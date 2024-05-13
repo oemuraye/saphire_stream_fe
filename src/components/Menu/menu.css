@@ -1,0 +1,13 @@
+.tab_box {
+    background-color: #570b5778;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 18%;
+}
+.menu-text {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}

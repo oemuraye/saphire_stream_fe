@@ -8,7 +8,8 @@ body {
 }
 
 .main_section {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   background-color: purple;
+  height: 100vh;
 }

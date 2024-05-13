@@ -1,0 +1,12 @@
+.progressCount span{
+    color: #fff;
+}
+.progressCount .tap_count {
+    font-size: 12px;
+    position: relative;
+    top: 1px;
+}
+.progress {
+    height: 15px !important;
+    border: 3px solid #2f0e45a2;
+}
