@@ -1,0 +1,13 @@
+header {
+    background-color: #2f062f;
+}
+.header_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.header_section .fa-times {
+    position: relative;
+    top: -3px;
+}

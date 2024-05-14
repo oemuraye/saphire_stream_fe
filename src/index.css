@@ -12,4 +12,10 @@ body {
   margin: 0 auto;
   background-color: purple;
   height: 100vh;
+  position: relative;
 }
+
+/* .main_section footer {
+  position: fixed;
+  bottom: 0;
+} */
