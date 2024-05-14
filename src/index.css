@@ -7,15 +7,23 @@ body {
   -moz-osx-font-smoothing: grayscale; */
 }
 
+.app {
+  height: 100vh;
+}
+
 .main_section {
   max-width: 500px;
   margin: 0 auto;
   background-color: purple;
-  height: 100vh;
+  height: 100%;
+  display: flex;
   position: relative;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* .main_section footer {
-  position: fixed;
-  bottom: 0;
-} */
+.main_section footer {
+  /* position: absolute;
+  bottom: 0px;
+  margin: 0 auto; */
+}

@@ -13,9 +13,9 @@ import Header from '../Header/Header';
 const Tap_homePage = () => {
   return (
     <>
-      <section>
+      {/* <section>
         <Header />
-      </section>
+      </section> */}
       <section className='tap_section'> 
         <section>
           <section className='d-flex flex-column justify-content-center gap-1 pt-3'>
@@ -40,9 +40,9 @@ const Tap_homePage = () => {
             <ProgressBar />
           </section>
 
-          <section className='menu_tabs container'>
+          {/* <section className='menu_tabs container'>
             <Menu />
-          </section>
+          </section> */}
         </section>
       </section>
     </>
