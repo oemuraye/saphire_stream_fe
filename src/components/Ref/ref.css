@@ -1,0 +1,17 @@
+.referral_section {
+    
+}
+.referral_section .increase_ref {
+    color: #84ee95;
+    /* font-size: 16px; */
+    font-weight: 600;
+    margin-top: -5px;
+}
+.referral_section .ref_link {
+    text-decoration: none;
+    color: #fff;
+    background-color: #ffc107;
+    padding: 3px 12px;
+    border-radius: 5px;
+    font-weight: 600;
+}

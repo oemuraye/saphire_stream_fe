@@ -6,20 +6,20 @@
     /* justify-content: space-between; */
     margin: auto;
 }
-.tap_section .points img {
+.points_section .points img {
     position: relative;
     top: 2px;
 }
-.tap_section .points span {
+.points_section .points span {
     color: #ffff;
     font-size: 2rem;
     font-weight: bold;
 }
-.tap_section .trophy {
+.points_section .trophy {
     color: #cecece;
     font-weight: 600;
 }
-.tap_section .trophy .fa-angle-right {
+.points_section .trophy .fa-angle-right {
     font-size: 12px;
     position: relative;
     top: 2px;

@@ -14,16 +14,17 @@ function App() {
   return (
     <section className="app">
       <section className="main_section">
-        <header>
+        <section>
           <Header />
-        </header>
-        <Routes>
-          <Route path="/" element={<Tap />} />
-          <Route path="/ref" element={<Ref />} />
-          <Route path="/task" element={<Task />} />
-          <Route path="/boost" element={<Boost />} />
-          <Route path="/stats" element={<Stats />} />
-        </Routes>
+          
+          <Routes>
+            <Route path="/" element={<Tap />} />
+            <Route path="/ref" element={<Ref />} />
+            <Route path="/task" element={<Task />} />
+            <Route path="/boost" element={<Boost />} />
+            <Route path="/stats" element={<Stats />} />
+          </Routes>
+        </section>
           {/* <Tap /> */}
 
         <footer className="container">
