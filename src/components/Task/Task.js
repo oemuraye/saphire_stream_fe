@@ -3,6 +3,8 @@ import React from 'react';
 import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 import coinIcon from "../../utils/images/goldCoin.png";
 
+import './task.css';
+
 
 const Task = () => {
   return (
@@ -21,7 +23,28 @@ const Task = () => {
 
           <hr />
 
-          <section className='my-3 pt-4'></section>
+          <section className="task-tab_section my-3 pt-4 " id="myTab" role="tablist">
+            <section className="d-flex justify-content-around border rounded-3 p-1">
+                <div className='task_tab px-4 py-2 active' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                  <h5>Special</h5>
+                </div>
+                <div className='task_tab px-4 py-2' id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                  <h5>Leagues</h5>
+                </div>
+                <div className='task_tab px-4 py-2' id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+                  <h5>Ref Task</h5>
+                </div>
+            </section>
+
+
+
+
+              <div className="tab-content container mt-3" id="myTabContent">
+                <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">.a..</div>
+                <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">.b..</div>
+                <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">.c..</div>
+              </div>
+          </section>
     </section>
   )
 }

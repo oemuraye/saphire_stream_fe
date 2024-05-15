@@ -1,0 +1,14 @@
+.task_tab {
+    font-size: 15px;
+}
+.task-tab_section.nav-tabs {
+    border-bottom: none !important;
+}
+.task_tab {
+    color: #fff;
+}
+.task_tab.active {
+    background-color: #cecece7a;
+    border-radius: 5px;
+    color: black;
+}
