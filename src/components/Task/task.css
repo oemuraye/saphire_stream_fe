@@ -6,9 +6,19 @@
 }
 .task_tab {
     color: #fff;
+    position: relative;
 }
 .task_tab.active {
-    background-color: #cecece7a;
+    background-color: var(--bg_basic);
     border-radius: 5px;
-    color: black;
+    /* color: black; */
+}
+.task_tab .badge {
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    border-radius: 50%;
+    background-color: #E97451;
+    height: 15px;
+    width: 15px;
 }

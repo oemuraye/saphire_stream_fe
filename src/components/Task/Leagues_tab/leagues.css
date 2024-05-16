@@ -1,0 +1,24 @@
+.leagues-tab_section .claim_link {
+    text-decoration: none;
+    color: #fff;
+    background-color: #ffc107;
+    padding: 3px 12px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+.leagues-tab_section .notClaim_link {
+    text-decoration: none;
+    color: #fff;
+    background-color: #31302f10;
+    padding: 3px 12px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.leagues-tab_section .progress {
+    height: 25px !important;
+}
+.leagues-tab_section .progress-bar {
+    background-color: purple;
+}

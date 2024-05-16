@@ -1,5 +1,5 @@
 .tab_box {
-    background-color: #570b5778;
+    background-color: var(--bg_basic);
     display: flex;
     flex-direction: column;
     justify-content: center;
