@@ -1,9 +1,9 @@
 .tap_section {
     position: relative;
     height: 100%;
-    /* display: grid; */
-    /* flex-direction: column; */
-    /* justify-content: space-between; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: auto;
 }
 .points_section .points img {

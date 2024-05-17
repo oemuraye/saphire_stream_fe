@@ -35,15 +35,15 @@ const Tap_homePage = () => {
           </section>
         </section>
 
-        <section className='footer container'>
+        {/* <section className='footer container'>
           <section className="progress_section container">
             <ProgressBar />
           </section>
 
-          {/* <section className='menu_tabs container'>
+          <section className='menu_tabs container'>
             <Menu />
-          </section> */}
-        </section>
+          </section>
+        </section> */}
       </section>
     </>
   )

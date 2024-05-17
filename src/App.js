@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 
 import Header from "./components/Header/Header";
@@ -11,6 +11,8 @@ import Stats from "./components/Stats/Stats";
 
 
 function App() {
+  const location = useLocation();
+
   return (
     <section className="app">
       <section className="main_section">
@@ -25,10 +27,10 @@ function App() {
             <Route path="/stats" element={<Stats />} />
           </Routes>
         </section>
-          {/* <Tap /> */}
 
         <footer className="container">
-          <Menu />
+          {location.pathname !== '/' && <Menu />}
+          {location.pathname === '/' && <Menu />}
         </footer>
       </section>
     </section>
