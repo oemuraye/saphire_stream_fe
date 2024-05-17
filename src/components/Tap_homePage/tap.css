@@ -12,11 +12,11 @@
 }
 .points_section .points span {
     color: #ffff;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
 }
 .points_section .trophy {
-    color: #cecece;
+    /* color: #cecece; */
     font-weight: 600;
 }
 .points_section .trophy .fa-angle-right {

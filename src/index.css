@@ -1,5 +1,6 @@
 :root {
   --bg_basic: #cecece7a;
+  --muted_color: #cecece;
 }
 
 body {
@@ -30,4 +31,8 @@ body {
   /* position: absolute;
   bottom: 0px;
   margin: 0 auto; */
+}
+
+.muted-color {
+  color: var(--muted_color);
 }

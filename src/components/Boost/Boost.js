@@ -10,7 +10,7 @@ const Boost = () => {
   return (
     <section className='boost_section container'>
       <section className='points_section d-flex flex-column justify-content-center gap-1 py-3'>
-        <h5 className='text-center my-2'>Your Share balance</h5>
+        <h5 className='text-center muted-color my-2'>Your Share balance</h5>
         <div className='points d-flex justify-content-center align-items-center gap-1'>
           <img src={coinIcon} alt="coin-logo" width="30px" />
           <span className=''>15</span>
@@ -45,19 +45,66 @@ const Boost = () => {
 
       <section className='boosters text-white my-3'>
         <h2>Boosters:</h2>
-        <section className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
-          <div className='d-flex gap-2 align-items-center'>
-            <img src={taskIcon} alt="taskIcon" width="70px" height="" />
-            <div className="d-flex flex-column">
-              <h6>Multitap</h6>
-              <div className='d-flex align-items-center gap-2'>
-                <img src={coinIcon} alt="coin-icon" width="25px" />
-                <span>200</span>
-                <span className='text-muted'>| 1 level</span>
+        
+        <section className="d-flex flex-column gap-2">
+          <section className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
+            <div className='d-flex gap-2 align-items-center'>
+              <img src={taskIcon} alt="taskIcon" width="70px" height="" />
+              <div className="d-flex flex-column">
+                <h6>Multitap</h6>
+                <div className='d-flex align-items-center gap-2'>
+                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <span>200</span>
+                  <span className='muted-color'>| 1 level</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </section>
+
+          <section className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
+            <div className='d-flex gap-2 align-items-center'>
+              <img src={taskIcon} alt="taskIcon" width="70px" height="" />
+              <div className="d-flex flex-column">
+                <h6>Energy Limit</h6>
+                <div className='d-flex align-items-center gap-2'>
+                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <span>200</span>
+                  <span className='muted-color'>| 1 level</span>
+                </div>
+              </div>
+            </div>
+            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </section>
+
+          <section className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
+            <div className='d-flex gap-2 align-items-center'>
+              <img src={taskIcon} alt="taskIcon" width="70px" height="" />
+              <div className="d-flex flex-column">
+                <h6>Recharging Speed</h6>
+                <div className='d-flex align-items-center gap-2'>
+                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <span>2000</span>
+                  <span className='muted-color'>| 1 level</span>
+                </div>
+              </div>
+            </div>
+            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </section>
+          
+          <section className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
+            <div className='d-flex gap-2 align-items-center'>
+              <img src={taskIcon} alt="taskIcon" width="70px" height="" />
+              <div className="d-flex flex-column">
+                <h6>Tap Bot</h6>
+                <div className='d-flex align-items-center gap-2'>
+                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <span>200000</span>
+                </div>
+              </div>
+            </div>
+            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </section>
         </section>
 
       </section>

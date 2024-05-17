@@ -20,8 +20,8 @@ const Task = () => {
       </div>
       <div className='trophy d-flex justify-content-center align-items-center gap-1'>
         <img src={trophyIcon} alt="trophy-logo" width="13px" />
-        <span className='trophy-text'>Bronze</span>
-        <i className="fa fa-angle-right" aria-hidden="true"></i>
+        <span className='muted-color'>Bronze</span>
+        <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
       </div>
     </section>
 
