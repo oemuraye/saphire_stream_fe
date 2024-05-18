@@ -1,5 +1,5 @@
 :root {
-  --bg_basic: #cecece7a;
+  --bg_basic: #67636352;
   --muted_color: #cecece;
 }
 
@@ -19,7 +19,8 @@ body {
 .main_section {
   max-width: 500px;
   margin: 0 auto;
-  background-color: purple;
+  background-color: #87638a;
+  background: linear-gradient(194deg, #87638a -47%, #1b1849 72.4%, #87638a 110%);
   height: 100%;
   display: flex;
   position: relative;
@@ -27,12 +28,15 @@ body {
   justify-content: space-between;
 }
 
-.main_section footer {
-  /* position: absolute;
-  bottom: 0px;
-  margin: 0 auto; */
+.main-section {
+  overflow: auto;
+  scrollbar-width: none;
 }
-
 .muted-color {
   color: var(--muted_color);
+}
+
+.basic-gradient {
+  background-color: #3e187a;
+  background-image: linear-gradient(0deg, #3e187a 0%, #994ecc 105%);
 }

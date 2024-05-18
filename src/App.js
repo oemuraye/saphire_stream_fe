@@ -8,15 +8,19 @@ import Ref from "./components/Ref/Ref";
 import Task from "./components/Task/Task";
 import Boost from "./components/Boost/Boost";
 import Stats from "./components/Stats/Stats";
+import JoinSocials from "./components/Task/Special_tab/JoinSocials";
+import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 
 
 function App() {
   const location = useLocation();
 
+  const showFooter = location.pathname !== '/socials' || location.pathname !== '/connect_wallet';
+
   return (
     <section className="app">
       <section className="main_section">
-        <section>
+        <section className="main-section">
           <Header />
           
           <Routes>
@@ -25,13 +29,17 @@ function App() {
             <Route path="/task" element={<Task />} />
             <Route path="/boost" element={<Boost />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/join_socials" element={<JoinSocials />} />
+            <Route path="/connect_wallet" element={<ConnectWallet />} />
           </Routes>
         </section>
 
-        <footer className="container">
-          {location.pathname !== '/' && <Menu />}
-          {location.pathname === '/' && <Menu />}
-        </footer>
+        {!showFooter && (
+          <footer className="container">
+            {location.pathname !== '/' && <Menu />}
+            {location.pathname === '/' && <Menu />}
+          </footer>
+        )}
       </section>
     </section>
   );

@@ -1,3 +1,29 @@
 .taskPad {
     background-color: var(--bg_basic);
 }
+
+.start-mission {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: center;
+}
+.end-mission {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: center;
+    color: var(--muted_color);
+    background-color: var(--bg_basic);
+}
+
+.go-mission {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 15px;
+    font-size: 20px;
+}

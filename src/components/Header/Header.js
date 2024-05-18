@@ -1,13 +1,23 @@
 import React from 'react';
 
 import './header.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const showGoBackArrow = location.pathname !== '/socials' || location.pathname !== '/wallet_connect';
+
   return (
     <header className='container shadow-sm'>
         <section className='header_section text-white container py-2'>
             <div className='d-flex align-items-center gap-3'>
-                <i className="fa fa-times" role='button' aria-hidden="true"></i>
+                {showGoBackArrow ? (
+                  <i role='button' onClick={() => navigate(-1)} className="fa fa-arrow-left" aria-hidden="true"></i>
+                ) : (
+                  <i role='button' className="fa fa-times" aria-hidden="true"></i>
+                )}
                 <h4>SaphireStream</h4>
             </div>
             <div>
