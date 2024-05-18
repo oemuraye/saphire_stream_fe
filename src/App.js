@@ -15,7 +15,7 @@ import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 function App() {
   const location = useLocation();
 
-  const showFooter = location.pathname !== '/socials' || location.pathname !== '/connect_wallet';
+  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
 
   return (
     <section className="app">
@@ -34,10 +34,9 @@ function App() {
           </Routes>
         </section>
 
-        {!showFooter && (
+        {showFooter && (
           <footer className="container">
-            {location.pathname !== '/' && <Menu />}
-            {location.pathname === '/' && <Menu />}
+            <Menu />
           </footer>
         )}
       </section>

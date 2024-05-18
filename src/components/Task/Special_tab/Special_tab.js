@@ -29,7 +29,7 @@ const Special_tab = () => {
             </div>
           </div>
         </div>
-        <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
       </section>
 
       <section onClick={() => goToConnectWallet()} role='button' className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
@@ -43,7 +43,7 @@ const Special_tab = () => {
             </div>
           </div>
         </div>
-        <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
       </section>
     </section>
   )

@@ -6,27 +6,29 @@ import { Link } from 'react-router-dom';
 const Connect_wallet = () => {
   return (
     <section className='connect_wallet container text-white py-2'>
-      <article>
+      <article className='container'>
         <h3>Join our socials</h3>
         <p className="muted-color">
           Log in to Saphire with your Solana Wallet. All project and partner drops will be sent to the wallet you provide here.
         </p>
         <p className="muted-color">
           If you don't have a Solana wallet, 
-          you can download the Phantom wallet from <Link to="https://phantom.app/ ">https://phantom.app/ </Link>
+          you can download the Phantom wallet from <Link className='wallet_link' to="https://phantom.app/ ">https://phantom.app/ </Link>
           or feel free to download any other legitimate Solona wallets
         </p>
       </article>
 
-      <section className='taskPad w-100 col-6 d-flex gap-2 align-items-center rounded-3 py-3 px-2 gap-2'>
-        <img src={coinIcon} alt="taskIcon" width="60px" height="" />
-        <div className="d-flex flex-column">
-          <h6>Reward</h6>
-          <span className='text-light'>100000</span>
+      <section className='container'> 
+        <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center rounded-3 py-3 px-2 gap-2 my-3'>
+          <img src={coinIcon} alt="taskIcon" width="60px" height="" />
+          <div className="d-flex flex-column">
+            <h6>Reward</h6>
+            <span className='text-light'>100000</span>
+          </div>
         </div>
       </section>
 
-      <section className='mission-tasks my-3'>
+      <section className='mission-tasks container my-3'>
         <h3 className='py-2'>Your tasks</h3>
         <div className="mission_tasks d-flex flex-column gap-2 mt-2">
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-3 px-2 gap-2'>
@@ -39,8 +41,8 @@ const Connect_wallet = () => {
         </div>
       </section>
 
-      <section>
-        <div className='end-mission my-3 h3'>Finish mission</div>
+      <section className='container'>
+        <div className='end-mission my-3'>Finish mission</div>
       </section>
     </section>
   )

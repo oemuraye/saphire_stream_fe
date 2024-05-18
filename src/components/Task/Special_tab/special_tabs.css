@@ -17,8 +17,11 @@
     align-items: center;
     border-radius: 10px;
     justify-content: center;
-    color: var(--muted_color);
+    color: #cecece7a;
+    /* color: var(--muted_color); */
     background-color: var(--bg_basic);
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .go-mission {
@@ -26,4 +29,7 @@
     color: #fff;
     border-radius: 15px;
     font-size: 20px;
+}
+.wallet_link {
+    color: #c113d0;
 }
