@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Connect_wallet = () => {
   return (
     <section className='connect_wallet container text-white py-2'>
-      <article className='container'>
+      <article className=''>
         <h3>Join our socials</h3>
         <p className="muted-color">
           Log in to Saphire with your Solana Wallet. All project and partner drops will be sent to the wallet you provide here.
@@ -18,7 +18,7 @@ const Connect_wallet = () => {
         </p>
       </article>
 
-      <section className='container'> 
+      <section className=''> 
         <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center rounded-3 py-3 px-2 gap-2 my-3'>
           <img src={coinIcon} alt="taskIcon" width="60px" height="" />
           <div className="d-flex flex-column">
@@ -28,7 +28,7 @@ const Connect_wallet = () => {
         </div>
       </section>
 
-      <section className='mission-tasks container my-3'>
+      <section className='mission-tasks my-3'>
         <h3 className='py-2'>Your tasks</h3>
         <div className="mission_tasks d-flex flex-column gap-2 mt-2">
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-3 px-2 gap-2'>
@@ -41,7 +41,7 @@ const Connect_wallet = () => {
         </div>
       </section>
 
-      <section className='container'>
+      <section className=''>
         <div className='end-mission my-3'>Finish mission</div>
       </section>
     </section>

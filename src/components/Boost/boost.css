@@ -1,3 +1,48 @@
 .boost_section .points_section h5 {
     /* color: #cecece; */
 }
+
+.boosters-modal_section {
+    position: absolute;
+    bottom: 0;
+    z-index: 1000;
+    background-color: #161116e6;
+    height: 60%;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    -webkit-box-shadow: 0px 10px 32px 23px rgba(0,0,0,0.56);
+    -moz-box-shadow: 0px 10px 32px 23px rgba(0,0,0,0.56);
+    box-shadow: 0px 10px 32px 23px rgba(0,0,0,0.56);
+}
+.boosters-modal_section .closeBtn {
+    font-weight: 300 !important;
+    color: #fff;
+    font-size: 30px;
+}
+
+.boosters-modal_section .booster-icon {
+    background-color: var(--bg_basic);
+    border-radius: 20px;
+    height: 140px;
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.boosters-modal_section h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+}
+.boosters-modal_section .action-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 90%;
+    color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
