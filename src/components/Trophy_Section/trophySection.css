@@ -1,0 +1,33 @@
+.trophy-slider {
+    position: relative;
+}
+.trophy-slider .carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.trophy-slider .carousel-image {
+    max-width: 100%;
+    height: auto;
+}
+  
+.trophy-slider .carousel-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+  
+.trophy-slider .carousel-button.prev {
+    position: absolute;
+    left: 10px;
+}
+  
+.trophy-slider .carousel-button.next {
+    position: absolute;
+    right: 10px;
+}
+  

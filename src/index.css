@@ -16,6 +16,10 @@ body {
   height: 100vh;
 }
 
+h6 {
+  font-size: 14px !important;
+}
+
 .main_section {
   max-width: 500px;
   margin: 0 auto;

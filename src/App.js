@@ -10,6 +10,7 @@ import Boost from "./components/Boost/Boost";
 import Stats from "./components/Stats/Stats";
 import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
+import TrophySection from "./components/Trophy_Section/TrophySection";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/stats" element={<Stats />} />
             <Route path="/join_socials" element={<JoinSocials />} />
             <Route path="/connect_wallet" element={<ConnectWallet />} />
+            <Route path="/trophy" element={<TrophySection />} />
           </Routes>
         </section>
 

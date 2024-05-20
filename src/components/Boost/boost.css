@@ -17,14 +17,14 @@
 .boosters-modal_section .closeBtn {
     font-weight: 300 !important;
     color: #fff;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .boosters-modal_section .booster-icon {
     background-color: var(--bg_basic);
     border-radius: 20px;
-    height: 140px;
-    width: 130px;
+    height: 75px;
+    width: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,7 +33,7 @@
 
 .boosters-modal_section h2 {
     color: #fff;
-    font-size: 32px;
+    font-size: 25px;
     font-weight: bold;
 }
 .boosters-modal_section .action-btn {
@@ -41,8 +41,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    width: 90%;
+    width: 100%;
     color: #fff;
     margin-left: auto;
     margin-right: auto;
+}
+
+.boosters-numbers span {
+    font-size: 14px;
 }

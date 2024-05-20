@@ -7,7 +7,7 @@ const Connect_wallet = () => {
   return (
     <section className='connect_wallet container text-white py-2'>
       <article className=''>
-        <h3>Join our socials</h3>
+        <h6>Join our socials</h6>
         <p className="muted-color">
           Log in to Saphire with your Solana Wallet. All project and partner drops will be sent to the wallet you provide here.
         </p>

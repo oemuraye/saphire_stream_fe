@@ -9,8 +9,14 @@ import coinIcon from "../../utils/images/goldCoin.png";
 import ProgressBar from './ProgressBar/ProgressBar';
 import './tap.css'
 import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 const Tap_homePage = () => {
+  const navigate = useNavigate();
+
+  const goToTrophyPage = () => {
+    navigate(`/trophy`);
+  }
   return (
     <>
       {/* <section>
@@ -23,7 +29,7 @@ const Tap_homePage = () => {
               <img src={coinIcon} alt="coin-logo" width="30px" />
               <span className=''>15</span>
             </div>
-            <div className='trophy d-flex justify-content-center align-items-center gap-1'>
+            <div onClick={goToTrophyPage} role='button' className='trophy d-flex justify-content-center align-items-center gap-1'>
               <img src={trophyIcon} alt="trophy-logo" width="13px" />
               <span className='muted-color'>Bronze</span>
               <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>

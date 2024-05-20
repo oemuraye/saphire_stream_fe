@@ -5,13 +5,13 @@ import coinIcon from "../../utils/images/goldCoin.png";
 const BoostersModal = ({onClose, iconSrc, title}) => {
   return (
     <section className='boosters-modal_section container'>
-        <div className="d-flex justify-content-end p-4 closeBtn">
+        <div className="d-flex justify-content-end p-2 closeBtn">
             <i onClick={onClose} className="fa fa-times" aria-hidden="true"></i>
         </div>
 
-        <section className='d-flex flex-column gap-2 justify-content-center text-center mt-2'>
+        <section className='d-flex flex-column gap-2 justify-content-center text-center'>
             <span className="booster-icon">
-                <img src={iconSrc} alt="booster-img" className='img-fluid' width="75px" />
+                <img src={iconSrc} alt="booster-img" className='img-fluid' width="40px" />
             </span>
 
             <h2>{title}</h2>
@@ -26,8 +26,8 @@ const BoostersModal = ({onClose, iconSrc, title}) => {
             </div>
         </section>
         
-        <section className='action-btn'>
-            <div role='button' className='start-mission basic-gradient my-3 h3'>Get it!</div>
+        <section className='action-btn container'>
+            <div role='button' className='start-mission basic-gradient my-3 h5'>Get it!</div>
         </section>
 
 

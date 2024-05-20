@@ -8,9 +8,15 @@ import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 import coinIcon from "../../utils/images/goldCoin.png";
 
 import './task.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const Task = () => {
+  const navigate = useNavigate();
+
+  const goToTrophyPage = () => {
+    navigate(`/trophy`);
+  }
   return (
     <section className='task_section container'>
       <section className='points_section d-flex flex-column justify-content-center gap-1 pt-3'>
@@ -18,7 +24,7 @@ const Task = () => {
         <img src={coinIcon} alt="coin-logo" width="30px" />
         <span className=''>15</span>
       </div>
-      <div className='trophy d-flex justify-content-center align-items-center gap-1'>
+      <div onClick={goToTrophyPage} role='button' className='trophy d-flex justify-content-center align-items-center gap-1'>
         <img src={trophyIcon} alt="trophy-logo" width="13px" />
         <span className='muted-color'>Bronze</span>
         <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
@@ -30,15 +36,15 @@ const Task = () => {
     <section className="task-tab_section my-3 pt-4 " id="myTab" role="tablist">
       <section className="d-flex justify-content-around border rounded-3 p-1">
           <div className='task_tab px-4 py-2 active' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
-            <h5>Special</h5>
+            <h6>Special</h6>
             <span className='badge'> </span>
           </div>
           <div className='task_tab px-4 py-2' id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
-            <h5>Leagues</h5>
+            <h6>Leagues</h6>
             <span className='badge'> </span>
           </div>
           <div className='task_tab px-4 py-2' id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
-            <h5>Ref Task</h5>
+            <h6>Ref Task</h6>
           </div>
       </section>
 
