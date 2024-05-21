@@ -31,3 +31,10 @@
     right: 10px;
 }
   
+.trophy-slider .progress {
+    background-color: #c0c0c03a;
+    padding: 2px;
+}
+.trophy-slider .progress-bar {
+    background-color: purple;
+}
