@@ -16,7 +16,7 @@ const Menu = () => {
 
   return (
     <footer className=''>
-      {location.pathname === '/' && <ProgressBar />}
+      {/* {location.pathname === '/' && <ProgressBar />} */}
       <section className='d-flex justify-content-between gap-2 my-2 pb-1'>
         <div role='button' onClick={() => navigate('/ref')} className="tab_box p-2 px-4 rounded-3">
           <img src={teddyIcon} alt="coin-img" width="25px" />

@@ -7,7 +7,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const showGoBackArrow = location.pathname !== '/socials' || location.pathname !== '/wallet_connect' || location.pathname !== '/trophy';
+  const showGoBackArrow = location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
 
   return (
     <header className='container shadow-sm'>
