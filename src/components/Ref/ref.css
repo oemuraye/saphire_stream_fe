@@ -3,15 +3,30 @@
 }
 .referral_section .increase_ref {
     color: #84ee95;
-    /* font-size: 16px; */
+    font-size: 12px;
     font-weight: 600;
     margin-top: -5px;
 }
 .referral_section .ref_link {
     text-decoration: none;
     color: #fff;
-    background-color: #ffc107;
+    background-color: #ffa600;
     padding: 3px 12px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: 600;
+    font-size: 14px;
+}
+
+.referral_section .trophy-point img {
+    position: relative;
+    top: 2px;
+}
+.referral_section .trophy-point .trophy-img {
+    top: 4px;
+}
+
+.referral_section .progress {
+    padding: 3px;
+    height: 20px;
+    background-color: var(--bg_basic);
 }

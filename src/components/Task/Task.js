@@ -34,17 +34,17 @@ const Task = () => {
     <hr />
 
     <section className="task-tab_section my-3 pt-4 " id="myTab" role="tablist">
-      <section className="d-flex justify-content-around border rounded-3 p-1">
+      <section className="d-flex justify-content-around align-items-center border rounded-3 p-1">
           <div className='task_tab px-4 py-2 active' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
-            <h6>Special</h6>
-            <span className='badge'> </span>
+            <h6 className='mb-0'>Special</h6>
+            <span className='badge'>.</span>
           </div>
           <div className='task_tab px-4 py-2' id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
-            <h6>Leagues</h6>
-            <span className='badge'> </span>
+            <h6 className='mb-0'>Leagues</h6>
+            <span className='badge'>.</span>
           </div>
           <div className='task_tab px-4 py-2' id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
-            <h6>Ref Task</h6>
+            <h6 className='mb-0'>Ref Task</h6>
           </div>
       </section>
 
