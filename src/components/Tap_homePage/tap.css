@@ -37,11 +37,15 @@
 }
 
 
+.coinTap_section {
+    position: relative;
+}
 .plus-one {
     position: absolute;
     color: #fff;
     font-size: 24px;
     font-weight: bold;
+    pointer-events: none;
     animation: moveUp 1s ease-out forwards;
 }
 
@@ -56,13 +60,17 @@
     }
 }
 
-.coinTap_section {
-    position: relative;
+.coinTap_section img {
+    width: 225px;
+    /* height: 225px; */
+    margin-top: 30px;
 }
 
 .coinTap_section img.clicked {
     animation: dipEffect 0.2s ease-in-out;
 }
+
+
   
 @keyframes dipEffect {
     0% {

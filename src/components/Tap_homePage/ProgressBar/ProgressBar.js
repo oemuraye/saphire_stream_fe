@@ -1,5 +1,7 @@
 import React from 'react';
 
+import boltIcon from "../../../utils/images/Small Icons/Bolt.png";
+
 import './progressBar.css'
 
 const ProgressBar = ({ remainingPoints, progressPercentage }) => {
@@ -7,8 +9,8 @@ const ProgressBar = ({ remainingPoints, progressPercentage }) => {
 
   return (
     <section className='progressCount'>
-      <div className="d-flex justify-content-center align-items-center">
-        <i className="fa-solid fa-bolt text-warning pe-1"></i>
+      <div className="d-flex justify-content-center align-items-center my-2">
+        <img src={boltIcon} alt="icon" width="25px" />
         <span className='fw-bold'>{remainingPoints}</span>
         <span className='tap_count'>/ 500</span>
       </div>

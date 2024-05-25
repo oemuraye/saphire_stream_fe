@@ -1,27 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ProgressBar from './ProgressBar/ProgressBar';
-import TapCoin from './TapCoin/TapCoin';
-import Menu from '../Menu/Menu';
-
 import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 import coinIcon from "../../utils/images/goldCoin.png";
-import coinImg from "../../utils/images/coin.png";
+import coinImg from "../../utils/images/tap coin.png";
 
-import './tap.css'
+import './tap.css';
 
 const Tap_homePage = () => {
   const [points, setPoints] = useState(18);
   const [remainingPoints, setRemainingPoints] = useState(500);
   const [clickAnimations, setClickAnimations] = useState([]);
-  const [clickedPosition, setClickedPosition] = useState(null);
-  
+
   const navigate = useNavigate();
 
   const goToTrophyPage = () => {
     navigate(`/trophy`);
-  }
+  };
 
   const handleTap = (e) => {
     if (remainingPoints > 0) {
@@ -30,7 +26,7 @@ const Tap_homePage = () => {
 
       // Calculate click position relative to the image
       const rect = e.target.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const x = e.clientX - rect.left + 140;
       const y = e.clientY - rect.top;
 
       // Create a unique animation entry
@@ -42,16 +38,13 @@ const Tap_homePage = () => {
 
       setClickAnimations(prevAnimations => [...prevAnimations, newAnimation]);
 
-      // Set the clicked position for the image dip effect
-      setClickedPosition({ x, y });
-
       // Temporarily remove the 'clicked' class to restart the animation
       const coinImgElement = e.target;
       coinImgElement.classList.remove('clicked');
-      void coinImgElement.offsetWidth; // Trigger reflow
+
+      void coinImgElement.offsetWidth;
       coinImgElement.classList.add('clicked');
 
-      // Remove the animation after 1 second
       setTimeout(() => {
         setClickAnimations(prevAnimations => prevAnimations.filter(anim => anim.id !== newAnimation.id));
       }, 1000);
@@ -76,30 +69,20 @@ const Tap_homePage = () => {
             </div>
           </section>
 
-          <section className='coinTap_section container d-flex justify-content-center '>
-          <img src={coinImg} alt="coin-img" 
-              className={clickedPosition ? 'clicked' : ''}
-              style={{
-                transformOrigin: clickedPosition ? `${clickedPosition.x}px ${clickedPosition.y}px` : 'center'
-              }}
-              width="100%"
-              onClick={handleTap}
-            />
+          <section className='coinTap_section container d-flex justify-content-center' onClick={handleTap}>
+            <img src={coinImg} alt="coin-img" className="img-fluid"width="100%"height="250px" />
             {clickAnimations.map(animation => (
-              <span key={animation.id}
-                className="plus-one"
-                style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
+              <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
               >+1</span>
             ))}
           </section>
         </section>
-
       </section>
       <section className="tap-progress_section container">
         <ProgressBar remainingPoints={remainingPoints} progressPercentage={progressPercentage} /> 
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Tap_homePage
+export default Tap_homePage;

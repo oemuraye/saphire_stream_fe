@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import coinIcon from "../../utils/images/goldCoin.png";
-import teddyIcon from "../../utils/images/teddy-bear.png";
-import taskIcon from "../../utils/images/taskIcon.png";
-import flameIcon from "../../utils/images/fire.png";
-import statsIcon from "../../utils/images/chart.png";
+import teddyIcon from "../../utils/images/Small Icons/Referral.png";
+import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
+import taskIcon from "../../utils/images/Small Icons/Task.png";
+import flameIcon from "../../utils/images/Small Icons/Fire.png";
+import statsIcon from "../../utils/images/Small Icons/Statistics.png";
 
 import ProgressBar from '../Tap_homePage/ProgressBar/ProgressBar';
 import './menu.css'
