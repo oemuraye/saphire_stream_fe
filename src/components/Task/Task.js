@@ -5,7 +5,7 @@ import League_tab from './Leagues_tab/Leagues_tab';
 import RefTask_tab from './RefTask_tab/RefTask_tab';
 
 import trophyIcon from "../../utils/svgs/bronze trophy.svg";
-import coinIcon from "../../utils/images/goldCoin.png";
+import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 
 import './task.css';
 import { useNavigate } from 'react-router-dom';

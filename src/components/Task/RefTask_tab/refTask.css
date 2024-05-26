@@ -17,8 +17,10 @@
 }
 
 .refTask-tab_section .progress {
-    height: 25px !important;
+    height: 15px;
+    border: 2px solid var(--bg_basic);
 }
 .refTask-tab_section .progress-bar {
     background-color: purple;
+    border-radius: 20px;
 }

@@ -7,7 +7,7 @@
     bottom: 0;
     z-index: 1000;
     background-color: #161116e6;
-    height: 60%;
+    height: 400px;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     -webkit-box-shadow: 0px 10px 32px 23px rgba(0,0,0,0.56);
@@ -31,10 +31,13 @@
     margin: 0 auto;
 }
 
-.boosters-modal_section h2 {
+.boosters-modal_section h3 {
     color: #fff;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: bold;
+}
+.boosters-modal_section p {
+    font-size: 14px;
 }
 .boosters-modal_section .action-btn {
     position: absolute;
@@ -49,4 +52,22 @@
 
 .boosters-numbers span {
     font-size: 14px;
+}
+.daily-boosters .taskPad:hover {
+    border: 1px solid #0ad5af;
+}
+.daily-boosters .taskPad:hover h6 {
+    color:#0ad5af;
+}
+
+.alert-toast {
+    color: #0ad5af;
+    background-color: #211f1fdd;
+    position: absolute;
+    bottom: 18px;
+    z-index: 1100;
+    width: 95%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
 }

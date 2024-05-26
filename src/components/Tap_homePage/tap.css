@@ -6,6 +6,16 @@
     justify-content: space-between;
     margin: auto;
 }
+.gold-shadow {
+    position: absolute;
+    top: 80px;
+    width: 70px;
+    height: 60px;
+    background-color: #e7a61a36;
+    -webkit-box-shadow: 13px 92px 99px 97px #e7a61a;
+    -moz-box-shadow: 13px 92px 99px 97px #e7a61a;
+    box-shadow: 13px 92px 99px 97px #e7a61a;
+}
 .points_section .points img {
     position: relative;
     top: 2px;
@@ -63,7 +73,7 @@
 .coinTap_section img {
     width: 225px;
     /* height: 225px; */
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .coinTap_section img.clicked {

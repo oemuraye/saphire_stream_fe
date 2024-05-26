@@ -1,7 +1,7 @@
 import React from 'react';
 
-import refIcon from '../../../utils/images/teddy-bear.png';
-import coinIcon from '../../../utils/images/goldCoin.png';
+import refIcon from '../../../utils/images/Small Icons/Referral.png';
+import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
 
 import './refTask.css';
 
@@ -13,9 +13,9 @@ const RefTask_tab = () => {
           <div className='d-flex gap-3 align-items-center'>
               <img src={refIcon} alt="taskIcon" width="40px" height="45px" />
               <div className="d-flex flex-column">
-                <h5>Invite 1 Friends</h5>
+                <h6 className="mb-0">Invite 1 Friends</h6>
                 <div className='d-flex align-items-center gap-2'>
-                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <img src={coinIcon} alt="coin-icon" width="18px" />
                   <span>2500</span>
                 </div>
               </div>
@@ -37,9 +37,9 @@ const RefTask_tab = () => {
           <div className='d-flex gap-3 align-items-center'>
               <img src={refIcon} alt="taskIcon" width="40px" height="45px" />
               <div className="d-flex flex-column">
-                <h5>Invite 3 Friends</h5>
+                <h6 className="mb-0">Invite 3 Friends</h6>
                 <div className='d-flex align-items-center gap-2'>
-                  <img src={coinIcon} alt="coin-icon" width="25px" />
+                  <img src={coinIcon} alt="coin-icon" width="18px" />
                   <span>50000</span>
                 </div>
               </div>

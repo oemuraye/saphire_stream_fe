@@ -11,10 +11,18 @@ import Stats from "./components/Stats/Stats";
 import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
+import { useEffect } from "react";
 
+const telegram = window.Telegram.WebApp
 
 function App() {
   const location = useLocation();
+  console.log(telegram);
+
+  useEffect(() => {
+    telegram.ready();
+  })
+  
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
 

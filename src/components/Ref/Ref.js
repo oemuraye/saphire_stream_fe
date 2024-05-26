@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import coinIcon from "../../utils/images/goldCoin.png";
+import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 
 
 import './ref.css';
 
 const Ref = () => {
-  const [hasReferrals, sethasReferrals] = useState(false)
+  const [hasReferrals, sethasReferrals] = useState(false);
+
   return (
     <section className='referral_section container mt-4'>
       <div className="d-flex flex-column text-center text-white">
@@ -30,14 +31,14 @@ const Ref = () => {
 
             <div className="trophy-point d-flex gap-2 justify-content-between">
               <div className="d-flex gap-1">
-                <img src={trophyIcon} alt="coin-icon" className='trophy-img' width="20px" height="15px" />
+                <img src={trophyIcon} alt="coin-icon" className='trophy-img' width="18px" height="15px" />
                 <span className='muted-color'>bronze |</span>
                 <img src={coinIcon} alt="coin-icon" width="20px" height="20px" />
                 <span className=''>652</span>
               </div>
               <div className="d-flex gap-2">
                 <h6>+2000</h6>
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <i className="fa fa-angle-right" aria-hidden="true"></i>
               </div>
             </div>
 
