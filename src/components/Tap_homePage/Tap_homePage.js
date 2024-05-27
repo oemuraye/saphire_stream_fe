@@ -101,7 +101,7 @@ const Tap_homePage = () => {
             </div>
           </section>
 
-          <section className='coinTap_section container d-flex justify-content-center' onClick={handleTap}>
+          <section className='coinTap_section container d-flex justify-content-center' onTouchStart={handleTap} onMouseDown={handleTap}>
             <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px" />
             {clickAnimations.map(animation => (
               <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
