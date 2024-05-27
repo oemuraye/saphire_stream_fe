@@ -78,7 +78,7 @@ const Tap_homePage = () => {
     <>
       <section className='tap_section'> 
         <section>
-          <section className='points_section d-flex flex-column justify-content-center gap-1 pt-2'>
+          <section className='points_section d-flex flex-column justify-content-center gap-1 pt-4'>
             <div className='points d-flex justify-content-center align-items-center gap-1'>
               <img src={coinIcon} alt="coin-logo" width="30px" />
               <span className=''>{points}</span>

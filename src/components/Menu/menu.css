@@ -11,3 +11,7 @@
     font-size: 12px;
     font-weight: bold;
 }
+.tab_box.active {
+    background-color: #e7a61a1c;
+    border: 1px solid #e7a61a;
+}
