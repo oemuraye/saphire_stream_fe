@@ -17,13 +17,15 @@ const telegram = window.Telegram.WebApp
 
 function App() {
   const location = useLocation();
+  const isTelegramMiniApp = window.Telegram && telegram;
 
   useEffect(() => {
     telegram.ready();
 
     if (telegram.setHeaderColor) {
-      telegram.setHeaderColor('#0088cc');
+      telegram.setHeaderColor('#2f062f');
     }
+
     // Customize the header
     if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
       telegram.BackButton.show();
@@ -41,7 +43,7 @@ function App() {
     <section className="app">
       <section className="main_section">
         <section className="main-section">
-          <Header />
+          {!isTelegramMiniApp && <Header />}
           
           <Routes>
             <Route path="/" element={<Tap />} />
