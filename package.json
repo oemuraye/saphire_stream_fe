@@ -1,5 +1,6 @@
 {
   "name": "saphire_stream_fe",
+  "homepage": "http://saphirestreamapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
