@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 
 import Header from "./components/Header/Header";
@@ -18,6 +18,7 @@ const telegram = window.Telegram.WebApp
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
 
   useEffect(() => {
@@ -28,15 +29,28 @@ function App() {
     }
   }, []);
 
-  console.log(window.Telegram);
-
   useEffect(() => {
-    telegram.ready();
+    const backButton = window.Telegram.WebApp.BackButton;
 
+    telegram.ready();
+  
     if (telegram.setHeaderColor) {
       telegram.setHeaderColor('#2f062f');
     }
+    
+    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+      backButton.show();
+    } else {
+      backButton.hide();
+    }
+    
+    backButton.onClick(() => {
+      navigate(-1)
+    });
+
+    return () => backButton.offClick();
   }, [location.pathname]);
+
   
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';

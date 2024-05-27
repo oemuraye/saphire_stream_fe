@@ -7,22 +7,6 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const backButton = window.Telegram.WebApp.BackButton;
-    
-    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
-      backButton.show();
-    } else {
-      backButton.hide();
-    }
-    
-    backButton.onClick(() => {
-      navigate(-1)
-    });
-
-    return () => backButton.offClick();
-  }, [location.pathname]);
-
 
   const showGoBackArrow = location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
 
