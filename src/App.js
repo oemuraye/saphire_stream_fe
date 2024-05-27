@@ -11,13 +11,24 @@ import Stats from "./components/Stats/Stats";
 import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 
 const telegram = window.Telegram.WebApp
 
 function App() {
   const location = useLocation();
-  const isTelegramMiniApp = window.Telegram && telegram;
+  const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
+
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      setIsTelegramMiniApp(true);
+    } else {
+      setIsTelegramMiniApp(false);
+    }
+  }, []);
+
+  console.log(isTelegramMiniApp);
 
   useEffect(() => {
     telegram.ready();
@@ -43,7 +54,7 @@ function App() {
     <section className="app">
       <section className="main_section">
         <section className="main-section">
-          {!isTelegramMiniApp && <Header />}
+          {isTelegramMiniApp && <Header />}
           
           <Routes>
             <Route path="/" element={<Tap />} />
