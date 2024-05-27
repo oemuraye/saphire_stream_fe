@@ -17,11 +17,20 @@ const telegram = window.Telegram.WebApp
 
 function App() {
   const location = useLocation();
-  console.log(telegram);
 
   useEffect(() => {
     telegram.ready();
-  })
+
+    // Customize the header
+    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+      telegram.BackButton.show();
+    } else {
+      telegram.BackButton.hide();
+    }
+
+    telegram.WebApp.setHeaderColor('#2f062f');
+
+  }, [location.pathname]);
   
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';

@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(window.Telegram.WebApp);
+
 
   const showGoBackArrow = location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
 
