@@ -50,7 +50,7 @@ const Tap_homePage = () => {
 
         // Calculate touch position relative to the image
         const rect = e.target.getBoundingClientRect();
-        const x = touch.clientX - rect.left + 140;
+        const x = touch.clientX - rect.left + 100;
         const y = touch.clientY - rect.top;
 
         // Create a unique animation entry
