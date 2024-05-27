@@ -36,35 +36,46 @@ const Tap_homePage = () => {
 
 
   const handleTap = (e) => {
-    if (remainingPoints > 0) {
-      setPoints(prevPoints => prevPoints + 1);
-      setRemainingPoints(prevRemainingPoints => prevRemainingPoints - 1);
+    e.preventDefault();
 
-      // Calculate click position relative to the image
-      const rect = e.target.getBoundingClientRect();
-      const x = e.clientX - rect.left + 140;
-      const y = e.clientY - rect.top;
+    const isTouchEvent = e.type === 'touchstart';
+    const touchPoints = isTouchEvent ? e.touches : [e]; // Handle both touch and mouse events
+    const newClickAnimations = [];
 
-      // Create a unique animation entry
-      const newAnimation = {
-        id: Date.now(),
-        x,
-        y
-      };
+    for (let i = 0; i < touchPoints.length; i++) {
+      const touch = touchPoints[i];
+      if (remainingPoints > 0) {
+        setPoints(prevPoints => prevPoints + 1);
+        setRemainingPoints(prevRemainingPoints => prevRemainingPoints - 1);
 
-      setClickAnimations(prevAnimations => [...prevAnimations, newAnimation]);
+        // Calculate touch position relative to the image
+        const rect = e.target.getBoundingClientRect();
+        const x = touch.clientX - rect.left + 140;
+        const y = touch.clientY - rect.top;
 
-      // Temporarily remove the 'clicked' class to restart the animation
-      const coinImgElement = e.target;
-      coinImgElement.classList.remove('clicked');
+        // Create a unique animation entry
+        const newAnimation = {
+          id: Date.now() + i,
+          x,
+          y
+        };
 
-      void coinImgElement.offsetWidth;
-      coinImgElement.classList.add('clicked');
-
-      setTimeout(() => {
-        setClickAnimations(prevAnimations => prevAnimations.filter(anim => anim.id !== newAnimation.id));
-      }, 1000);
+        newClickAnimations.push(newAnimation);
+      }
     }
+
+    setClickAnimations(prevAnimations => [...prevAnimations, ...newClickAnimations]);
+
+    // Temporarily remove the 'clicked' class to restart the animation
+    const coinImgElement = e.target;
+    coinImgElement.classList.remove('clicked');
+
+    void coinImgElement.offsetWidth;
+    coinImgElement.classList.add('clicked');
+
+    setTimeout(() => {
+      setClickAnimations(prevAnimations => prevAnimations.filter(anim => !newClickAnimations.some(newAnim => newAnim.id === anim.id)));
+    }, 1000);
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
