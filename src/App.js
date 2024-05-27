@@ -28,7 +28,7 @@ function App() {
     }
   }, []);
 
-  console.log(isTelegramMiniApp);
+  console.log(window.Telegram);
 
   useEffect(() => {
     telegram.ready();
@@ -45,7 +45,7 @@ function App() {
     <section className="app">
       <section className="main_section">
         <section className="main-section">
-          {isTelegramMiniApp && <Header />}
+          {!isTelegramMiniApp && <Header />}
           
           <Routes>
             <Route path="/" element={<Tap />} />
