@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './header.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +6,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.onBack(() => {
+        // Handle navigation back
+        navigate(-1);
+      });
+    }
+  }, [navigate]);
 
 
   const showGoBackArrow = location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
