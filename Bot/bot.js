@@ -6,7 +6,7 @@ const bot = new Telegraf(BOT_TOKEN);
 const web_link = "https://saphirestreamapp.com/";
 
 bot.start((ctx) =>
-ctx.reply("Hello ", {
+ctx.reply("Welcome ", {
         reply_markup: {
         keyboard: [[{ text: "web app", web_app: { url: web_link } }]],
         },
