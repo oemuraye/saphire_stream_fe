@@ -21,6 +21,9 @@ function App() {
   useEffect(() => {
     telegram.ready();
 
+    if (telegram.setHeaderColor) {
+      telegram.setHeaderColor('#0088cc');
+    }
     // Customize the header
     if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
       telegram.BackButton.show();
@@ -28,7 +31,6 @@ function App() {
       telegram.BackButton.hide();
     }
 
-    telegram.WebApp.setHeaderColor('#2f062f');
 
   }, [location.pathname]);
   
