@@ -6,7 +6,7 @@ const BOT_TOKEN = "";
 const bot = new Telegraf(BOT_TOKEN);
 const web_link = "https://saphirestreamapp.com/";
 
-const imagePath = path.join(__dirname, '../src/utils/images/sapphire coin.png');
+const imagePath = path.join(__dirname, './sapphire coin.png');
 
 bot.start((ctx) => {
     const user = ctx.from;
