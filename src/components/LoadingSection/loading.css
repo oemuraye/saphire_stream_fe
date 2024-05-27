@@ -13,6 +13,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
 }
 .loader div {
     background:linear-gradient(#ffc107, #87638a);

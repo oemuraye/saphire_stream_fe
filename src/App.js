@@ -12,11 +12,13 @@ import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
 import { useEffect, useState } from "react";
+import Loading from "./components/LoadingSection/Loading";
 
 
 const telegram = window.Telegram.WebApp
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
@@ -51,9 +53,21 @@ function App() {
     return () => backButton.offClick();
   }, [location.pathname]);
 
-  
+
+    // Simulate loading for 2 seconds
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }, [])
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
+
+  if (isLoading) {
+    return <div><Loading /></div>;
+  }
 
   return (
     <section className="app">
