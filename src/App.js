@@ -36,15 +36,6 @@ function App() {
     if (telegram.setHeaderColor) {
       telegram.setHeaderColor('#2f062f');
     }
-
-    // Customize the header
-    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
-      telegram.BackButton.show();
-    } else {
-      telegram.BackButton.hide();
-    }
-
-
   }, [location.pathname]);
   
 

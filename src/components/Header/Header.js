@@ -8,13 +8,24 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.onBack(() => {
-        // Handle navigation back
-        navigate(-1);
-      });
+    const backButton = window.Telegram.WebApp.BackButton;
+    
+    // Show or hide the back button based on the current route
+    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+      backButton.show();
+    } else {
+      backButton.hide();
     }
-  }, [navigate]);
+    
+    // Set the onClick event handler for the back button
+    backButton.onClick(() => {
+      // Implement your navigation logic here
+      console.log('Back button clicked');
+    });
+
+    // Clean up event listener when the component unmounts
+    return () => backButton.offClick();
+  }, [location.pathname]);
 
 
   const showGoBackArrow = location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
