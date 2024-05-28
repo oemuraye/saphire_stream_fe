@@ -80,6 +80,7 @@ function App() {
       <section className="main_section">
         <section className="main-section">
           {!isTelegramMiniApp && <Header />}
+          {userId && <h3>{userId}</h3>}
           
           <Routes>
             <Route path="/" element={<Tap />} />
