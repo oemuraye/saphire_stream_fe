@@ -1,4 +1,9 @@
+import React, { useContext } from 'react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Loading from "./components/LoadingSection/Loading";
+import axios from "axios";
+import { UserProvider } from './contexts/UserContext';
 
 
 import Header from "./components/Header/Header";
@@ -11,15 +16,12 @@ import Stats from "./components/Stats/Stats";
 import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
-import { useEffect, useState } from "react";
-import Loading from "./components/LoadingSection/Loading";
-import axios from "axios";
 
 
 const telegram = window.Telegram.WebApp
 
 function App() {
-  const [userId, setUserId] = useState('704222354');
+  const [userId, setUserId] = useState('abc704222354');
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -85,37 +87,39 @@ function App() {
     return () => clearTimeout(timeout);
   }, []);
 
-  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
-
+  
   if (isLoading) {
     return <div><Loading /></div>;
   }
+  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
 
   return (
-    <section className="app">
-      <section className="main_section">
-        <section className="main-section">
-          {!isTelegramMiniApp && <Header />}
-          
-          <Routes>
-            <Route path="/" element={<Tap />} />
-            <Route path="/ref" element={<Ref />} />
-            <Route path="/task" element={<Task />} />
-            <Route path="/boost" element={<Boost />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="/join_socials" element={<JoinSocials />} />
-            <Route path="/connect_wallet" element={<ConnectWallet />} />
-            <Route path="/trophy" element={<TrophySection />} />
-          </Routes>
-        </section>
+    <UserProvider>
+      <section className="app">
+        <section className="main_section">
+          <section className="main-section">
+            {!isTelegramMiniApp && <Header />}
+            
+            <Routes>
+              <Route path="/" element={<Tap />} />
+              <Route path="/ref" element={<Ref />} />
+              <Route path="/task" element={<Task />} />
+              <Route path="/boost" element={<Boost />} />
+              <Route path="/stats" element={<Stats />} />
+              <Route path="/join_socials" element={<JoinSocials />} />
+              <Route path="/connect_wallet" element={<ConnectWallet />} />
+              <Route path="/trophy" element={<TrophySection />} />
+            </Routes>
+          </section>
 
-        {showFooter && (
-          <footer className="container">
-            <Menu />
-          </footer>
-        )}
+          {showFooter && (
+            <footer className="container">
+              <Menu />
+            </footer>
+          )}
+        </section>
       </section>
-    </section>
+    </UserProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Special_tab from './Special_tab/Special_tab';
 import League_tab from './Leagues_tab/Leagues_tab';
@@ -9,9 +9,12 @@ import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 
 import './task.css';
 import { useNavigate } from 'react-router-dom';
+import TrophyInfo from '../Trophy_Section/TrophyInfo';
+import UserContext from '../../contexts/UserContext';
 
 
 const Task = () => {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const goToTrophyPage = () => {
@@ -22,13 +25,9 @@ const Task = () => {
       <section className='points_section d-flex flex-column justify-content-center gap-1 pt-3'>
       <div className='points d-flex justify-content-center align-items-center gap-1'>
         <img src={coinIcon} alt="coin-logo" width="30px" />
-        <span className=''>15</span>
+        <span className=''>{user?.data.coins}</span>
       </div>
-      <div onClick={goToTrophyPage} role='button' className='trophy d-flex justify-content-center align-items-center gap-1'>
-        <img src={trophyIcon} alt="trophy-logo" width="13px" />
-        <span className='muted-color'>Bronze</span>
-        <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
-      </div>
+      <TrophyInfo points={user?.data.coins} league={user?.data.league} />
     </section>
 
     <hr />

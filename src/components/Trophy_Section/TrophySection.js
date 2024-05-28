@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import './trophySection.css';
-import woodImg from '../../utils/images/trophies/bronze trophy.svg'
-import bronzeImg from '../../utils/images/trophies/bronze trophy.svg'
-import silverImg from '../../utils/images/trophies/silverTrophy.png'
+import woodImg from '../../utils/images/trophies/bronze trophy.svg';
+import bronzeImg from '../../utils/images/trophies/bronze trophy.svg';
+import silverImg from '../../utils/images/trophies/silverTrophy.png';
 
 const trophyImages = [
   { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 500 },

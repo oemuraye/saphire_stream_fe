@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 
 import ProgressBar from './ProgressBar/ProgressBar';
 import trophyIcon from "../../utils/svgs/bronze trophy.svg";
@@ -7,12 +8,17 @@ import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import coinImg from "../../utils/images/tap coin.png";
 
 import './tap.css';
+import Loading from '../LoadingSection/Loading';
+import UserContext from '../../contexts/UserContext';
+import TrophyInfo from '../Trophy_Section/TrophyInfo';
 
 const Tap_homePage = () => {
-  const [points, setPoints] = useState(18);
+  const { user, isLoading, updateUser } = useContext(UserContext);
+
+  const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
+  const [points, setPoints] = useState(0);
   const [remainingPoints, setRemainingPoints] = useState(500);
   const [clickAnimations, setClickAnimations] = useState([]);
-  const [energyLevel, setEnergyLevel] = useState(500);
   const intervalRef = useRef(null);
 
   const navigate = useNavigate();
@@ -21,6 +27,12 @@ const Tap_homePage = () => {
     navigate(`/trophy`);
   };
 
+  useEffect(() => {
+    if (user && user.data) {
+      setEnergyLevel(user.data.energy || 500);
+      setPoints(user.data.coins || 0);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (remainingPoints < 500) {
@@ -85,6 +97,10 @@ const Tap_homePage = () => {
 
   const progressPercentage = (remainingPoints / 500) * 100;
 
+  if (isLoading) {
+    return <div><Loading /></div>;
+  }
+
   return (
     <>
       <section className='tap_section'> 
@@ -94,11 +110,7 @@ const Tap_homePage = () => {
               <img src={coinIcon} alt="coin-logo" width="30px" />
               <span className=''>{points}</span>
             </div>
-            <div onClick={goToTrophyPage} role='button' className='trophy d-flex justify-content-center align-items-center gap-1'>
-              <img src={trophyIcon} alt="trophy-logo" width="13px" />
-              <span className='muted-color'>Bronze</span>
-              <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
-            </div>
+            <TrophyInfo points={points} league={user?.data.league} />
           </section>
 
           <section className='coinTap_section container d-flex justify-content-center' 
