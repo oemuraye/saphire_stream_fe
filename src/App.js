@@ -35,7 +35,7 @@ function App() {
 
       if (user) {
         setUserId(user.id);
-        alert("User ID:", user); // For debugging purposes
+        alert(user); // For debugging purposes
       }
     } else {
       setIsTelegramMiniApp(false);
