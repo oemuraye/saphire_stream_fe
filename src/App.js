@@ -44,13 +44,24 @@ function App() {
 
   useEffect(() => {
     if (userId) {
-      // Send the user ID to your login API
-      axios.post('https://api.saphirestreamapp.com/api/login', { userId })
-        .then(response => {
-          console.log(response.data);
+      const config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api.saphirestreamapp.com/api/login',
+        headers: { 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'  // Ensuring the Content-Type is set
+        },
+        data : userId
+      };
+  
+      // Send the request
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
         })
-        .catch(error => {
-          console.error(error);
+        .catch(function (error) {
+          console.log(error);
         });
     }
   }, []);
