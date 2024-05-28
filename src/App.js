@@ -34,8 +34,7 @@ function App() {
       const user = initDataUnsafe.user;
 
       if (user) {
-        setUserId(user.username);
-        alert(user); // For debugging purposes
+        setUserId(user.id);
       }
     } else {
       setIsTelegramMiniApp(false);
@@ -81,7 +80,6 @@ function App() {
       <section className="main_section">
         <section className="main-section">
           {!isTelegramMiniApp && <Header />}
-          {userId && <h31>{userId}</h31>}
           
           <Routes>
             <Route path="/" element={<Tap />} />
