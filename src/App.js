@@ -44,24 +44,12 @@ function App() {
 
   useEffect(() => {
     if (userId) {
-      const config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api.saphirestreamapp.com/api/login',
-        headers: { 
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'  // Ensuring the Content-Type is set
-        },
-        data : userId
-      };
-  
-      // Send the request
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
+      axios.post('https://api.saphirestreamapp.com/api/login', { "telegram_user_id": userId })
+        .then(response => {
+          console.log(response.data);
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch(error => {
+          console.error(error);
         });
     }
   }, []);
