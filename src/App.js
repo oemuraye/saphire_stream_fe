@@ -18,6 +18,7 @@ import Loading from "./components/LoadingSection/Loading";
 const telegram = window.Telegram.WebApp
 
 function App() {
+  const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,42 +27,48 @@ function App() {
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       setIsTelegramMiniApp(true);
+
+      // Initialize Telegram WebApp and get user info
+      telegram.ready();
+      const initDataUnsafe = telegram.initDataUnsafe;
+      const user = initDataUnsafe.user;
+
+      if (user) {
+        setUserId(user.id);
+        alert("User ID:", user.id); // For debugging purposes
+      }
     } else {
       setIsTelegramMiniApp(false);
     }
   }, []);
 
   useEffect(() => {
-    const backButton = window.Telegram.WebApp.BackButton;
+      const backButton = window.Telegram.WebApp.BackButton;
 
-    telegram.ready();
-  
-    if (telegram.setHeaderColor) {
-      telegram.setHeaderColor('#2f062f');
-    }
-    
-    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
-      backButton.show();
-    } else {
-      backButton.hide();
-    }
-    
-    backButton.onClick(() => {
-      navigate(-1)
-    });
+      if (telegram.setHeaderColor) {
+        telegram.setHeaderColor('#2f062f');
+      }
+      
+      if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+        backButton.show();
+      } else {
+        backButton.hide();
+      }
+      
+      backButton.onClick(() => {
+        navigate(-1);
+      });
 
-    return () => backButton.offClick();
-  }, [location.pathname]);
+      return () => backButton.offClick();
+    }, [location.pathname, navigate]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
-    // Simulate loading for 2 seconds
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
-    }, [])
+    return () => clearTimeout(timeout);
+  }, []);
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
 
@@ -74,6 +81,7 @@ function App() {
       <section className="main_section">
         <section className="main-section">
           {!isTelegramMiniApp && <Header />}
+          {userId && <h31>{userId}</h31>}
           
           <Routes>
             <Route path="/" element={<Tap />} />

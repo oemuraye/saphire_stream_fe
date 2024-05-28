@@ -11,7 +11,7 @@ const imagePath = path.join(__dirname, './sapphire coin.png');
 bot.start((ctx) => {
     const user = ctx.from;
     const username = user.username;
-    console.log(user);
+    // console.log(user);
 
     ctx.replyWithPhoto(
         { source: imagePath }, 
@@ -19,7 +19,7 @@ bot.start((ctx) => {
     ).then(() => {
         // Send the text message with buttons after the image
         ctx.replyWithHTML(
-            "Click the buttons below to get started:",
+            "<b>SaphireStream is a Decentralised Exchange on the Solana Blockchain. The biggest part of SaphireStream Token (SAST) distribution will occur among the players here</b>\n\nClick the buttons below to get started:",
             {
                 reply_markup: {
                     inline_keyboard: [
@@ -40,3 +40,7 @@ bot.action('help', (ctx) => {
 });
 
 bot.launch();
+
+
+// cpanel terminal path
+// source /home/saphqspe/nodevenv/bot.saphirestreamapp.com/20/bin/activate && cd /home/saphqspe/bot.saphirestreamapp.com 
