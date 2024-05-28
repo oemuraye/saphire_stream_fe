@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     if (userId) {
       // Send the user ID to your login API
-      axios.post('http://api.saphirestreamapp.com/api/login', { userId })
+      axios.post('https://api.saphirestreamapp.com/api/login', { userId })
         .then(response => {
           console.log(response.data);
         })
