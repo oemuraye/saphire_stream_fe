@@ -13,12 +13,13 @@ import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
 import { useEffect, useState } from "react";
 import Loading from "./components/LoadingSection/Loading";
+import axios from "axios";
 
 
 const telegram = window.Telegram.WebApp
 
 function App() {
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState('704222354');
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,18 +30,32 @@ function App() {
       setIsTelegramMiniApp(true);
 
       // Initialize Telegram WebApp and get user info
-      telegram.ready();
-      const initDataUnsafe = telegram.initDataUnsafe;
-      const user = initDataUnsafe.user;
+      // telegram.ready();
+      // const initDataUnsafe = telegram.initDataUnsafe;
+      // const user = initDataUnsafe.user;
 
-      if (user) {
-        setUserId(user.id);
-      }
+      // if (user) {
+      //   setUserId(user.id);
+      // }
     } else {
       setIsTelegramMiniApp(false);
     }
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      // Send the user ID to your login API
+      axios.post('http://api.saphirestreamapp.com/api/login', { userId })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+  // adding back button to telegram default header
   useEffect(() => {
       const backButton = window.Telegram.WebApp.BackButton;
 
@@ -61,6 +76,8 @@ function App() {
       return () => backButton.offClick();
     }, [location.pathname, navigate]);
 
+
+    // initialize loading
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsLoading(false);
@@ -80,7 +97,6 @@ function App() {
       <section className="main_section">
         <section className="main-section">
           {!isTelegramMiniApp && <Header />}
-          {userId && <h3>{userId}</h3>}
           
           <Routes>
             <Route path="/" element={<Tap />} />
