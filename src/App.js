@@ -34,7 +34,7 @@ function App() {
       const user = initDataUnsafe.user;
 
       if (user) {
-        setUserId(user.id);
+        setUserId(user.username);
         alert(user); // For debugging purposes
       }
     } else {
