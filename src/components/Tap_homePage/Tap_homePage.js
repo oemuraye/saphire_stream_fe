@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 
 import ProgressBar from './ProgressBar/ProgressBar';
-import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import coinImg from "../../utils/images/tap coin.png";
 
@@ -11,21 +9,18 @@ import './tap.css';
 import Loading from '../LoadingSection/Loading';
 import UserContext from '../../contexts/UserContext';
 import TrophyInfo from '../Trophy_Section/TrophyInfo';
+import API from '../../api/api';
 
 const Tap_homePage = () => {
   const { user, isLoading, updateUser } = useContext(UserContext);
 
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
-  const [points, setPoints] = useState(0);
+  const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
   const [remainingPoints, setRemainingPoints] = useState(500);
   const [clickAnimations, setClickAnimations] = useState([]);
+  const [points, setPoints] = useState(0);
   const intervalRef = useRef(null);
 
-  const navigate = useNavigate();
-
-  const goToTrophyPage = () => {
-    navigate(`/trophy`);
-  };
 
   useEffect(() => {
     if (user && user.data) {
@@ -77,6 +72,7 @@ const Tap_homePage = () => {
     }
 
     setClickAnimations(prevAnimations => [...prevAnimations, ...newClickAnimations]);
+    // saveTappings();
 
     // Temporarily remove the 'clicked' class to restart the animation
     const coinImgElement = e.target;
@@ -94,6 +90,15 @@ const Tap_homePage = () => {
       setRemainingPoints(prev => Math.min(prev + 1, 500));
     }, 1000);
   };
+
+  const saveTappings = async () => {
+    try {
+      const response = await API.post('/tap', { taps: tapSequence });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const progressPercentage = (remainingPoints / 500) * 100;
 
@@ -121,7 +126,7 @@ const Tap_homePage = () => {
             <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px" />
             {clickAnimations.map(animation => (
               <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
-              >+1</span>
+              >+{tapSequence}</span>
             ))}
           </section>
         </section>

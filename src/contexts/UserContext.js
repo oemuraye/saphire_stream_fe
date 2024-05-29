@@ -16,6 +16,8 @@ export const UserProvider = ({ children }) => {
 
       axios.post('https://api.saphirestreamapp.com/api/login', { "telegram_user_id": userId })
         .then(response => {
+          const token = response.data.token;
+          localStorage.setItem('profile', JSON.stringify({ access_token: token }));
           setUser(response.data);
           setIsLoading(false);
         })

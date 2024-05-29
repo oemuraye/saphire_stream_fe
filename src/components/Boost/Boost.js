@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import UserContext from '../../contexts/UserContext';
 
+
+import BoostersModal from './BoostersModal';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import taskIcon from '../../utils/images/Small Icons/Task.png';
 import flameIcon from '../../utils/images/Small Icons/Fire.png';
@@ -8,13 +11,38 @@ import energyIcon from '../../utils/images/Small Icons/Battery.png';
 import handsIcon from '../../utils/images/Small Icons/Hand.png';
 
 import './boost.css';
-import BoostersModal from './BoostersModal';
+import API from '../../api/api';
 
 const Boost = () => {
+  const { user, isLoading, updateUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [successAlert, setSuccessAlert] = useState(false);
   const [selectedIconSrc, setSelectedIconSrc] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
+  const [guruCount, setGuruCount] = useState(3);
+  const [fullTankCount, setFullTankCount] = useState(3);
+
+  useEffect(() => {
+    if (user?.data?.booster_data?.daily_boosters) {
+      setGuruCount(user.data.booster_data.daily_boosters.tapping_guru);
+      setFullTankCount(user.data.booster_data.daily_boosters.full_tank);
+    }
+  }, [user]);
+
+  const getBoosters = async () => {
+    try {
+      const response = API.get('/boosters');
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    // getBoosters();
+  }, [])
+  
 
   const openModal = (iconSrc, title) => {
     if (!isModalOpen) {
@@ -47,7 +75,7 @@ const Boost = () => {
           <h6 className='text-center muted-color mb-0'>Your Share balance</h6>
           <div className='points d-flex justify-content-center align-items-center gap-1'>
             <img src={coinIcon} alt="coin-logo" width="30px" />
-            <span className=''>15</span>
+            <span className=''>{user?.data.coins}</span>
           </div>
         </section>
 
@@ -61,7 +89,7 @@ const Boost = () => {
               <div className="d-flex flex-column">
                 <h6 className='mb-0'>Taping Guru</h6>
                 <div className=''>
-                  <span>3/3</span>
+                  <span>{guruCount}/3</span>
                 </div>
               </div>
             </div>
@@ -70,7 +98,7 @@ const Boost = () => {
               <div className="d-flex flex-column">
                 <h6 className='mb-0'>Full Task</h6>
                 <div className=''>
-                  <span>3/3</span>
+                  <span>{fullTankCount}/3</span>
                 </div>
               </div>
             </div>
