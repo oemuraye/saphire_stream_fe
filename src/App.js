@@ -26,6 +26,8 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
+  const [speedTapping, setSpeedTapping] = useState(false);
+  const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -101,10 +103,10 @@ function App() {
             {!isTelegramMiniApp && <Header />}
             
             <Routes>
-              <Route path="/" element={<Tap />} />
+              <Route path="/" element={<Tap speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
               <Route path="/ref" element={<Ref />} />
               <Route path="/task" element={<Task />} />
-              <Route path="/boost" element={<Boost />} />
+              <Route path="/boost" element={<Boost setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
               <Route path="/stats" element={<Stats />} />
               <Route path="/join_socials" element={<JoinSocials />} />
               <Route path="/connect_wallet" element={<ConnectWallet />} />

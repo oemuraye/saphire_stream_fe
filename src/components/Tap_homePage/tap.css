@@ -93,3 +93,27 @@
       transform: scale(1);
     }
 }
+
+
+.speed-tapping {
+    background: linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);
+    box-shadow: inset 0px 0px 20px 20px linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);;
+    border-radius: 120px;
+    background-repeat: no-repeat;
+    animation: pulse 0.25s infinite;
+}
+
+@keyframes pulse {
+    0% {
+      opacity: 1;
+      box-shadow: 0 0 30px #00c6ff, 0 0 60px #ffa600, 0 0 90px #ff007f;
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 15px #00c6ff, 0 0 30px #ffa600, 0 0 45px #ff007f;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 30px #00c6ff, 0 0 60px #ffa600, 0 0 90px #ff007f;
+    }
+  }

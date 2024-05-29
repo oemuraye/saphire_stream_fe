@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import { useNavigate } from 'react-router-dom';
+import API from '../../api/api';
 
 const actionsTitle = {
     tappingGuru: "Tapping Guru",
@@ -13,7 +14,7 @@ const actionsTitle = {
 
 }
 
-const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert}) => {
+const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel}) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,36 +28,55 @@ console.log(isLoading);
         setIsLoading(true);
         try {
             if (title === actionsTitle.tappingGuru) {
-                setTimeout(() => {
-                    onClose();
-                    navigate('/');
-                    setSuccessAlert(true);
-                    setIsLoading(false);
-                }, 3000);
-                console.log(actionsTitle.tappingGuru);
+                const data = {"daily_booster": "tapping_guru"}
+                const response = await API.post('/boosters/activate', {data: data});
+                console.log(response.data);
+                // onClose();
+                // navigate('/');
+                // setIsLoading(false);
+                // setSuccessAlert(true);
+                // setSpeedTapping(true);
             } else if (title === actionsTitle.fullTank) {
-                setTimeout(() => {
-                    onClose();
-                    navigate('/');
-                    setSuccessAlert(true);
-                }, 3000);
-                console.log(actionsTitle.fullTank);
+                const data = {"daily_booster": "full_tank"}
+                const response = await API.post('/boosters/activate', {data: data});
+                console.log(response.data);
+                // onClose();
+                // navigate('/');
+                // setSuccessAlert(true);
+                // setFullEnergyLevel(true);
             } else if (title === actionsTitle.multiTap) {
-                onClose();
-                setSuccessAlert(true);
-                console.log(actionsTitle.multiTap);
+                const data = {
+                    "booster": "tap",
+                    "level": "2"
+                }
+                const response = await API.post('/boosters/upgrade', {data: data});
+                console.log(response.data);
+                // onClose();
+                // setSuccessAlert(true);
             } else if (title === actionsTitle.energyLimit) {
-                onClose();
-                setSuccessAlert(true);
-                console.log(actionsTitle.energyLimit);
+                const data = {
+                    "booster":"energy_limit",
+                    "level":"2"
+                }
+                const response = await API.post('/boosters/upgrade', {data: data});
+                console.log(response.data);
+                // onClose();
+                // setSuccessAlert(true);
             } else if (title === actionsTitle.rechargeSpeed) {
-                onClose();
-                setSuccessAlert(true);
-                console.log(actionsTitle.rechargeSpeed);
+                const data = {
+                    "booster":"energy_recharge",
+                    "level":"2"
+                }
+                const response = await API.post('/boosters/upgrade', {data: data});
+                console.log(response.data);
+                // onClose();
+                // setSuccessAlert(true);
             } else if (title === actionsTitle.tapBot) {
-                onClose();
-                setSuccessAlert(true);
-                console.log(actionsTitle.tapBot);
+                const data = {"type": "tap_bot_coins"}
+                const response = await API.post('/claim', {data: data});
+                console.log(response.data);
+                // onClose();
+                // setSuccessAlert(true);
             }
         } catch (error) {
             setIsLoading(false);

@@ -11,7 +11,7 @@ import UserContext from '../../contexts/UserContext';
 import TrophyInfo from '../Trophy_Section/TrophyInfo';
 import API from '../../api/api';
 
-const Tap_homePage = () => {
+const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
   const { user, isLoading, updateUser } = useContext(UserContext);
 
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
@@ -30,7 +30,7 @@ const Tap_homePage = () => {
   }, [user]);
 
   useEffect(() => {
-    if (remainingPoints < 500) {
+    if (remainingPoints < 500 && !fullEnergyLevel) {
       intervalRef.current = setInterval(() => {
         setRemainingPoints((prev) => Math.min(prev + 1, 500));
       }, 1000);
@@ -39,7 +39,35 @@ const Tap_homePage = () => {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [remainingPoints]);
+  }, [remainingPoints, fullEnergyLevel]);
+
+  useEffect(() => {
+    if (speedTapping) {
+      const originalTapSequence = tapSequence;
+      setTapSequence(prev => prev * 6);
+
+      const speedTappingTimer = setTimeout(() => {
+        setSpeedTapping(false);
+        setTapSequence(originalTapSequence);
+      }, 20000);
+
+      return () => clearTimeout(speedTappingTimer);
+    }
+  }, [speedTapping]);
+
+
+
+  useEffect(() => {
+    if (fullEnergyLevel) {
+      setRemainingPoints(energyLevel);
+
+      const fullEnergyTimer = setTimeout(() => {
+        setFullEnergyLevel(false);
+      }, 20000);
+
+      return () => clearTimeout(fullEnergyTimer);
+    }
+  }, [fullEnergyLevel, energyLevel]);
 
 
   const handleTap = (e) => {
@@ -92,8 +120,10 @@ const Tap_homePage = () => {
   };
 
   const saveTappings = async () => {
+    const data = { "taps":tapSequence };
+    console.log(data);
     try {
-      const response = await API.post('/tap', { taps: tapSequence });
+      const response = await API.post('/tap', {data: data});
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -118,12 +148,12 @@ const Tap_homePage = () => {
             <TrophyInfo points={points} league={user?.data.league} />
           </section>
 
-          <section className='coinTap_section container d-flex justify-content-center' 
+          <section className="coinTap_section container d-flex justify-content-center pb-5" 
             onTouchStart={handleTap} 
             onMouseDown={handleTap}
             onTouchMove={(e) => e.preventDefault()} 
           >
-            <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px" />
+            <img src={coinImg} alt="coin-img" className={`img-fluid ${speedTapping ? 'speed-tapping' : ''}`} width="100%" height="250px" />
             {clickAnimations.map(animation => (
               <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
               >+{tapSequence}</span>

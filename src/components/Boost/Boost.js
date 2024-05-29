@@ -13,7 +13,7 @@ import handsIcon from '../../utils/images/Small Icons/Hand.png';
 import './boost.css';
 import API from '../../api/api';
 
-const Boost = () => {
+const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
   const { user, boosters, updateUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -223,6 +223,8 @@ const Boost = () => {
             title={selectedTitle} 
             selectedBooster={selectedBooster}
             setSuccessAlert={setSuccessAlert}
+            setSpeedTapping={setSpeedTapping}
+            setFullEnergyLevel={setFullEnergyLevel}
           />
         )}    
     </>
