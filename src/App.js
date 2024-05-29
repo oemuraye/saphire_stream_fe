@@ -21,7 +21,7 @@ import TrophySection from "./components/Trophy_Section/TrophySection";
 const telegram = window.Telegram.WebApp
 
 function App() {
-  const [userId, setUserId] = useState('abc704222354');
+  const [userId, setUserId] = useState('dfe704222354');
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,17 +44,17 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (userId) {
-      axios.post('https://api.saphirestreamapp.com/api/login', { "telegram_user_id": userId })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userId) {
+  //     axios.post('https://api.saphirestreamapp.com/api/login', { "telegram_user_id": userId })
+  //       .then(response => {
+  //         console.log(response.data);
+  //       })
+  //       .catch(error => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, []);
 
   // adding back button to telegram default header
   useEffect(() => {

@@ -14,7 +14,7 @@ import './boost.css';
 import API from '../../api/api';
 
 const Boost = () => {
-  const { user, isLoading, updateUser } = useContext(UserContext);
+  const { user, boosters, updateUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [successAlert, setSuccessAlert] = useState(false);
@@ -22,6 +22,9 @@ const Boost = () => {
   const [selectedTitle, setSelectedTitle] = useState('');
   const [guruCount, setGuruCount] = useState(3);
   const [fullTankCount, setFullTankCount] = useState(3);
+  const [boostersData, setBoostersData] = useState(boosters);
+  const [selectedBooster, setSelectedBooster] = useState(null);
+
 
   useEffect(() => {
     if (user?.data?.booster_data?.daily_boosters) {
@@ -30,32 +33,38 @@ const Boost = () => {
     }
   }, [user]);
 
-  const getBoosters = async () => {
-    try {
-      const response = API.get('/boosters');
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getBoosters = async () => {
+  //   try {
+  //     const response = await API.get('/boosters');
+  //     setBoostersData(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    // getBoosters();
-  }, [])
+  console.log(boostersData);
+
+  // useEffect(() => {
+  //   getBoosters();
+  //   setBoostersData(boosters);
+  // }, [])
   
 
-  const openModal = (iconSrc, title) => {
+  const openModal = (iconSrc, title, booster) => {
     if (!isModalOpen) {
-      setSelectedIconSrc(iconSrc);
+      setSelectedBooster(booster);
       setSelectedTitle(title);
+      setSelectedIconSrc(iconSrc);
       setIsModalOpen(true);
     }
   };
 
-  const closeModal = () => {
+  const closeModal = (booster) => {
     setIsModalOpen(false);
-    setSelectedIconSrc('');
+    setSelectedBooster(null);
     setSelectedTitle('');
+    setSelectedIconSrc('');
   };
 
   useEffect(() => {
@@ -67,6 +76,13 @@ const Boost = () => {
       return () => clearTimeout(timer);
     }
   }, [successAlert]);
+
+  const boosterIcons = {
+    'Multitap': handsIcon,
+    'Energy Limit': energyIcon,
+    'Recharging Speed': boltIcon,
+    'Tap Bot': taskIcon,
+  };
 
   return (
     <>
@@ -84,19 +100,19 @@ const Boost = () => {
         <section className='daily-boosters container text-white my-3'>
           <h5>Your daily boosters:</h5>
           <section className="d-flex justify-content-between align-items-center gap-1">
-            <div role="button" onClick={() => openModal(flameIcon, 'Taping Guru')} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2'>
+            <div role="button" onClick={() => openModal(flameIcon, 'Tapping Guru', null)} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2'>
               <img src={flameIcon} alt="taskIcon" width="30px" height="" />
               <div className="d-flex flex-column">
-                <h6 className='mb-0'>Taping Guru</h6>
+                <h6 className='mb-0'>Tapping Guru</h6>
                 <div className=''>
                   <span>{guruCount}/3</span>
                 </div>
               </div>
             </div>
-            <div role="button" onClick={() => openModal(boltIcon, 'Full Task')} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ms-1'>
+            <div role="button" onClick={() => openModal(boltIcon, 'Full Tank', null)} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ms-1'>
               <img src={boltIcon} alt="boltIcon" width="30px" height="" />
               <div className="d-flex flex-column">
-                <h6 className='mb-0'>Full Task</h6>
+                <h6 className='mb-0'>Full Tank</h6>
                 <div className=''>
                   <span>{fullTankCount}/3</span>
                 </div>
@@ -107,8 +123,31 @@ const Boost = () => {
 
         <section className='boosters text-white my-3'>
           <h5>Boosters:</h5>
-          
           <section className="d-flex flex-column gap-2">
+            {boosters?.data.map((booster, index) => (
+              <section
+                key={index}
+                role="button"
+                onClick={() => openModal(boosterIcons[booster.name], booster.name, booster)}
+                className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
+              >
+                <div className='d-flex gap-3 align-items-center'>
+                  <img src={boosterIcons[booster.name]} alt={`${booster.name}Icon`} width="40px" height="" />
+                  <div className="d-flex flex-column">
+                    <h6>{booster.name}</h6>
+                    <div className='boosters-numbers d-flex align-items-center gap-1'>
+                      <img src={coinIcon} alt="coin-icon" width="20px" />
+                      <span>{booster.data.levels[0].price}</span>
+                      {booster.name === "Tap Bot" ? null : <span className='muted-color'>| {booster.data.levels[0].value} level</span> }
+                    </div>
+                  </div>
+                </div>
+                <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
+              </section>
+            ))}
+          </section>
+          
+          {/* <section className="d-flex flex-column gap-2">
             <section role="button" onClick={() => openModal(handsIcon, 'Multitap')} className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
               <div className='d-flex gap-3 align-items-center'>
                 <img src={handsIcon} alt="handsIcon" width="40px" height="" />
@@ -167,17 +206,25 @@ const Boost = () => {
               </div>
               <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
             </section>
-          </section>
+          </section> */}
 
         </section>
       </section>
       {successAlert && (
         <section className="alert-toast d-flex align-items-center rounded-3 py-3 px-3 gap-2">
-          <i class="fa fa-check-circle" aria-hidden="true"></i>
+          <i className="fa fa-check-circle" aria-hidden="true"></i>
           <h6 className="mb-0">Good!</h6>
         </section>
       )}
-      {isModalOpen && <BoostersModal onClose={closeModal} setSuccessAlert={setSuccessAlert} iconSrc={selectedIconSrc} title={selectedTitle}/>}
+      {isModalOpen && (
+          <BoostersModal 
+            onClose={closeModal} 
+            iconSrc={selectedIconSrc} 
+            title={selectedTitle} 
+            selectedBooster={selectedBooster}
+            setSuccessAlert={setSuccessAlert}
+          />
+        )}    
     </>
   )
 }
