@@ -16,15 +16,15 @@ export const UserProvider = ({ children }) => {
       if (telegram && telegram.initDataUnsafe) {
         // const initDataUnsafe = telegram.initDataUnsafe;
         // const userId = initDataUnsafe.user;
-        const userId = "cbd704222354";
+        const userId = "ihj704222354";
 
         try {
           // Fetch user data
           const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
           const token = userResponse.data.token;
+          const points = userResponse.data.data.coins;
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
-          setUser(userResponse.data);
-          console.log(userResponse.data);
+          localStorage.setItem('points', points);          setUser(userResponse.data);
 
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');

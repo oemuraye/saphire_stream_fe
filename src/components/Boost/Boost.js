@@ -34,8 +34,6 @@ const Boost = ({points, setPoints, setSpeedTapping, setFullEnergyLevel}) => {
     }
   }, [user]);
 
-  console.log(user);  
-
   const openModal = (iconSrc, title, booster, level) => {
     if (!isModalOpen) {
       setSelectedBooster(booster);

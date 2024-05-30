@@ -78,10 +78,10 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 <img src={iconSrc} alt="booster-img" className='img-fluid' width="40px" />
             </span>
 
-            <h3>{title}</h3>
 
             {selectedBooster != null ? (
-                <>
+                <section key={selectedBooster?.data.id}>
+                    <h3>{title}</h3>
                     {selectedBooster.data.description && (<p className='muted-color mb-0'>{selectedBooster.data.description}.</p>)}
                     {selectedBooster.data.action_description && (<p className='muted-color mb-0'>{selectedBooster.data.action_description}.</p>)}
                     {filteredLevel.map((level, index) => (
@@ -101,9 +101,10 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                         </>
                     ))}
                    
-                </>
+                </section>
             ) : (
                 <>
+                    <h3>{title}</h3>
                     {title === "Tap Bot" ? (
                        <p className='muted-color mb-0'>Multiply your income by x5 for 20seconds. Do not use energy while active.</p> 
                     ):(

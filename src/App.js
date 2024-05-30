@@ -18,7 +18,7 @@ import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
 
 
-const telegram = window.Telegram.WebApp
+const telegram = window.Telegram.WebApp;
 
 function App() {
   const [userId, setUserId] = useState('dfe704222354');
@@ -28,7 +28,11 @@ function App() {
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(localStorage.getItem('points'));
+
+  useEffect(() => {
+    localStorage.setItem('points', points);
+  }, [points]);
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {

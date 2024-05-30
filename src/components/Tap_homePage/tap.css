@@ -78,6 +78,7 @@
 
 .coinTap_section img.clicked {
     animation: dipEffect 0.2s ease-in-out;
+    /* animation: pulse 0.25s infinite; */
 }
 
 
@@ -96,12 +97,15 @@
 
 
 .speed-tapping {
-    background: linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);
+    /* background: linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);
     box-shadow: inset 0px 0px 20px 20px linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);;
     border-radius: 120px;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     animation: pulse 0.25s infinite;
 }
+/* .speed-tapping.clicked {
+    animation: pulse 0.25s infinite;
+} */
 
 @keyframes pulse {
     0% {

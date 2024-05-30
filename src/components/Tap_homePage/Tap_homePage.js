@@ -21,6 +21,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
   const [clickAnimations, setClickAnimations] = useState([]);
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
   const [initialPoints, setInitialPoints] = useState(user?.data?.coins || 0);
+  const saveTappingsIntervalRef = useRef(null);
   const intervalRef = useRef(null);
   const location = useLocation();
 
@@ -28,8 +29,9 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
   useEffect(() => {
     if (user && user?.data) {
       setEnergyLevel(user.data.energy || 500);
-      setPoints(user.data.coins || 0);
-    }
+      const savedPoints = localStorage.getItem('points');
+      const initialPoints = savedPoints ? parseInt(savedPoints, 10) : user.data.coins || 0;
+      setPoints(initialPoints);    }
   }, [user, setPoints]);
 
 
@@ -85,7 +87,11 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
     for (let i = 0; i < touchPoints.length; i++) {
       const touch = touchPoints[i];
       if (remainingPoints > 0) {
-        setPoints(prevPoints => prevPoints + 1);
+        setPoints((prevPoints) => {
+          const newPoints = prevPoints + 1;
+          localStorage.setItem('points', newPoints);
+          return newPoints;
+        });
         setRemainingPoints(prevRemainingPoints => prevRemainingPoints - 1);
         setAccumulatedTaps(prev => prev + 1);
 
@@ -123,16 +129,14 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
     intervalRef.current = setInterval(() => {
       setRemainingPoints(prev => Math.min(prev + 1, 500));
     }, 1000);
-    // saveTappings();
+
   };
 
   const saveTappings = async () => {
-    console.log(accumulatedTaps);
     try {
-      const response = await API.post('/tap', {"taps": accumulatedTaps });
-      console.log(response.data);
+      const response = await API.post('/tap', { "taps": accumulatedTaps });
+      console.log("points sent");
       setAccumulatedTaps(0);
-      setPoints(points);
     } catch (error) {
       console.error(error);
     }
@@ -152,6 +156,24 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
     };
   }, [accumulatedTaps]);
 
+  // useEffect(() => {
+  //   if (accumulatedTaps >= 100) {
+  //     saveTappings();
+  //   }
+  // }, [accumulatedTaps]);
+
+  useEffect(() => {
+    if (accumulatedTaps > 0) {
+      const saveTappingsInterval = setInterval(() => {
+        saveTappings(accumulatedTaps);
+        setAccumulatedTaps(0);
+      }, 10000);
+  
+      return () => {
+        clearInterval(saveTappingsInterval);
+      };
+    }
+  }, [accumulatedTaps]);
   
 
   const progressPercentage = (remainingPoints / 500) * 100;
