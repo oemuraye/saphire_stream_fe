@@ -24,7 +24,8 @@ const Task = ({points, setPoints}) => {
   
   useEffect(() => {
     setPoints(points);
-  }, [])
+  }, []);
+  
   return (
     <section className='task_section container'>
       <section className='points_section d-flex flex-column justify-content-center gap-1 pt-3'>

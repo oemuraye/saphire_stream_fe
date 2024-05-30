@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import refIcon from '../../../utils/images/Small Icons/Referral.png';
 import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
 
 import './refTask.css';
 import API from '../../../api/api';
+import UserContext from '../../../contexts/UserContext';
 
 const RefTaskTab = ({refTasks}) => {
+  const { user } = useContext(UserContext);
   const claimReward = async (id) => {
-    const data = {
-      "type": "task",
-      "task_id": id
-    }
     try {
-      const response = await API.post('/claim', {data: data});
+      const response = await API.post('/claim', {"type": "task", "task_id": id});
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
-    console.log(data);
   }
+  console.log(user);
+  const calculatePercentage = (totalCoins, rewardCoins) => {
+    const percentage = (totalCoins / rewardCoins) * 100;
+    return percentage;
+  };
 
   return (
     <section className='refTask-tab_section d-flex flex-column gap-2 text-white'>
@@ -46,8 +48,8 @@ const RefTaskTab = ({refTasks}) => {
           </div>
 
           <div className="task_progress my-2">
-            <div className="progress" role="progressbar" aria-valuenow={task.completed ? "100" : "0"} aria-valuemin="0" aria-valuemax="100">
-              <div className="progress-bar" style={{ width: task.completed ? "100%" : "0%" }}></div>
+            <div className="progress" role="progressbar" aria-valuenow={calculatePercentage(user.data.total_coins, task.reward_in_coins)} aria-valuemin="0" aria-valuemax="100">
+              <div className="progress-bar" style={{ width: `${calculatePercentage(user.data.total_coins, task.reward_in_coins)}%` }}></div>
             </div>
           </div>
         </section>

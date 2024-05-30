@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import { useNavigate } from 'react-router-dom';
 import API from '../../api/api';
+import UserContext from '../../contexts/UserContext';
 
 const actionsTitle = {
     tappingGuru: "Tapping Guru",
@@ -15,6 +16,7 @@ const actionsTitle = {
 }
 
 const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, levels, setFullEnergyLevel}) => {
+    const { updateBoosters } = useContext(UserContext);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -28,10 +30,13 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 const response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
                 console.log(response.data);
                 onClose();
-                navigate('/');
                 setIsLoading(false);
                 setSuccessAlert(true);
                 setSpeedTapping(true);
+                await updateBoosters();
+                if (response.data.status === true) {
+                    navigate('/');                    
+                }
             } else if (title === actionsTitle.fullTank) {
                 const response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
                 console.log(response.data);
@@ -39,32 +44,42 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 navigate('/');
                 setSuccessAlert(true);
                 setFullEnergyLevel(true);
+                await updateBoosters();
+                if (response.data.status === true) {
+                    navigate('/');                    
+                }
             } else if (title === actionsTitle.multiTap) {
                 const response = await API.post('/boosters/upgrade', {"booster": "tap", "level": level + 1});
                 console.log(response.data);
                 onClose();
                 setSuccessAlert(true);
+                await updateBoosters();
             } else if (title === actionsTitle.energyLimit) {
-                const response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": level + 1000});
+                const response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": level + 1});
                 console.log(response.data);
+                // console.log(level);
                 onClose();
                 setSuccessAlert(true);
+                await updateBoosters();
             } else if (title === actionsTitle.rechargeSpeed) {
-                const response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": level});
+                const response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": level + 1});
                 console.log(response.data);
                 onClose();
                 setSuccessAlert(true);
+                await updateBoosters();
             } else if (title === actionsTitle.tapBot) {
                 const response = await API.post('/claim', {"booster":"tap_bot_coins"});
                 console.log(response.data);
                 onClose();
                 setSuccessAlert(true);
+                await updateBoosters();
             }
         } catch (error) {
             setIsLoading(false);
             console.log(error);
         }
     };
+
 
 
   return (
@@ -74,36 +89,41 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
         </div>
 
         <section className='d-flex flex-column gap-2 justify-content-center text-center'>
-            <span className="booster-icon">
-                <img src={iconSrc} alt="booster-img" className='img-fluid' width="40px" />
-            </span>
 
 
             {selectedBooster != null ? (
                 <section key={selectedBooster?.data.id}>
-                    <h3>{title}</h3>
-                    {selectedBooster.data.description && (<p className='muted-color mb-0'>{selectedBooster.data.description}.</p>)}
-                    {selectedBooster.data.action_description && (<p className='muted-color mb-0'>{selectedBooster.data.action_description}.</p>)}
-                    {filteredLevel.map((level, index) => (
-                        <>
-                            <div key={index} className='d-flex justify-content-center align-items-center gap-2'>
-                                <img src={coinIcon} alt="coin-icon" width="25px" />
-                                <h4 className='text-white mb-0'>{level.price}</h4>
-                                {title === "Tap Bot" ? null : <h6 className='muted-color mb-0'>| {level.value} level</h6>}
-                            </div>
-                            <section key={index + 1} className='action-btn container'>
-                                {isLoading ? (
-                                    <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
-                                ) : (
-                                    <div role='button' onClick={() => handleBooster(level.value)} className='start-mission basic-gradient my-3 h5'>Get it!</div>
-                                )}
-                            </section>
-                        </>
-                    ))}
-                   
+                    <span className="booster-icon">
+                        <img src={iconSrc} alt="booster-img" className='img-fluid' width="40px" />
+                    </span>
+                    <section key={selectedBooster?.data.id}>
+                        <h3>{title}</h3>
+                        {selectedBooster.data.description && (<p className='muted-color mb-0'>{selectedBooster.data.description}.</p>)}
+                        {selectedBooster.data.action_description && (<p className='muted-color'>{selectedBooster.data.action_description}.</p>)}
+                        {filteredLevel.map((level, index) => (
+                            <>
+                                <div key={index} className='d-flex justify-content-center align-items-center gap-2'>
+                                    <img src={coinIcon} alt="coin-icon" width="25px" />
+                                    <h4 className='text-white mb-0'>{level.price}</h4>
+                                    {title === "Tap Bot" ? null : <h6 className='muted-color mb-0'>| {level.value} level</h6>}
+                                </div>
+                                <section key={index + 1} className='action-btn container'>
+                                    {isLoading ? (
+                                        <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
+                                    ) : (
+                                        <div role='button' onClick={() => handleBooster(level.value)} className='start-mission basic-gradient my-3 h5'>Get it!</div>
+                                    )}
+                                </section>
+                            </>
+                        ))}
+                    
+                    </section>
                 </section>
             ) : (
                 <>
+                    <span className="booster-icon">
+                        <img src={iconSrc} alt="booster-img" className='img-fluid' width="40px" />
+                    </span>
                     <h3>{title}</h3>
                     {title === "Tap Bot" ? (
                        <p className='muted-color mb-0'>Multiply your income by x5 for 20seconds. Do not use energy while active.</p> 

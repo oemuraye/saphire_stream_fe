@@ -9,14 +9,15 @@ export const UserProvider = ({ children }) => {
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(user);
 
   useEffect(() => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initDataUnsafe) {
-        // const initDataUnsafe = telegram.initDataUnsafe;
-        // const userId = initDataUnsafe.user;
-        const userId = "ihj704222354";
+        const initDataUnsafe = telegram.initDataUnsafe;
+        const userId = initDataUnsafe.user;
+        // const userId = "ihj704222354";
 
         try {
           // Fetch user data
@@ -66,8 +67,17 @@ export const UserProvider = ({ children }) => {
     }));
   };
 
+  const updateBoosters = async () => {
+    try {
+      const boostersResponse = await API.get('/boosters');
+      setBoosters(boostersResponse.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, boosters, tasks, updateUser, isLoading }}>
+    <UserContext.Provider value={{ user, boosters, tasks, updateUser, updateBoosters, isLoading }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import trophyIcon from '../../../utils/svgs/bronze trophy.svg';
@@ -7,6 +7,7 @@ import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
 
 import './leagues.css';
 import API from '../../../api/api';
+import UserContext from '../../../contexts/UserContext';
 
 
 // Function to get the appropriate trophy icon based on the league or task type
@@ -22,14 +23,16 @@ const getTrophyIcon = (type) => {
 };
 
 const LeaguesTab = ({leagueTasks}) => {
+  const { user } = useContext(UserContext);
   const claimReward = async (id) => {
-    const data = {
-      "type": "task",
-      "task_id": id
-    }
     const response = await API.post('/claim', {"type": "task", "task_id": id});
       console.log(response.data);
   }
+
+  const calculatePercentage = (totalCoins, rewardCoins) => {
+    const percentage = (totalCoins / rewardCoins) * 100;
+    return percentage;
+  };
 
   return (
     <section className='leagues-tab_section d-flex flex-column gap-2 text-white'>
@@ -56,8 +59,8 @@ const LeaguesTab = ({leagueTasks}) => {
           </div>
           {!task.completed && (
             <div className="task_progress my-2">
-              <div className="progress" role="progressbar" aria-label="Warning example" aria-valuenow={task.progress} aria-valuemin="0" aria-valuemax="100">
-                <div className="progress-bar" style={{ width: `${task.progress}%` }}></div>
+              <div className="progress" role="progressbar" aria-label="Warning example" aria-valuenow={calculatePercentage(user.data.total_coins, task.reward_in_coins)} aria-valuemin="0" aria-valuemax="100">
+                <div className="progress-bar" style={{ width: `${calculatePercentage(user.data.total_coins, task.reward_in_coins)}%` }}></div>
               </div>
             </div>
           )}
