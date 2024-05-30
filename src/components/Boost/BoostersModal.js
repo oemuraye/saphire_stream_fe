@@ -14,75 +14,59 @@ const actionsTitle = {
 
 }
 
-const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel}) => {
+const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, levels, setFullEnergyLevel}) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
     const targetValue = selectedBooster?.data?.levels && selectedBooster?.data.levels[0].value;
     const filteredLevel = selectedBooster?.data?.levels && selectedBooster?.data.levels.filter(level => level.value === targetValue);
-console.log(isLoading);
 
-
-// setIsLoading(true);
-    const handleBooster = async () => {
+    const handleBooster = async (level) => {
         setIsLoading(true);
         try {
             if (title === actionsTitle.tappingGuru) {
-                const data = {"daily_booster": "tapping_guru"}
-                const response = await API.post('/boosters/activate', {data: data});
+                const response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
                 console.log(response.data);
-                // onClose();
-                // navigate('/');
-                // setIsLoading(false);
-                // setSuccessAlert(true);
-                // setSpeedTapping(true);
+                onClose();
+                navigate('/');
+                setIsLoading(false);
+                setSuccessAlert(true);
+                setSpeedTapping(true);
             } else if (title === actionsTitle.fullTank) {
-                const data = {"daily_booster": "full_tank"}
-                const response = await API.post('/boosters/activate', {data: data});
+                const response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
                 console.log(response.data);
-                // onClose();
-                // navigate('/');
-                // setSuccessAlert(true);
-                // setFullEnergyLevel(true);
+                onClose();
+                navigate('/');
+                setSuccessAlert(true);
+                setFullEnergyLevel(true);
             } else if (title === actionsTitle.multiTap) {
-                const data = {
-                    "booster": "tap",
-                    "level": "2"
-                }
-                const response = await API.post('/boosters/upgrade', {data: data});
+                const response = await API.post('/boosters/upgrade', {"booster": "tap", "level": level + 1});
                 console.log(response.data);
-                // onClose();
-                // setSuccessAlert(true);
+                onClose();
+                setSuccessAlert(true);
             } else if (title === actionsTitle.energyLimit) {
-                const data = {
-                    "booster":"energy_limit",
-                    "level":"2"
-                }
-                const response = await API.post('/boosters/upgrade', {data: data});
+                const response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": level + 1000});
                 console.log(response.data);
-                // onClose();
-                // setSuccessAlert(true);
+                onClose();
+                setSuccessAlert(true);
             } else if (title === actionsTitle.rechargeSpeed) {
-                const data = {
-                    "booster":"energy_recharge",
-                    "level":"2"
-                }
-                const response = await API.post('/boosters/upgrade', {data: data});
+                const response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": level});
                 console.log(response.data);
-                // onClose();
-                // setSuccessAlert(true);
+                onClose();
+                setSuccessAlert(true);
             } else if (title === actionsTitle.tapBot) {
-                const data = {"type": "tap_bot_coins"}
-                const response = await API.post('/claim', {data: data});
+                const response = await API.post('/claim', {"booster":"tap_bot_coins"});
                 console.log(response.data);
-                // onClose();
-                // setSuccessAlert(true);
+                onClose();
+                setSuccessAlert(true);
             }
         } catch (error) {
             setIsLoading(false);
             console.log(error);
         }
     };
+
+
   return (
     <section className='boosters-modal_section container'>
         <div className="d-flex justify-content-end p-2 closeBtn">
@@ -96,29 +80,52 @@ console.log(isLoading);
 
             <h3>{title}</h3>
 
-            {selectedBooster != null && (
+            {selectedBooster != null ? (
                 <>
-                    {selectedBooster.data.description && (<p className='muted-color mb-0'>{selectedBooster.data.description}</p>)}
-                    {selectedBooster.data.action_description && (<p className='muted-color mb-0'>{selectedBooster.data.action_description}</p>)}
+                    {selectedBooster.data.description && (<p className='muted-color mb-0'>{selectedBooster.data.description}.</p>)}
+                    {selectedBooster.data.action_description && (<p className='muted-color mb-0'>{selectedBooster.data.action_description}.</p>)}
                     {filteredLevel.map((level, index) => (
-                        <div key={index} className='d-flex justify-content-center align-items-center gap-2'>
-                            <img src={coinIcon} alt="coin-icon" width="25px" />
-                            <h4 className='text-white mb-0'>{level.price}</h4>
-                            {title === "Tap Bot" ? null : <h6 className='muted-color mb-0'>| {level.value} level</h6>}
-                        </div>
+                        <>
+                            <div key={index} className='d-flex justify-content-center align-items-center gap-2'>
+                                <img src={coinIcon} alt="coin-icon" width="25px" />
+                                <h4 className='text-white mb-0'>{level.price}</h4>
+                                {title === "Tap Bot" ? null : <h6 className='muted-color mb-0'>| {level.value} level</h6>}
+                            </div>
+                            <section key={index + 1} className='action-btn container'>
+                                {isLoading ? (
+                                    <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
+                                ) : (
+                                    <div role='button' onClick={() => handleBooster(level.value)} className='start-mission basic-gradient my-3 h5'>Get it!</div>
+                                )}
+                            </section>
+                        </>
                     ))}
+                   
+                </>
+            ) : (
+                <>
+                    {title === "Tap Bot" ? (
+                       <p className='muted-color mb-0'>Multiply your income by x5 for 20seconds. Do not use energy while active.</p> 
+                    ):(
+                        <p className='muted-color mb-0'>Fill your energy to the max.</p> 
+                    )}
+                    <div className='d-flex justify-content-center align-items-center gap-1 pt-3'>
+                        <img src={coinIcon} alt="coin-icon" width="16px" />
+                        <h5 className='text-white mb-0'>Free</h5>
+                    </div>
+        
+                    <section className='action-btn container'>
+                        {isLoading ? (
+                            <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
+                        ) : (
+                            <div role='button' onClick={() => handleBooster()} className='start-mission basic-gradient my-3 h5'>Get it!</div>
+                        )}
+                    </section>
                 </>
             )}
             
         </section>
         
-        <section className='action-btn container'>
-            {isLoading ? (
-                <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
-            ) : (
-                <div role='button' onClick={handleBooster} className='start-mission basic-gradient my-3 h5'>Get it!</div>
-            )}
-        </section>
 
 
     </section>

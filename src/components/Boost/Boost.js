@@ -13,7 +13,7 @@ import handsIcon from '../../utils/images/Small Icons/Hand.png';
 import './boost.css';
 import API from '../../api/api';
 
-const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
+const Boost = ({points, setPoints, setSpeedTapping, setFullEnergyLevel}) => {
   const { user, boosters, updateUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,6 +24,7 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
   const [fullTankCount, setFullTankCount] = useState(3);
   const [boostersData, setBoostersData] = useState(boosters);
   const [selectedBooster, setSelectedBooster] = useState(null);
+  
 
 
   useEffect(() => {
@@ -33,38 +34,24 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
     }
   }, [user]);
 
-  // const getBoosters = async () => {
-  //   try {
-  //     const response = await API.get('/boosters');
-  //     setBoostersData(response.data);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  console.log(user);  
 
-  console.log(boostersData);
-
-  // useEffect(() => {
-  //   getBoosters();
-  //   setBoostersData(boosters);
-  // }, [])
-  
-
-  const openModal = (iconSrc, title, booster) => {
+  const openModal = (iconSrc, title, booster, level) => {
     if (!isModalOpen) {
       setSelectedBooster(booster);
       setSelectedTitle(title);
       setSelectedIconSrc(iconSrc);
+      // setSelectedLevel(level);
       setIsModalOpen(true);
     }
   };
 
-  const closeModal = (booster) => {
+  const closeModal = () => {
     setIsModalOpen(false);
     setSelectedBooster(null);
     setSelectedTitle('');
     setSelectedIconSrc('');
+    // setSelectedLevel(0);
   };
 
   useEffect(() => {
@@ -84,6 +71,27 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
     'Tap Bot': taskIcon,
   };
 
+  const boosterFieldMap = {
+    'Multitap': 'tap_level',
+    'Energy Limit': 'energy_limit_level',
+    'Recharging Speed': 'energy_recharge_level',
+    'Tap Bot': 'tap_bot',
+  };
+
+  const getUserBoosterLevel = (boosterName) => {
+    const fieldName = boosterFieldMap[boosterName];
+    return user?.data?.booster_data?.[fieldName] || 0;
+  };
+
+  const getUserBoosterValue = (booster, level) => {
+    return booster.data.levels[level]?.value || 0;
+  };
+
+  const getUserBoosterPrice = (booster, level) => {
+    return booster.data.levels[level]?.price || 0;
+  };
+
+
   return (
     <>
       <section className='boost_section container'>
@@ -91,7 +99,7 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
           <h6 className='text-center muted-color mb-0'>Your Share balance</h6>
           <div className='points d-flex justify-content-center align-items-center gap-1'>
             <img src={coinIcon} alt="coin-logo" width="30px" />
-            <span className=''>{user?.data.coins}</span>
+            <span className=''>{points}</span>
           </div>
         </section>
 
@@ -124,90 +132,34 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
         <section className='boosters text-white my-3'>
           <h5>Boosters:</h5>
           <section className="d-flex flex-column gap-2">
-            {boosters?.data.map((booster, index) => (
-              <section
-                key={index}
-                role="button"
-                onClick={() => openModal(boosterIcons[booster.name], booster.name, booster)}
-                className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
-              >
-                <div className='d-flex gap-3 align-items-center'>
-                  <img src={boosterIcons[booster.name]} alt={`${booster.name}Icon`} width="40px" height="" />
-                  <div className="d-flex flex-column">
-                    <h6>{booster.name}</h6>
-                    <div className='boosters-numbers d-flex align-items-center gap-1'>
-                      <img src={coinIcon} alt="coin-icon" width="20px" />
-                      <span>{booster.data.levels[0].price}</span>
-                      {booster.name === "Tap Bot" ? null : <span className='muted-color'>| {booster.data.levels[0].value} level</span> }
+          {boosters?.data.map((booster, index) => {
+              const boosterName = booster.name;
+              const boosterIcon = boosterIcons[boosterName];
+              const userBoosterLevel = getUserBoosterLevel(boosterName);
+              const boosterValue = getUserBoosterValue(booster, userBoosterLevel);
+              const boosterPrice = getUserBoosterPrice(booster, userBoosterLevel);
+
+              return (
+                <section key={index} role="button" onClick={() => openModal(boosterIcon, boosterName, booster)}
+                  className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
+                >
+                  <div className='d-flex gap-3 align-items-center'>
+                    <img src={boosterIcon} alt={`${boosterName}Icon`} width="40px" height="" />
+                    <div className="d-flex flex-column">
+                      <h6>{boosterName}</h6>
+                      <div className='boosters-numbers d-flex align-items-center gap-1'>
+                        <img src={coinIcon} alt="coin-icon" width="20px" />
+                        <span>{boosterPrice}</span>
+                        {boosterName === "Tap Bot" ? null : <span className='muted-color'>| {boosterValue} level</span>}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
-              </section>
-            ))}
+                  <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
+                </section>
+              );
+            })}
           </section>
-          
-          {/* <section className="d-flex flex-column gap-2">
-            <section role="button" onClick={() => openModal(handsIcon, 'Multitap')} className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
-              <div className='d-flex gap-3 align-items-center'>
-                <img src={handsIcon} alt="handsIcon" width="40px" height="" />
-                <div className="d-flex flex-column">
-                  <h6>Multitap</h6>
-                  <div className='boosters-numbers d-flex align-items-center gap-1'>
-                    <img src={coinIcon} alt="coin-icon" width="20px" />
-                    <span>200</span>
-                    <span className='muted-color'>| 1 level</span>
-                  </div>
-                </div>
-              </div>
-              <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
-            </section>
-
-            <section role="button" onClick={() => openModal(energyIcon, 'Energy Limit')} className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
-              <div className='d-flex gap-3 align-items-center'>
-                <img src={energyIcon} alt="energyIcon" width="40px" height="" />
-                <div className="d-flex flex-column">
-                  <h6>Energy Limit</h6>
-                  <div className='boosters-numbers d-flex align-items-center gap-1'>
-                    <img src={coinIcon} alt="coin-icon" width="20px" />
-                    <span>200</span>
-                    <span className='muted-color'>| 1 level</span>
-                  </div>
-                </div>
-              </div>
-              <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
-            </section>
-
-            <section role="button" onClick={() => openModal(boltIcon, 'Recharging Speed')} className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
-              <div className='d-flex gap-3 align-items-center'>
-                <img src={boltIcon} alt="boltIcon" width="40px" height="" />
-                <div className="d-flex flex-column">
-                  <h6>Recharging Speed</h6>
-                  <div className='boosters-numbers d-flex align-items-center gap-1'>
-                    <img src={coinIcon} alt="coin-icon" width="20px" />
-                    <span>2000</span>
-                    <span className='muted-color'>| 1 level</span>
-                  </div>
-                </div>
-              </div>
-              <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
-            </section>
-            
-            <section role="button" onClick={() => openModal(taskIcon, 'Tap Bot')} className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3">
-              <div className='d-flex gap-3 align-items-center'>
-                <img src={taskIcon} alt="taskIcon" width="40px" height="" />
-                <div className="d-flex flex-column">
-                  <h6>Tap Bot</h6>
-                  <div className='boosters-numbers d-flex align-items-center gap-1'>
-                    <img src={coinIcon} alt="coin-icon" width="20px" />
-                    <span>200000</span>
-                  </div>
-                </div>
-              </div>
-              <div><i className="fa fa-angle-right" aria-hidden="true"></i></div>
-            </section>
-          </section> */}
-
+        
         </section>
       </section>
       {successAlert && (
@@ -225,6 +177,7 @@ const Boost = ({setSpeedTapping, setFullEnergyLevel}) => {
             setSuccessAlert={setSuccessAlert}
             setSpeedTapping={setSpeedTapping}
             setFullEnergyLevel={setFullEnergyLevel}
+            levels={user?.data?.booster_data}
           />
         )}    
     </>

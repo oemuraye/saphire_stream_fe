@@ -7,6 +7,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [boosters, setBoosters] = useState(null);
+  const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export const UserProvider = ({ children }) => {
       if (telegram && telegram.initDataUnsafe) {
         // const initDataUnsafe = telegram.initDataUnsafe;
         // const userId = initDataUnsafe.user;
-        const userId = "abc704222354";
+        const userId = "cbd704222354";
 
         try {
           // Fetch user data
@@ -23,10 +24,15 @@ export const UserProvider = ({ children }) => {
           const token = userResponse.data.token;
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
           setUser(userResponse.data);
+          console.log(userResponse.data);
 
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');
           setBoosters(boostersResponse.data);
+
+          // Fetch tasks data
+          const getTasksResponse = await API.get('/tasks');
+          setTasks(getTasksResponse.data);
 
           setIsLoading(false);
         } catch (error) {
@@ -61,7 +67,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, boosters, updateUser, isLoading }}>
+    <UserContext.Provider value={{ user, boosters, tasks, updateUser, isLoading }}>
       {children}
     </UserContext.Provider>
   );

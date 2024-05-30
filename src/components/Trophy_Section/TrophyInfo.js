@@ -5,7 +5,7 @@ import bronzeImg from '../../utils/images/trophies/bronze trophy.svg'
 import silverImg from '../../utils/images/trophies/silverTrophy.png'
 import { useNavigate } from 'react-router-dom';
 
-const TrophyInfo = ({points, league}) => {
+const TrophyInfo = ({coinPoints, league}) => {
    // Define trophy images and their corresponding point ranges
    const trophies = [
     { src: woodImg, title: 'Wood', rangeEnd: 500 },
@@ -20,8 +20,8 @@ const TrophyInfo = ({points, league}) => {
     navigate(`/trophy`);
   };
 
-  // Find the trophy image corresponding to the user's points
-  const trophy = trophies.find(trophy => points >= trophy.rangeStart && points < trophy.rangeEnd) || trophies[trophies.length - 1];
+  // Find the trophy image corresponding to the user's coinPoints
+  const trophy = trophies.find(trophy => coinPoints >= trophy.rangeStart && coinPoints < trophy.rangeEnd) || trophies[trophies.length - 1];
 
   return (
     <div className='trophy d-flex justify-content-center align-items-center gap-1' onClick={goToTrophyPage} role='button'>

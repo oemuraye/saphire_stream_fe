@@ -10,24 +10,29 @@ import Loading from '../LoadingSection/Loading';
 import UserContext from '../../contexts/UserContext';
 import TrophyInfo from '../Trophy_Section/TrophyInfo';
 import API from '../../api/api';
+import { useLocation } from 'react-router-dom';
 
-const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
+const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
   const { user, isLoading, updateUser } = useContext(UserContext);
 
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
   const [remainingPoints, setRemainingPoints] = useState(500);
   const [clickAnimations, setClickAnimations] = useState([]);
-  const [points, setPoints] = useState(0);
+  const [accumulatedTaps, setAccumulatedTaps] = useState(0);
+  const [initialPoints, setInitialPoints] = useState(user?.data?.coins || 0);
   const intervalRef = useRef(null);
+  const location = useLocation();
 
 
   useEffect(() => {
-    if (user && user.data) {
+    if (user && user?.data) {
       setEnergyLevel(user.data.energy || 500);
       setPoints(user.data.coins || 0);
     }
-  }, [user]);
+  }, [user, setPoints]);
+
+
 
   useEffect(() => {
     if (remainingPoints < 500 && !fullEnergyLevel) {
@@ -44,7 +49,7 @@ const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEn
   useEffect(() => {
     if (speedTapping) {
       const originalTapSequence = tapSequence;
-      setTapSequence(prev => prev * 6);
+      setTapSequence(prev => prev * 5);
 
       const speedTappingTimer = setTimeout(() => {
         setSpeedTapping(false);
@@ -82,6 +87,7 @@ const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEn
       if (remainingPoints > 0) {
         setPoints(prevPoints => prevPoints + 1);
         setRemainingPoints(prevRemainingPoints => prevRemainingPoints - 1);
+        setAccumulatedTaps(prev => prev + 1);
 
         // Calculate touch position relative to the image
         const rect = e.target.getBoundingClientRect();
@@ -96,11 +102,11 @@ const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEn
         };
 
         newClickAnimations.push(newAnimation);
+        // saveTappings();
       }
     }
 
     setClickAnimations(prevAnimations => [...prevAnimations, ...newClickAnimations]);
-    // saveTappings();
 
     // Temporarily remove the 'clicked' class to restart the animation
     const coinImgElement = e.target;
@@ -117,18 +123,36 @@ const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEn
     intervalRef.current = setInterval(() => {
       setRemainingPoints(prev => Math.min(prev + 1, 500));
     }, 1000);
+    // saveTappings();
   };
 
   const saveTappings = async () => {
-    const data = { "taps":tapSequence };
-    console.log(data);
+    console.log(accumulatedTaps);
     try {
-      const response = await API.post('/tap', {data: data});
+      const response = await API.post('/tap', {"taps": accumulatedTaps });
       console.log(response.data);
+      setAccumulatedTaps(0);
+      setPoints(points);
     } catch (error) {
       console.error(error);
     }
   }
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      saveTappings();
+      event.preventDefault();
+      event.returnValue = ''; // Standard way to trigger a confirmation dialog
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [accumulatedTaps]);
+
+  
 
   const progressPercentage = (remainingPoints / 500) * 100;
 
@@ -145,7 +169,7 @@ const Tap_homePage = ({speedTapping, setSpeedTapping, fullEnergyLevel, setFullEn
               <img src={coinIcon} alt="coin-logo" width="30px" />
               <span className=''>{points}</span>
             </div>
-            <TrophyInfo points={points} league={user?.data.league} />
+            <TrophyInfo coinPoints={points} league={user?.data.league} />
           </section>
 
           <section className="coinTap_section container d-flex justify-content-center pb-5" 

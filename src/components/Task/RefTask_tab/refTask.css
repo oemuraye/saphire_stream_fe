@@ -10,7 +10,7 @@
 .refTask-tab_section .notClaim_link {
     text-decoration: none;
     color: #fff;
-    background-color: #31302f10;
+    background-color: var(--bg_basic);
     padding: 3px 12px;
     border-radius: 5px;
     font-weight: 600;

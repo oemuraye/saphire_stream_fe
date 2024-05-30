@@ -1,4 +1,3 @@
-// src/api.js
 import axios from 'axios';
 
 const API = axios.create({ baseURL: 'https://api.saphirestreamapp.com/api' });

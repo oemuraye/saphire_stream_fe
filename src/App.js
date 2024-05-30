@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "./components/LoadingSection/Loading";
 import axios from "axios";
-import { UserProvider } from './contexts/UserContext';
+import UserContext, { UserProvider } from './contexts/UserContext';
 
 
 import Header from "./components/Header/Header";
@@ -28,6 +28,7 @@ function App() {
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
+  const [points, setPoints] = useState(0);
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -103,10 +104,10 @@ function App() {
             {!isTelegramMiniApp && <Header />}
             
             <Routes>
-              <Route path="/" element={<Tap speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
+              <Route path="/" element={<Tap points={points} setPoints={setPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
               <Route path="/ref" element={<Ref />} />
-              <Route path="/task" element={<Task />} />
-              <Route path="/boost" element={<Boost setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
+              <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
+              <Route path="/boost" element={<Boost points={points} setPoints={setPoints} setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
               <Route path="/stats" element={<Stats />} />
               <Route path="/join_socials" element={<JoinSocials />} />
               <Route path="/connect_wallet" element={<ConnectWallet />} />
