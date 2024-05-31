@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import ProgressBar from './ProgressBar/ProgressBar';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import coinImg from "../../utils/images/tap coin.png";
+import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
 import Loading from '../LoadingSection/Loading';
@@ -12,12 +13,15 @@ import TrophyInfo from '../Trophy_Section/TrophyInfo';
 import API from '../../api/api';
 import { useLocation } from 'react-router-dom';
 
-const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
+const Tap_homePage = ({points, setPoints, remainingPoints, setRemainingPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
   const { user, isLoading, updateUser } = useContext(UserContext);
 
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
-  const [remainingPoints, setRemainingPoints] = useState(500);
+  // const [remainingPoints, setRemainingPoints] = useState(() => {
+  //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
+  //   return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
+  // });
   const [clickAnimations, setClickAnimations] = useState([]);
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
   const [initialPoints, setInitialPoints] = useState(user?.data?.coins || 0);
@@ -31,22 +35,32 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
       setEnergyLevel(user.data.energy || 500);
       const savedPoints = localStorage.getItem('points');
       const initialPoints = savedPoints ? parseInt(savedPoints, 10) : user.data.coins || 0;
-      setPoints(initialPoints);    }
+      setPoints(initialPoints);    
+    }
   }, [user, setPoints]);
 
 
 
-  useEffect(() => {
-    if (remainingPoints < 500 && !fullEnergyLevel) {
-      intervalRef.current = setInterval(() => {
-        setRemainingPoints((prev) => Math.min(prev + 1, 500));
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
-    }
+  // useEffect(() => {
+  //   // Start the interval unconditionally
+  //   intervalRef.current = setInterval(() => {
+  //     setRemainingPoints(prev => Math.min(prev + 1, 500));
+  //   }, 1000);
+  
+  //   // Clean up function to clear the interval when component unmounts
+  //   return () => clearInterval(intervalRef.current);
+  // }, []);
 
-    return () => clearInterval(intervalRef.current);
-  }, [remainingPoints, fullEnergyLevel]);
+
+
+  useEffect(() => {
+    const savedRemainingPoints = localStorage.getItem('remainingPoints');
+    if (savedRemainingPoints) {
+      setRemainingPoints(parseInt(savedRemainingPoints, 10));
+    }
+  }, []);
+
+
 
   useEffect(() => {
     if (speedTapping) {
@@ -77,6 +91,24 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
   }, [fullEnergyLevel, energyLevel]);
 
 
+
+  useEffect(() => {
+    if (remainingPoints < 500 && !fullEnergyLevel) {
+      intervalRef.current = setInterval(() => {
+        setRemainingPoints((prev) => {
+          const newRemainingPoints = Math.min(prev + 1, 500);
+          localStorage.setItem('remainingPoints', newRemainingPoints);
+          return newRemainingPoints;
+        });
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [remainingPoints, fullEnergyLevel]);
+
+
   const handleTap = (e) => {
     e.preventDefault();
 
@@ -86,13 +118,21 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
 
     for (let i = 0; i < touchPoints.length; i++) {
       const touch = touchPoints[i];
-      if (remainingPoints > 0) {
+      if (remainingPoints > 0 || speedTapping) {
         setPoints((prevPoints) => {
-          const newPoints = prevPoints + 1;
+          const newPoints = prevPoints + tapSequence;
           localStorage.setItem('points', newPoints);
           return newPoints;
         });
-        setRemainingPoints(prevRemainingPoints => prevRemainingPoints - 1);
+
+        if (!speedTapping) {
+          setRemainingPoints(prevRemainingPoints => {
+            const newRemainingPoints = prevRemainingPoints - 1;
+            localStorage.setItem('remainingPoints', newRemainingPoints);
+            return newRemainingPoints;
+          });
+        }
+
         setAccumulatedTaps(prev => prev + 1);
 
         // Calculate touch position relative to the image
@@ -108,7 +148,6 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
         };
 
         newClickAnimations.push(newAnimation);
-        // saveTappings();
       }
     }
 
@@ -127,14 +166,18 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setRemainingPoints(prev => Math.min(prev + 1, 500));
+      setRemainingPoints(prev => {
+        const newRemainingPoints = Math.min(prev + 1, 500);
+        localStorage.setItem('remainingPoints', newRemainingPoints);
+        return newRemainingPoints;
+      });
     }, 1000);
 
   };
 
   const saveTappings = async () => {
     try {
-      const response = await API.post('/tap', { "taps": accumulatedTaps });
+      await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
       setAccumulatedTaps(0);
     } catch (error) {

@@ -11,7 +11,7 @@ const TrophyInfo = ({coinPoints, league}) => {
     { src: woodImg, title: 'Wood', rangeEnd: 500 },
     { src: bronzeImg, title: 'Bronze', rangeEnd: 5000 },
     { src: silverImg, title: 'Silver', rangeEnd: 50000 },
-    // { src: goldImg, title: 'Gold', rangeEnd: Infinity },
+    { src: silverImg, title: 'Gold', rangeEnd: Infinity },
   ];
 
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const TrophyInfo = ({coinPoints, league}) => {
   return (
     <div className='trophy d-flex justify-content-center align-items-center gap-1' onClick={goToTrophyPage} role='button'>
       <img src={trophy.src} alt="trophy-logo" width="13px" />
-      <span className='muted-color'>{league}</span>
+      <span className='muted-color'>{trophy.title}</span>
       <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
     </div>
   );

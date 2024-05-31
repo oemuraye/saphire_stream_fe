@@ -11,21 +11,23 @@ const imagePath = path.join(__dirname, './sapphire coin.png');
 bot.start((ctx) => {
     const user = ctx.from;
     const username = user.username;
-    // console.log(user);
 
     ctx.replyWithPhoto(
-        { source: imagePath }, 
-        { caption: `<b>Welcome ${username}! to Saphire Stream!</b>\n\nExplore our web app for more features.`, parse_mode: 'HTML' }
+        { source: imagePath }
     ).then(() => {
-        // Send the text message with buttons after the image
         ctx.replyWithHTML(
-            "<b>SaphireStream is a Decentralised Exchange on the Solana Blockchain. The biggest part of SaphireStream Token (SAST) distribution will occur among the players here</b>\n\nClick the buttons below to get started:",
+            `Welcome <b>${username}! </b>to Saphire Stream!\n\n` +
+            "Tap on the coin and see your balance rise.\n\n" +
+            "<b>SaphireStream</b> is a Decentralized Exchange on the Solana Blockchain. The biggest part of SaphireStream Token SAST distribution will occur among the players here.\n\n" +
+            `Got friends, relatives, co-workers?
+Bring them all into the game.
+More buddies, more coins.`,
             {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "Open Web App", web_app: { url: web_link } }],
-                        [{ text: "Join Our Community", url: 'https://saphirestreamapp.com/contact' }],
-                        [{ text: "Help", callback_data: 'help' }]
+                        [{ text: "👋 Open Web App", web_app: { url: web_link } }],
+                        [{ text: "💪 Join Our Community", url: 'https://saphirestreamapp.com/' }],
+                        [{ text: "🗒️ Help", callback_data: 'help' }]
                     ]
                 }
             }
@@ -36,7 +38,34 @@ bot.start((ctx) => {
 
 // Handle the 'Help' button callback
 bot.action('help', (ctx) => {
-    ctx.reply('Here is some help text...');
+    ctx.replyWithPhoto(
+        { source: imagePath }
+    ).then(() => {
+        ctx.replyWithHTML(
+            `Tap to Earn:
+SaphireStream is an addictive clicker game where you accumulate Shares by tapping the screen.
+    
+Leagues:
+Climb the ranks by earning more Shares and outperforming others in the leagues.
+    
+Boosts:
+Unlock boosts and complete tasks to maximize your Shares earnings.
+    
+Friends:
+Invite others and both of you will receive bonuses. Assist your friends in advancing to higher leagues for bigger Shares rewards.
+    
+The Purpose:
+Collect as many Shares as possible and exchange them for SAST, SaphireStream Token on Solana Blockchain.`,
+            {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: "🤝 Join Channel", url: 'https://saphirestreamapp.com/contact' }],
+                        [{ text: "SaphireStream on X", url: 'https://saphirestreamapp.com/contact' }]
+                    ]
+                }
+            }
+        );
+    });
 });
 
 bot.launch();

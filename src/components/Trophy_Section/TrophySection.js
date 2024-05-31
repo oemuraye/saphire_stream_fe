@@ -9,6 +9,7 @@ const trophyImages = [
   { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 500 },
   { src: bronzeImg, title: 'Bronze', rangeStart: 500, rangeEnd: 5000 },
   { src: silverImg, title: 'Silver', rangeStart: 5000, rangeEnd: 50000 },
+  { src: silverImg, title: 'Gold', rangeStart: 50000, rangeEnd: Infinity },
 ];
 
 

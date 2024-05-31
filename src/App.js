@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "./components/LoadingSection/Loading";
@@ -21,47 +21,39 @@ import TrophySection from "./components/Trophy_Section/TrophySection";
 const telegram = window.Telegram.WebApp;
 
 function App() {
-  const [userId, setUserId] = useState('dfe704222354');
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
-  const [speedTapping, setSpeedTapping] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [speedTapping, setSpeedTapping] = useState(true);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
   const [points, setPoints] = useState(localStorage.getItem('points'));
+  const [remainingPoints, setRemainingPoints] = useState(() => {
+    const savedRemainingPoints = localStorage.getItem('remainingPoints');
+    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
+  });
+
+
 
   useEffect(() => {
     localStorage.setItem('points', points);
   }, [points]);
 
+
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       setIsTelegramMiniApp(true);
 
-      // Initialize Telegram WebApp and get user info
-      // telegram.ready();
-      // const initDataUnsafe = telegram.initDataUnsafe;
-      // const user = initDataUnsafe.user;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (!isMobile) {
+        setIsMobile(true);
+      }
 
-      // if (user) {
-      //   setUserId(user.id);
-      // }
     } else {
       setIsTelegramMiniApp(false);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (userId) {
-  //     axios.post('https://api.saphirestreamapp.com/api/login', { "telegram_user_id": userId })
-  //       .then(response => {
-  //         console.log(response.data);
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //       });
-  //   }
-  // }, []);
 
   // adding back button to telegram default header
   useEffect(() => {
@@ -94,11 +86,15 @@ function App() {
     return () => clearTimeout(timeout);
   }, []);
 
+  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
+  if (isMobile) {
+    return <div><Loading /></div>;
+  }
+
   if (isLoading) {
     return <div><Loading /></div>;
   }
-  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
 
   return (
     <UserProvider>
@@ -108,7 +104,7 @@ function App() {
             {!isTelegramMiniApp && <Header />}
             
             <Routes>
-              <Route path="/" element={<Tap points={points} setPoints={setPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
+              <Route path="/" element={<Tap points={points} setPoints={setPoints} remainingPoints={remainingPoints} setRemainingPoints={setRemainingPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
               <Route path="/ref" element={<Ref />} />
               <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
               <Route path="/boost" element={<Boost points={points} setPoints={setPoints} setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />

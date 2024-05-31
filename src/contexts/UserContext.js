@@ -9,7 +9,6 @@ export const UserProvider = ({ children }) => {
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(user);
 
   useEffect(() => {
     const fetchUserAndData = async () => {
