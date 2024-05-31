@@ -26,7 +26,7 @@ function App() {
   const navigate = useNavigate();
   const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [speedTapping, setSpeedTapping] = useState(true);
+  const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
   const [points, setPoints] = useState(localStorage.getItem('points'));
   const [remainingPoints, setRemainingPoints] = useState(() => {
