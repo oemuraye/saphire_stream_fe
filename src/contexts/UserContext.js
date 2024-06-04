@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       if (telegram && telegram.initDataUnsafe) {
         const initDataUnsafe = telegram.initDataUnsafe;
         const userId = initDataUnsafe.user;
-        // const userId = "ihj704222354";
+        // const userId = "704222354";
 
         try {
           // Fetch user data
@@ -29,6 +29,7 @@ export const UserProvider = ({ children }) => {
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');
           setBoosters(boostersResponse.data);
+          console.log(boostersResponse.data);
 
           // Fetch tasks data
           const getTasksResponse = await API.get('/tasks');
@@ -70,6 +71,7 @@ export const UserProvider = ({ children }) => {
     try {
       const boostersResponse = await API.get('/boosters');
       setBoosters(boostersResponse.data);
+      console.log(boostersResponse.data);
     } catch (error) {
       console.error(error);
     }

@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 
+import UserContext from '../../contexts/UserContext';
+import { useRemainingPoints } from '../../contexts/RemainingPointsContext';
+import API from '../../api/api';
+import Loading from '../LoadingSection/Loading';
+import TrophyInfo from '../Trophy_Section/TrophyInfo';
 
 import ProgressBar from './ProgressBar/ProgressBar';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
@@ -7,14 +13,10 @@ import coinImg from "../../utils/images/tap coin.png";
 import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
-import Loading from '../LoadingSection/Loading';
-import UserContext from '../../contexts/UserContext';
-import TrophyInfo from '../Trophy_Section/TrophyInfo';
-import API from '../../api/api';
-import { useLocation } from 'react-router-dom';
 
-const Tap_homePage = ({points, setPoints, remainingPoints, setRemainingPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
+const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
   const { user, isLoading, updateUser } = useContext(UserContext);
+  const { remainingPoints, setRemainingPoints } = useRemainingPoints();
 
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
@@ -88,25 +90,25 @@ const Tap_homePage = ({points, setPoints, remainingPoints, setRemainingPoints, s
 
       return () => clearTimeout(fullEnergyTimer);
     }
-  }, [fullEnergyLevel, energyLevel]);
+  }, [fullEnergyLevel, energyLevel, setRemainingPoints]);
 
 
 
-  useEffect(() => {
-    if (remainingPoints < 500 && !fullEnergyLevel) {
-      intervalRef.current = setInterval(() => {
-        setRemainingPoints((prev) => {
-          const newRemainingPoints = Math.min(prev + 1, 500);
-          localStorage.setItem('remainingPoints', newRemainingPoints);
-          return newRemainingPoints;
-        });
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
-    }
+  // useEffect(() => {
+  //   if (remainingPoints < 500 && !fullEnergyLevel) {
+  //     intervalRef.current = setInterval(() => {
+  //       setRemainingPoints((prev) => {
+  //         const newRemainingPoints = Math.min(prev + 1, 500);
+  //         localStorage.setItem('remainingPoints', newRemainingPoints);
+  //         return newRemainingPoints;
+  //       });
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(intervalRef.current);
+  //   }
 
-    return () => clearInterval(intervalRef.current);
-  }, [remainingPoints, fullEnergyLevel]);
+  //   return () => clearInterval(intervalRef.current);
+  // }, [remainingPoints, fullEnergyLevel]);
 
 
   const handleTap = (e) => {
@@ -237,12 +239,12 @@ const Tap_homePage = ({points, setPoints, remainingPoints, setRemainingPoints, s
             <TrophyInfo coinPoints={points} league={user?.data.league} />
           </section>
 
-          <section className="coinTap_section container d-flex justify-content-center pb-5" 
+          <section className={`coinTap_section container d-flex justify-content-center pb-5 ${speedTapping && 'speed-tapping'}`} 
             onTouchStart={handleTap} 
             onMouseDown={handleTap}
             onTouchMove={(e) => e.preventDefault()} 
           >
-            <img src={coinImg} alt="coin-img" className={`img-fluid ${speedTapping ? 'speed-tapping' : ''}`} width="100%" height="250px" />
+            <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px" />
             {clickAnimations.map(animation => (
               <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
               >+{tapSequence}</span>

@@ -74,6 +74,11 @@
     width: 70%;
     /* height: 225px; */
     margin-top: 40px;
+    border-bottom-right-radius: 90%;
+    border-bottom-left-radius: 46%;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 90%;
+    background-color: #ffffff00;
 }
 
 .coinTap_section img.clicked {
@@ -81,8 +86,13 @@
     /* animation: pulse 0.25s infinite; */
 }
 
+.speed-tapping {
+    background: url(../../utils/images/electricBolt.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+}
 
-  
 @keyframes dipEffect {
     0% {
       transform: scale(1);
@@ -94,19 +104,6 @@
       transform: scale(1);
     }
 }
-
-
-.speed-tapping {
-    /* background: linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);
-    box-shadow: inset 0px 0px 20px 20px linear-gradient(45deg, #00c6ff, #ffa600, #ff007f);;
-    border-radius: 120px;
-    background-repeat: no-repeat; */
-    animation: pulse 0.25s infinite;
-}
-/* .speed-tapping.clicked {
-    animation: pulse 0.25s infinite;
-} */
-
 @keyframes pulse {
     0% {
       opacity: 1;

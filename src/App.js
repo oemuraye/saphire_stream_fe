@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Loading from "./components/LoadingSection/Loading";
 import axios from "axios";
 import UserContext, { UserProvider } from './contexts/UserContext';
+import { RemainingPointsProvider, useRemainingPoints } from './contexts/RemainingPointsContext';
 
 
 import Header from "./components/Header/Header";
@@ -28,7 +29,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
-  const [points, setPoints] = useState(localStorage.getItem('points'));
+  const [points, setPoints] = useState(0);
   const [remainingPoints, setRemainingPoints] = useState(() => {
     const savedRemainingPoints = localStorage.getItem('remainingPoints');
     return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
@@ -98,30 +99,32 @@ function App() {
 
   return (
     <UserProvider>
-      <section className="app">
-        <section className="main_section">
-          <section className="main-section">
-            {!isTelegramMiniApp && <Header />}
-            
-            <Routes>
-              <Route path="/" element={<Tap points={points} setPoints={setPoints} remainingPoints={remainingPoints} setRemainingPoints={setRemainingPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
-              <Route path="/ref" element={<Ref />} />
-              <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
-              <Route path="/boost" element={<Boost points={points} setPoints={setPoints} setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
-              <Route path="/stats" element={<Stats />} />
-              <Route path="/join_socials" element={<JoinSocials />} />
-              <Route path="/connect_wallet" element={<ConnectWallet />} />
-              <Route path="/trophy" element={<TrophySection />} />
-            </Routes>
-          </section>
+      <RemainingPointsProvider>
+        <section className="app">
+          <section className="main_section">
+            <section className="main-section">
+              {!isTelegramMiniApp && <Header />}
+              
+              <Routes>
+                <Route path="/" element={<Tap points={points} setPoints={setPoints} remainingPoints={remainingPoints} setRemainingPoints={setRemainingPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
+                <Route path="/ref" element={<Ref />} />
+                <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
+                <Route path="/boost" element={<Boost points={points} setPoints={setPoints} setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
+                <Route path="/stats" element={<Stats />} />
+                <Route path="/join_socials" element={<JoinSocials />} />
+                <Route path="/connect_wallet" element={<ConnectWallet />} />
+                <Route path="/trophy" element={<TrophySection />} />
+              </Routes>
+            </section>
 
-          {showFooter && (
-            <footer className="container">
-              <Menu />
-            </footer>
-          )}
+            {showFooter && (
+              <footer className="container">
+                <Menu />
+              </footer>
+            )}
+          </section>
         </section>
-      </section>
+      </RemainingPointsProvider>
     </UserProvider>
   );
 }

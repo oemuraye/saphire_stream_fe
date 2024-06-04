@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
+import woodImg from '../../utils/images/trophies/wood.png';
+import bronzeImg from '../../utils/images/trophies/Bronze.png';
+import silverImg from '../../utils/images/trophies/Silver.png';
+import goldImg from '../../utils/images/trophies/Gold.png';
+import platinumImg from '../../utils/images/trophies/Platinum.png';
+import diamondImg from '../../utils/images/trophies/Diamond.png';
+import masterImg from '../../utils/images/trophies/Master.png';
+import grandMasterImg from '../../utils/images/trophies/Grandmaster.png';
+import EliteImg from '../../utils/images/trophies/Elite league.png';
+import legendaryImg from '../../utils/images/trophies/Legendary.png';
+import mythicImg from '../../utils/images/trophies/Mystic league.png';
 import './trophySection.css';
-import woodImg from '../../utils/images/trophies/bronze trophy.svg';
-import bronzeImg from '../../utils/images/trophies/bronze trophy.svg';
-import silverImg from '../../utils/images/trophies/silverTrophy.png';
 
 const trophyImages = [
-  { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 500 },
-  { src: bronzeImg, title: 'Bronze', rangeStart: 500, rangeEnd: 5000 },
-  { src: silverImg, title: 'Silver', rangeStart: 5000, rangeEnd: 50000 },
-  { src: silverImg, title: 'Gold', rangeStart: 50000, rangeEnd: Infinity },
+  { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 50 },
+  { src: bronzeImg, title: 'Bronze', rangeStart: 50, rangeEnd: 500 },
+  { src: silverImg, title: 'Silver', rangeStart: 500, rangeEnd: 5000 },
+  { src: goldImg, title: 'Gold', rangeStart: 5000, rangeEnd: 50000 },
+  { src: platinumImg, title: 'Platinum', rangeStart: 50000, rangeEnd: 500000 },
+  { src: diamondImg, title: 'Diamond', rangeStart: 500000, rangeEnd: 1000000 },
+  { src: masterImg, title: 'Master', rangeStart: 1000000, rangeEnd: 2500000 },
+  { src: grandMasterImg, title: 'Grand Master', rangeStart: 2500000, rangeEnd: 5000000 },
+  { src: EliteImg, title: 'Elite League', rangeStart: 5000000, rangeEnd: 10000000 },
+  { src: legendaryImg, title: 'Legendary', rangeStart: 10000000, rangeEnd: 50000000 },
+  { src: mythicImg, title: 'Mythic', rangeStart: 50000000, rangeEnd: Infinity },
 ];
 
 
@@ -59,7 +74,7 @@ const TrophySection = () => {
   
   return (
     <section className='trophy_section container text-center my-3'>
-        <h4 className='text-white'>{trophyImages[currentIndex].title}</h4>
+        <h4 className='text-white'>{trophyImages[currentIndex].title} League</h4>
         <span className='muted-color'>Your number of shares determines the league you enter.</span>
 
         <section className="trophy-slider mt-5">
