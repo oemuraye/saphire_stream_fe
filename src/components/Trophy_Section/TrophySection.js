@@ -8,21 +8,21 @@ import platinumImg from '../../utils/images/trophies/Platinum.png';
 import diamondImg from '../../utils/images/trophies/Diamond.png';
 import masterImg from '../../utils/images/trophies/Master.png';
 import grandMasterImg from '../../utils/images/trophies/Grandmaster.png';
-import EliteImg from '../../utils/images/trophies/Elite league.png';
+import eliteImg from '../../utils/images/trophies/Elite league.png';
 import legendaryImg from '../../utils/images/trophies/Legendary.png';
 import mythicImg from '../../utils/images/trophies/Mystic league.png';
 import './trophySection.css';
 
 const trophyImages = [
-  { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 50 },
-  { src: bronzeImg, title: 'Bronze', rangeStart: 50, rangeEnd: 500 },
+  { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 1 },
+  { src: bronzeImg, title: 'Bronze', rangeStart: 1, rangeEnd: 500 },
   { src: silverImg, title: 'Silver', rangeStart: 500, rangeEnd: 5000 },
   { src: goldImg, title: 'Gold', rangeStart: 5000, rangeEnd: 50000 },
   { src: platinumImg, title: 'Platinum', rangeStart: 50000, rangeEnd: 500000 },
   { src: diamondImg, title: 'Diamond', rangeStart: 500000, rangeEnd: 1000000 },
   { src: masterImg, title: 'Master', rangeStart: 1000000, rangeEnd: 2500000 },
   { src: grandMasterImg, title: 'Grand Master', rangeStart: 2500000, rangeEnd: 5000000 },
-  { src: EliteImg, title: 'Elite League', rangeStart: 5000000, rangeEnd: 10000000 },
+  { src: eliteImg, title: 'Elite League', rangeStart: 5000000, rangeEnd: 10000000 },
   { src: legendaryImg, title: 'Legendary', rangeStart: 10000000, rangeEnd: 50000000 },
   { src: mythicImg, title: 'Mythic', rangeStart: 50000000, rangeEnd: Infinity },
 ];

@@ -22,6 +22,7 @@ import TrophySection from "./components/Trophy_Section/TrophySection";
 const telegram = window.Telegram.WebApp;
 
 function App() {
+  const user = JSON.parse(localStorage.getItem('user'));
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,17 +30,18 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(user.data.coins);
   const [remainingPoints, setRemainingPoints] = useState(() => {
     const savedRemainingPoints = localStorage.getItem('remainingPoints');
     return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
   });
+  const [guruCount, setGuruCount] = useState(user.data.booster_data?.daily_boosters.tapping_guru);
+  const [fullTankCount, setFullTankCount] = useState(user.data.booster_data?.daily_boosters.full_tank);
+  const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
 
-
-
-  useEffect(() => {
-    localStorage.setItem('points', points);
-  }, [points]);
+  // useEffect(() => {
+  //   setPoints(user.coins);
+  // }, [points]);
 
 
   useEffect(() => {
@@ -89,9 +91,9 @@ function App() {
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
-  if (isMobile) {
-    return <div><Loading /></div>;
-  }
+  // if (isMobile) {
+  //   return <div><Loading /></div>;
+  // }
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -106,10 +108,22 @@ function App() {
               {!isTelegramMiniApp && <Header />}
               
               <Routes>
-                <Route path="/" element={<Tap points={points} setPoints={setPoints} remainingPoints={remainingPoints} setRemainingPoints={setRemainingPoints} speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} />} />
+                <Route path="/" element={<Tap 
+                                            points={points} setPoints={setPoints} 
+                                            remainingPoints={remainingPoints} setRemainingPoints={setRemainingPoints} 
+                                            speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} 
+                                            fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} 
+                                            tapSequence={tapSequence} setTapSequence={setTapSequence}
+                                        />} />
                 <Route path="/ref" element={<Ref />} />
                 <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
-                <Route path="/boost" element={<Boost points={points} setPoints={setPoints} setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} />} />
+                <Route path="/boost" element={<Boost 
+                                                    setTapSequence={setTapSequence}
+                                                    points={points} setPoints={setPoints} 
+                                                    setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} 
+                                                    guruCount={guruCount} setGuruCount={setGuruCount} 
+                                                    fullTankCount={fullTankCount} setFullTankCount={setFullTankCount} 
+                                              />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/join_socials" element={<JoinSocials />} />
                 <Route path="/connect_wallet" element={<ConnectWallet />} />

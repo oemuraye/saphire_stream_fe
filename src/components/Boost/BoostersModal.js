@@ -15,8 +15,8 @@ const actionsTitle = {
 
 }
 
-const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, userBoosterLevel, boosterPrice, updateBoosters }) => {
-    const { user, updateUser } = useContext(UserContext);
+const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount }) => {
+    const { user, updateUser, handleBoosterUpdate } = useContext(UserContext);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -26,16 +26,22 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
             let response;
             if (title === actionsTitle.tappingGuru) {
                 response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
+                // handleBoosterUpdate('tapping_guru');
             } else if (title === actionsTitle.fullTank) {
                 response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
+                // handleBoosterUpdate('full_tank');
             } else if (title === actionsTitle.multiTap) {
-                response = await API.post('/boosters/upgrade', {"booster": "tap", "level": userBoosterLevel + 1});
+                response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
+                // handleBoosterUpdate('tap_level');
             } else if (title === actionsTitle.energyLimit) {
-                response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": userBoosterLevel + 1});
+                response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
+                // handleBoosterUpdate('energy_limit_level');
             } else if (title === actionsTitle.rechargeSpeed) {
-                response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": userBoosterLevel + 1});
+                response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
+                // handleBoosterUpdate('energy_recharge_level');
             } else if (title === actionsTitle.tapBot) {
                 response = await API.post('/claim', {"booster":"tap_bot_coins"});
+                // handleBoosterUpdate('tap_bot');
             }
 
             console.log(response.data);
@@ -45,9 +51,11 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
 
             if (title === actionsTitle.tappingGuru) {
                 setSpeedTapping(true)
+                setGuruCount((prev) => prev - 1)
                 navigate('/');
             }
             if (title === actionsTitle.fullTank) {
+                setFullTankCount((prev) => prev - 1)
                 setFullEnergyLevel(true)
                 navigate('/');
             }
@@ -57,8 +65,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
             setIsLoading(false);
         }
     };
-
-
+console.log(userBoosterLevel);
   return (
     <section className='boosters-modal_section container'>
         <div className="d-flex justify-content-end p-2 closeBtn">
@@ -80,7 +87,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                             <div className='d-flex justify-content-center align-items-center gap-2'>
                                 <img src={coinIcon} alt="coin-icon" width="25px" />
                                 <h4 className='text-white mb-0'>{boosterPrice}</h4>
-                                {title !== "Tap Bot" && <h6 className='muted-color mb-0'>| {userBoosterLevel} level</h6>}
+                                {title !== "Tap Bot" && <h6 className='muted-color mb-0'>| {title === "Energy Limit" ? `${boosterValue}` : `${userBoosterLevel}`} level</h6>}
                             </div>
                             <section className='action-btn container'>
                                 {isLoading ? (

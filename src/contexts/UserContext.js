@@ -14,22 +14,23 @@ export const UserProvider = ({ children }) => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initDataUnsafe) {
-        const initDataUnsafe = telegram.initDataUnsafe;
-        const userId = initDataUnsafe.user;
-        // const userId = "704222354";
+        // const initDataUnsafe = telegram.initDataUnsafe;
+        // const userId = initDataUnsafe.user;
+        const userId = "iuy704222354";
 
         try {
           // Fetch user data
           const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
           const token = userResponse.data.token;
           const points = userResponse.data.data.coins;
+          localStorage.setItem('user', JSON.stringify(userResponse.data));
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
-          localStorage.setItem('points', points);          setUser(userResponse.data);
+          localStorage.setItem('points', points);          
+          setUser(userResponse.data);
 
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');
           setBoosters(boostersResponse.data);
-          console.log(boostersResponse.data);
 
           // Fetch tasks data
           const getTasksResponse = await API.get('/tasks');
@@ -57,28 +58,80 @@ export const UserProvider = ({ children }) => {
     }
   }, [user]);
 
-  const updateUser = (updatedData) => {
-    setUser(prevUser => ({
-      ...prevUser,
-      data: {
-        ...prevUser.data,
-        ...updatedData
-      }
-    }));
-  };
-
   const updateBoosters = async () => {
     try {
       const boostersResponse = await API.get('/boosters');
+      const userResponse = await API.get('/user');
       setBoosters(boostersResponse.data);
-      console.log(boostersResponse.data);
+      // setUser(userResponse.data)
+      console.log(userResponse.data);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const updateUser = (updatedData) => {
+    const updatedUser = {
+      ...user,
+      data: {
+        ...user.data,
+        ...updatedData,
+      },
+    };
+    setUser(updatedUser);
+    console.log(updatedData);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+  const updateUserCoins = (newPoints) => {
+    const updatedUser = {
+      ...user,
+      data: {
+        ...user.data,
+        coins: newPoints,
+      },
+    };
+    setUser(updatedUser);
+    // localStorage.setItem('user', JSON.stringify(updatedUser));
+    console.log(newPoints);
+    // localStorage.setItem('points', newPoints); // Update the points in local storage
+  };
+
+
+  const actionsTitle = {
+    tappingGuru: 'tapping_guru',
+    fullTank: 'full_tank',
+    multiTap: 'tap_level',
+    energyLimit: 'energy_limit_level',
+    rechargeSpeed: 'energy_recharge_level',
+    tapBot: 'tap_bot',
+
+}
+
+  const handleBoosterUpdate = (boosterType) => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const updatedBoosterData = { ...storedUser.booster_data };
+console.log(storedUser);
+    if (boosterType === 'tapping_guru') {
+      storedUser.daily_booster.tapping_guru -= 1;
+    } else if (boosterType === 'full_tank') {
+      console.log(storedUser.daily_boosters.fullTank);
+      storedUser.daily_booster.full_tank -= 1;
+    } else if (boosterType === 'tap_level') {
+      storedUser.tap_level += 1;
+    } else if (boosterType === 'energy_limit_level') {
+      storedUser.energy_limit_level += 1;
+    } else if (boosterType === 'energy_recharge_level') {
+      storedUser.energy_recharge_level += 1;
+    } else if (boosterType === 'tap_bot') {
+      storedUser.tap_bot += 1;
+    }
+
+    updateUser({ booster_data: updatedBoosterData });
+  };
+
   return (
-    <UserContext.Provider value={{ user, boosters, tasks, updateUser, updateBoosters, isLoading }}>
+    <UserContext.Provider value={{ user, boosters, tasks, updateUser, updateBoosters, handleBoosterUpdate, updateUserCoins, isLoading }}>
       {children}
     </UserContext.Provider>
   );

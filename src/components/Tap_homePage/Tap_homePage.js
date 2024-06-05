@@ -14,12 +14,12 @@ import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
 
-const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel}) => {
-  const { user, isLoading, updateUser } = useContext(UserContext);
+const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence}) => {
+  const { isLoading, updateBoosters, updateUser } = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem('user'));
   const { remainingPoints, setRemainingPoints } = useRemainingPoints();
-
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
-  const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
+  // const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
   // const [remainingPoints, setRemainingPoints] = useState(() => {
   //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
   //   return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
@@ -182,6 +182,9 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
       setAccumulatedTaps(0);
+      console.log(points);
+      const userResponse = await API.get('/user');
+      updateUser(userResponse.data);
     } catch (error) {
       console.error(error);
     }
@@ -189,16 +192,18 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
 
 
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      saveTappings();
-      event.preventDefault();
-      event.returnValue = ''; // Standard way to trigger a confirmation dialog
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+    if (accumulatedTaps > 0) {
+      const handleBeforeUnload = (event) => {
+        saveTappings();
+        event.preventDefault();
+        event.returnValue = ''; // Standard way to trigger a confirmation dialog
+      };
+  
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }
   }, [accumulatedTaps]);
 
   // useEffect(() => {
@@ -210,7 +215,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
   useEffect(() => {
     if (accumulatedTaps > 0) {
       const saveTappingsInterval = setInterval(() => {
-        saveTappings(accumulatedTaps);
+        saveTappings();
         setAccumulatedTaps(0);
       }, 10000);
   

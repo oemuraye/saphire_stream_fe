@@ -13,23 +13,32 @@ import './boost.css';
 import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
-  const { user, boosters, updateBoosters } = useContext(UserContext);
+const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount }) => {
+  const { boosters, updateBoosters } = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
   const [selectedIconSrc, setSelectedIconSrc] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
-  const [guruCount, setGuruCount] = useState(3);
-  const [fullTankCount, setFullTankCount] = useState(3);
+  // const [guruCount, setGuruCount] = useState();
+  // const [fullTankCount, setFullTankCount] = useState();
   const [selectedBooster, setSelectedBooster] = useState(null);
   const [boosterLevel, setBoosterLevel] = useState(0);
+  const [boosterValue, setBoosterValue] = useState(0);
   const [boosterPrice, setBoosterPrice] = useState(0);
-  const location = useNavigate();
 
   useEffect(() => {
-    if (user?.data?.booster_data?.daily_boosters) {
-      setGuruCount(user.data.booster_data.daily_boosters.tapping_guru);
-      setFullTankCount(user.data.booster_data.daily_boosters.full_tank);
+    if (user?.booster_data?.daily_boosters) {
+      setGuruCount(user?.booster_data?.daily_boosters.tapping_guru);
+      setFullTankCount(user?.booster_data?.daily_boosters.full_tank);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user?.booster_data?.daily_boosters) {
+      setGuruCount(user.booster_data.daily_boosters.tapping_guru);
+      setFullTankCount(user.booster_data.daily_boosters.full_tank);
     }
   }, [user]);
 
@@ -42,12 +51,13 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
   // }, [location]);
   
 
-  const openModal = (iconSrc, title, booster, level, price) => {
+  const openModal = (iconSrc, title, booster, value, level, price) => {
     if (!isModalOpen) {
       setSelectedBooster(booster);
       setSelectedTitle(title);
       setSelectedIconSrc(iconSrc);
       setBoosterLevel(level);
+      setBoosterValue(value);
       setBoosterPrice(price);
       setIsModalOpen(true);
     }
@@ -59,6 +69,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
     setSelectedTitle('');
     setSelectedIconSrc('');
     setBoosterLevel(0);
+    setBoosterValue(0);
     setBoosterPrice(0);
   };
 
@@ -88,7 +99,8 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
 
   const getUserBoosterLevel = (boosterName) => {
     const fieldName = boosterFieldMap[boosterName];
-    return user?.data?.booster_data?.[fieldName] || 0;
+    const level = Number(user?.data?.booster_data?.[fieldName])
+    return level || 0;
   };
 
   const getBoosterLevelData = (booster, level) => {
@@ -143,12 +155,15 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
               const boosterIcon = boosterIcons[boosterName];
               const userBoosterLevel = getUserBoosterLevel(boosterName);
               const isTapBot = boosterName === 'Tap Bot';
+              const isEnergyLimit = boosterName === 'Energy Limit';
               const boosterData = isTapBot ? booster.data.levels[0] : getBoosterLevelData(booster, userBoosterLevel + 1);
+              console.log(userBoosterLevel + 1);
               const boosterValue = boosterData.value || 0;
+              const boosterLevel = boosterData.level || 0;
               const boosterPrice = boosterData.price || 0;
 
               return (
-                <section key={index} role="button" onClick={() => openModal(boosterIcon, boosterName, booster, boosterValue, boosterPrice)}
+                <section key={index} role="button" onClick={() => openModal(boosterIcon, boosterName, booster, boosterValue, boosterLevel, boosterPrice)}
                   className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
                 >
                   <div className='d-flex gap-3 align-items-center'>
@@ -158,7 +173,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
                       <div className='boosters-numbers d-flex align-items-center gap-1'>
                         <img src={coinIcon} alt="coin-icon" width="20px" />
                         <span>{boosterPrice}</span>
-                        {isTapBot ? null : <span className='muted-color'>| {boosterValue} level</span>}
+                        {isTapBot ? null : <span className='muted-color'>| {isEnergyLimit ? `${boosterValue}` : `${boosterLevel}`} level</span>}
                       </div>
                     </div>
                   </div>
@@ -187,8 +202,11 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel }) => {
           setSpeedTapping={setSpeedTapping}
           setFullEnergyLevel={setFullEnergyLevel}
           userBoosterLevel={boosterLevel}
+          boosterValue={boosterValue}
           boosterPrice={boosterPrice}
           updateBoosters={updateBoosters}
+          setGuruCount={setGuruCount}
+          setFullTankCount={setFullTankCount}
         />
       )}    
     </>
