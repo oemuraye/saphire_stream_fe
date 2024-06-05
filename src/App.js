@@ -91,9 +91,9 @@ function App() {
 
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
-  // if (isMobile) {
-  //   return <div><Loading /></div>;
-  // }
+  if (isMobile) {
+    return <div><Loading /></div>;
+  }
 
   if (isLoading) {
     return <div><Loading /></div>;

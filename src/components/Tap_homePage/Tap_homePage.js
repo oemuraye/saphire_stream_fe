@@ -178,10 +178,13 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
   };
 
   const saveTappings = async () => {
+    console.log(accumulatedTaps);
+    const taps = accumulatedTaps
     try {
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
       setAccumulatedTaps(0);
+      console.log(accumulatedTaps);
       console.log(points);
       const userResponse = await API.get('/user');
       updateUser(userResponse.data);
