@@ -30,9 +30,9 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
-  const [points, setPoints] = useState(user.data.coins);
-  const [guruCount, setGuruCount] = useState(user.data.booster_data?.daily_boosters.tapping_guru);
-  const [fullTankCount, setFullTankCount] = useState(user.data.booster_data?.daily_boosters.full_tank);
+  const [points, setPoints] = useState(user?.data.coins);
+  const [guruCount, setGuruCount] = useState(user?.data.booster_data?.daily_boosters.tapping_guru);
+  const [fullTankCount, setFullTankCount] = useState(user?.data.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
   const [energyLevel, setEnergyLevel] = useState(user?.data?.booster_data.energy_limit);
   
