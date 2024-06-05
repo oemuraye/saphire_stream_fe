@@ -15,33 +15,44 @@ const actionsTitle = {
 
 }
 
-const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount }) => {
-    const { user, updateUser, handleBoosterUpdate } = useContext(UserContext);
+const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount, setTapSequence }) => {
+    const { updateUser, handleBoosterUpdate } = useContext(UserContext);
+    const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
     const handleBooster = async () => {
         setIsLoading(true);
+        console.log(boosterPrice);
         try {
             let response;
             if (title === actionsTitle.tappingGuru) {
                 response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
-                // handleBoosterUpdate('tapping_guru');
+                setSpeedTapping(true)
+                setGuruCount((prev) => prev - 1)
+                navigate('/');
             } else if (title === actionsTitle.fullTank) {
                 response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
-                // handleBoosterUpdate('full_tank');
+                setFullTankCount((prev) => prev - 1)
+                setFullEnergyLevel(true)
+                navigate('/');
             } else if (title === actionsTitle.multiTap) {
                 response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
-                // handleBoosterUpdate('tap_level');
+                const newPoints = user.coins - boosterPrice;
+                updateUser({ coins: newPoints });
+                setTapSequence((prev) => prev + 1);
             } else if (title === actionsTitle.energyLimit) {
                 response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
-                // handleBoosterUpdate('energy_limit_level');
+                const newPoints = user.coins - boosterPrice;
+                updateUser({ coins: newPoints });
             } else if (title === actionsTitle.rechargeSpeed) {
                 response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
-                // handleBoosterUpdate('energy_recharge_level');
+                const newPoints = user.coins - boosterPrice;
+                updateUser({ coins: newPoints });
             } else if (title === actionsTitle.tapBot) {
                 response = await API.post('/claim', {"booster":"tap_bot_coins"});
-                // handleBoosterUpdate('tap_bot');
+                const newPoints = user.coins - boosterPrice;
+                updateUser({ coins: newPoints });
             }
 
             console.log(response.data);
@@ -49,16 +60,6 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
             setSuccessAlert(true);
             onClose();
 
-            if (title === actionsTitle.tappingGuru) {
-                setSpeedTapping(true)
-                setGuruCount((prev) => prev - 1)
-                navigate('/');
-            }
-            if (title === actionsTitle.fullTank) {
-                setFullTankCount((prev) => prev - 1)
-                setFullEnergyLevel(true)
-                navigate('/');
-            }
         } catch (error) {
             console.log(error);
         } finally {

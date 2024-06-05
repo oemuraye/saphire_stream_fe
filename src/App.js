@@ -31,13 +31,15 @@ function App() {
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
   const [points, setPoints] = useState(user.data.coins);
-  const [remainingPoints, setRemainingPoints] = useState(() => {
-    const savedRemainingPoints = localStorage.getItem('remainingPoints');
-    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
-  });
   const [guruCount, setGuruCount] = useState(user.data.booster_data?.daily_boosters.tapping_guru);
   const [fullTankCount, setFullTankCount] = useState(user.data.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
+  const [energyLevel, setEnergyLevel] = useState(user?.data?.booster_data.energy_limit);
+  
+  const [remainingPoints, setRemainingPoints] = useState(() => {
+    const savedRemainingPoints = localStorage.getItem('remainingPoints');
+    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : energyLevel;
+  });
 
   // useEffect(() => {
   //   setPoints(user.coins);
@@ -114,6 +116,7 @@ function App() {
                                             speedTapping={speedTapping} setSpeedTapping={setSpeedTapping} 
                                             fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} 
                                             tapSequence={tapSequence} setTapSequence={setTapSequence}
+                                            energyLevel={energyLevel} setEnergyLevel={setEnergyLevel}
                                         />} />
                 <Route path="/ref" element={<Ref />} />
                 <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />

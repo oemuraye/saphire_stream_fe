@@ -21,10 +21,11 @@ const Task = ({points, setPoints}) => {
   const specialTasks = getTasksByType('special');
   const leagueTasks = getTasksByType('leagues');
   const refTasks = getTasksByType('ref_tasks');
+  console.log(tasks);
   
-  useEffect(() => {
-    setPoints(points);
-  }, []);
+  // useEffect(() => {
+  //   setPoints(points);
+  // }, []);
   
   return (
     <section className='task_section container'>

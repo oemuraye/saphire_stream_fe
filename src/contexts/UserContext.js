@@ -15,8 +15,9 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initDataUnsafe) {
         const initDataUnsafe = telegram.initDataUnsafe;
+        console.log(initDataUnsafe);
         const userId = initDataUnsafe.user;
-        // const userId = "kjh704222354";
+        // const userId = "asd704222354";
 
         try {
           // Fetch user data
@@ -63,7 +64,7 @@ export const UserProvider = ({ children }) => {
       const boostersResponse = await API.get('/boosters');
       const userResponse = await API.get('/user');
       setBoosters(boostersResponse.data);
-      // setUser(userResponse.data)
+      setUser(userResponse.data)
       console.log(userResponse.data);
     } catch (error) {
       console.error(error);
@@ -71,6 +72,11 @@ export const UserProvider = ({ children }) => {
   };
 
   const updateUser = (updatedData) => {
+    if (!user) {
+      console.error("User is null");
+      return;
+    }
+
     const updatedUser = {
       ...user,
       data: {
@@ -78,8 +84,12 @@ export const UserProvider = ({ children }) => {
         ...updatedData,
       },
     };
+
+    // console.log("Original User:", user);
+    // console.log("Updated Data:", updatedData);
+    // console.log("Updated User:", updatedUser);
+
     setUser(updatedUser);
-    console.log(updatedData);
     localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 

@@ -13,7 +13,7 @@ import './boost.css';
 import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount }) => {
+const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence }) => {
   const { boosters, updateBoosters } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
@@ -207,6 +207,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
           updateBoosters={updateBoosters}
           setGuruCount={setGuruCount}
           setFullTankCount={setFullTankCount}
+          setTapSequence={setTapSequence}
         />
       )}    
     </>

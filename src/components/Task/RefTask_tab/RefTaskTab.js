@@ -17,9 +17,10 @@ const RefTaskTab = ({refTasks}) => {
       console.log(error);
     }
   }
+  
   console.log(user);
-  const calculatePercentage = (totalCoins, rewardCoins) => {
-    const percentage = (totalCoins / rewardCoins) * 100;
+  const calculatePercentage = (expectedReferral, referralCount) => {
+    const percentage = (expectedReferral / referralCount) * 100;
     return percentage;
   };
 

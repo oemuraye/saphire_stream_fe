@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
@@ -6,22 +6,48 @@ import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 
 
 import './ref.css';
+import UserContext from '../../contexts/UserContext';
 
 const Ref = () => {
+  const { user } = useContext(UserContext);
   const [hasReferrals, sethasReferrals] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const referralLink = `https://t.me/SapphireStreamBot?start=${user?.data.referral_id}`;
+  // console.log(user?.data);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(referralLink).then(() => {
+      setSuccessAlert(true);
+    }).catch(err => {
+      console.error("Could not copy text: ", err);
+    });
+  };
+
+  useEffect(() => {
+    if (successAlert) {
+      const timer = setTimeout(() => {
+        setSuccessAlert(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successAlert]);
 
   return (
     <section className='referral_section container mt-4'>
       <div className="d-flex flex-column text-center text-white">
-        <h2>0 Referrals</h2>
-        <span className='increase_ref'>+0</span>
+        <h2>{user?.data.referral_count} Referrals</h2>
+        {/* <span className='increase_ref'>+0</span> */}
       </div>
 
       <hr />
 
-      <section className="d-flex align-items-center justify-content-between text-white my-3 pt-2">
+      <section className="d-flex flex-column text-white my-3 pt-2">
         <h6>My Referrals:</h6>
-        <Link className='ref_link'>Invite a friend</Link>
+        <div className='refer-link d-flex align-items-center'>
+          <input type='text' value={referralLink} readOnly className='form-control' />
+          <span onClick={handleCopyLink} className='ref_link'>Invite a friend</span>
+        </div>      
       </section>
 
       <section className="text-center text-white mt-5">
@@ -51,6 +77,12 @@ const Ref = () => {
         )}
       </section>
 
+      {successAlert && (
+        <section className="alert-toast d-flex align-items-center rounded-3 py-3 px-3 gap-2">
+          <i className="fa fa-check-circle" aria-hidden="true"></i>
+          <h6 className="mb-0">Copied!</h6>
+        </section>
+      )}
     </section>
   )
 }

@@ -1,5 +1,5 @@
-.referral_section {
-    
+.referral_section h6 {
+    /* font-size: 10px !important; */
 }
 .referral_section .increase_ref {
     color: #00C076;
@@ -12,9 +12,14 @@
     color: #fff;
     background-color: #ffa600;
     padding: 3px 12px;
-    border-radius: 10px;
+    border-radius: 7px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .referral_section .trophy-point img {
@@ -29,4 +34,20 @@
     padding: 3px;
     height: 20px;
     background-color: var(--bg_basic);
+}
+
+.referral_section .refer-link {
+    position: relative;
+}
+.referral_section .refer-link input {
+    padding-top: 30px;
+    /* width: 100%; */
+    background-color: var(--bg_basic);
+    color: #fff;
+    border: none;
+    font-size: 12px;
+}
+.referral_section .refer-link input:focus {
+    box-shadow: none;
+    border: none;
 }

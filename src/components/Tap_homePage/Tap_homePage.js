@@ -14,11 +14,11 @@ import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
 
-const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence}) => {
+const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRemainingPoints, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence, energyLevel, setEnergyLevel}) => {
   const { isLoading, updateBoosters, updateUser } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
-  const { remainingPoints, setRemainingPoints } = useRemainingPoints();
-  const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
+  // const { remainingPoints, setRemainingPoints } = useRemainingPoints();
+  // const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
   // const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
   // const [remainingPoints, setRemainingPoints] = useState(() => {
   //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
@@ -124,6 +124,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
         setPoints((prevPoints) => {
           const newPoints = prevPoints + tapSequence;
           localStorage.setItem('points', newPoints);
+          updateUser({ coins: newPoints });
           return newPoints;
         });
 
@@ -169,7 +170,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setRemainingPoints(prev => {
-        const newRemainingPoints = Math.min(prev + 1, 500);
+        const newRemainingPoints = Math.min(prev + 1, energyLevel);
         localStorage.setItem('remainingPoints', newRemainingPoints);
         return newRemainingPoints;
       });
@@ -183,7 +184,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, setSpeedTapping, fullEne
     try {
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
-      setAccumulatedTaps(0);
+      setAccumulatedTaps(taps - accumulatedTaps);
       console.log(accumulatedTaps);
       console.log(points);
       const userResponse = await API.get('/user');
