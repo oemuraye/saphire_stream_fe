@@ -15,9 +15,9 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initDataUnsafe) {
         const initDataUnsafe = telegram.initDataUnsafe;
-        console.log(initDataUnsafe);
-        // const userId = initDataUnsafe.user;
-        const userId = "fds704222354";
+        alert(initDataUnsafe);
+        const userId = initDataUnsafe.user;
+        // const userId = "fds704222354";
 
         try {
           // Fetch user data
