@@ -13,10 +13,10 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
-      if (telegram && telegram.initDataUnsafe) {
-        const initDataUnsafe = telegram.initDataUnsafe;
-        alert(telegram);
-        // const userId = initDataUnsafe.user;
+      if (telegram && telegram.initData) {
+        const initData = telegram.initData;
+        alert(initData);
+        // const userId = initData.user;
         const userId = "fds704222354";
 
         try {
