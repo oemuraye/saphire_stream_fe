@@ -7,18 +7,17 @@ import './refTask.css';
 import API from '../../../api/api';
 import UserContext from '../../../contexts/UserContext';
 
-const RefTaskTab = ({refTasks}) => {
-  const { user } = useContext(UserContext);
+const RefTaskTab = ({refTasks, user, setSuccessAlert}) => {
   const claimReward = async (id) => {
     try {
       const response = await API.post('/claim', {"type": "task", "task_id": id});
+      setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   }
   
-  console.log(user);
   const calculatePercentage = (expectedReferral, referralCount) => {
     const percentage = (expectedReferral / referralCount) * 100;
     return percentage;
@@ -49,8 +48,8 @@ const RefTaskTab = ({refTasks}) => {
           </div>
 
           <div className="task_progress my-2">
-            <div className="progress" role="progressbar" aria-valuenow={calculatePercentage(user.data.total_coins, task.reward_in_coins)} aria-valuemin="0" aria-valuemax="100">
-              <div className="progress-bar" style={{ width: `${calculatePercentage(user.data.total_coins, task.reward_in_coins)}%` }}></div>
+            <div className="progress" role="progressbar" aria-valuenow={calculatePercentage(refTasks.referrals_required, user.data.referral_count)} aria-valuemin="0" aria-valuemax="100">
+              <div className="progress-bar" style={{ width: `${calculatePercentage(refTasks.referrals_required, user.data.referral_count)}%` }}></div>
             </div>
           </div>
         </section>

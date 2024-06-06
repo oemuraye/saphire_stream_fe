@@ -28,61 +28,64 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
-      if (telegram && telegram.initData) {
+      telegram.ready();
+
+      if (telegram && telegram.initDataUnsafe) {
         const initData = telegram.initData;
-        // const userId = initData.user;
-        // const userInfo = parseTelegramInitData(initData);
-        // let referralID
+        console.log(initData);
+        // const initial = initData.user;
+        const userInfo = parseTelegramInitData(initData);
+        let referralID
         // alert(initData.user.id)
-        const userId = "2we704222354";
-
-        try {
-          // Fetch user data
-          const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
-          
-          //  const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
-          //   { 
-          //     telegram_user_id: userInfo?.id,  
-          //     username: userInfo?.username,
-          //     first_name: userInfo?.first_name,
-          //     last_name: userInfo?.last_name,
-          //     referred_by: referralID !== undefined ? referralID : null,
-          //   }
-          // );
-          
-          // const newUser = userResponse.data;
-          const token = userResponse.data.token;
-          const points = userResponse.data.data.coins;
-
-
-
-           const storedUser = localStorage.getItem('user');
-           const storedUserId = storedUser.data.telegram_user_id;
-
-           if (storedUserId !== userId) {
-             localStorage.clear();
-           }
-
-          localStorage.setItem('user', JSON.stringify(userResponse.data));
-          localStorage.setItem('profile', JSON.stringify({ access_token: token }));
-          localStorage.setItem('points', points);          
-          setUser(userResponse.data);
-          // alert(JSON.stringify(userResponse.data.data));
-
-          // Fetch boosters data
-          const boostersResponse = await API.get('/boosters');
-          setBoosters(boostersResponse.data);
-
-          // Fetch tasks data
-          const getTasksResponse = await API.get('/tasks');
-          setTasks(getTasksResponse.data);
-
-          setIsLoading(false);
-        } catch (error) {
-          console.error(error);
-          setIsLoading(false);
+        // const userId = "dfd704222354";
+        // const userId = "jhjjh704222354";
+          try {
+            // Fetch user data
+            // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
+             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
+              { 
+                telegram_user_id: userInfo?.id,  
+                username: userInfo?.username,
+                first_name: userInfo?.first_name,
+                last_name: userInfo?.last_name,
+                referred_by: referralID !== undefined ? referralID : null,
+              }
+            );
+            
+            const newUser = userResponse.data;
+            const token = userResponse.data.token;
+            const points = userResponse.data.data.coins;
+  
+  
+  
+             const storedUser = JSON.parse(localStorage.getItem('user'));
+             const storedUserId = storedUser.data.telegram_user_id;
+  
+             if (storedUserId !== userInfo.id) {
+               localStorage.clear();
+             }
+  
+            localStorage.setItem('user', JSON.stringify(newUser));
+            localStorage.setItem('profile', JSON.stringify({ access_token: token }));
+            localStorage.setItem('points', points);          
+            setUser(newUser);
+            // alert(JSON.stringify(userResponse.data.data));
+  
+            // Fetch boosters data
+            const boostersResponse = await API.get('/boosters');
+            setBoosters(boostersResponse.data);
+  
+            // Fetch tasks data
+            const getTasksResponse = await API.get('/tasks');
+            setTasks(getTasksResponse.data);
+  
+            setIsLoading(false);
+          } catch (error) {
+            console.error(error);
+            setIsLoading(false);
+          }
+      
         }
-      }
     };
 
 

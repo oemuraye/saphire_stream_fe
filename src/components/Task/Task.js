@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import SpecialTab from './Special_tab/SpecialTab';
 import LeagueTab from './Leagues_tab/LeaguesTab';
@@ -14,7 +14,10 @@ import UserContext from '../../contexts/UserContext';
 
 
 const Task = ({points, setPoints}) => {
-  const { user, tasks } = useContext(UserContext);
+  const { tasks } = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [successAlert, setSuccessAlert] = useState(false);
+
   const hasCompletedTask = (type) => tasks?.data?.some(task => task.type === type && task.completed);
   const getTasksByType = (type) => tasks?.data?.filter(task => task.type === type) || [];
   
@@ -26,6 +29,16 @@ const Task = ({points, setPoints}) => {
   // useEffect(() => {
   //   setPoints(points);
   // }, []);
+
+  useEffect(() => {
+    if (successAlert) {
+      const timer = setTimeout(() => {
+        setSuccessAlert(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successAlert]);
   
   return (
     <section className='task_section container'>
@@ -60,16 +73,22 @@ const Task = ({points, setPoints}) => {
 
         <section className="tab-content mt-3" id="myTabContent">
           <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-            <SpecialTab specialTasks={specialTasks} />
+            <SpecialTab specialTasks={specialTasks} setSuccessAlert={setSuccessAlert} />
           </div>
           <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-            <LeagueTab leagueTasks={leagueTasks} />  
+            <LeagueTab leagueTasks={leagueTasks} setSuccessAlert={setSuccessAlert} />  
           </div>
           <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab">
-            <RefTaskTab refTasks={refTasks} />  
+            <RefTaskTab refTasks={refTasks} user={user} setSuccessAlert={setSuccessAlert} />  
           </div>
         </section>
     </section>
+    {successAlert && (
+        <section className="alert-toast d-flex align-items-center rounded-3 py-3 px-3 gap-2">
+          <i className="fa fa-check-circle" aria-hidden="true"></i>
+          <h6 className="mb-0">Copied!</h6>
+        </section>
+      )}
     </section>
   )
 }

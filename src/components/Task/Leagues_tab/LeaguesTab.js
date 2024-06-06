@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 
-import trophyIcon from '../../../utils/svgs/bronze trophy.svg';
-import silverTrophyIcon from '../../../utils/images/silverTrophy.png';
 import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
+
+import goldImg from '../../../utils/images/trophies/Gold.png';
+import platinumImg from '../../../utils/images/trophies/Platinum.png';
+import diamondImg from '../../../utils/images/trophies/Diamond.png';
+import masterImg from '../../../utils/images/trophies/Master.png';
+import grandMasterImg from '../../../utils/images/trophies/Grandmaster.png';
+import eliteImg from '../../../utils/images/trophies/Elite league.png';
+import legendaryImg from '../../../utils/images/trophies/Legendary.png';
+import mythicImg from '../../../utils/images/trophies/Mystic league.png';
 
 import './leagues.css';
 import API from '../../../api/api';
@@ -13,22 +19,37 @@ import UserContext from '../../../contexts/UserContext';
 // Function to get the appropriate trophy icon based on the league or task type
 const getTrophyIcon = (type) => {
   switch (type) {
-    case 'bronze':
-      return trophyIcon;
-    case 'silver':
-      return silverTrophyIcon;
+    case 'platinum':
+      return platinumImg;
+    case 'diamond':
+      return diamondImg;
+    case 'master':
+      return masterImg;
+    case 'grandmaster':
+      return grandMasterImg;
+    case 'elite':
+      return eliteImg;
+    case 'legendary':
+      return legendaryImg;
+    case 'mythic':
+      return mythicImg;
     default:
-      return trophyIcon;
+      return goldImg;
   }
 };
 
-const LeaguesTab = ({leagueTasks}) => {
+const LeaguesTab = ({leagueTasks, setSuccessAlert}) => {
   const { user } = useContext(UserContext);
-  const claimReward = async (id) => {
-    const response = await API.post('/claim', {"type": "task", "task_id": id});
-      console.log(response.data);
-  }
 
+  const claimReward = async (id) => {
+    try {
+      const response = await API.post('/claim', {"type": "task", "task_id": id});
+      setSuccessAlert(true)
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const calculatePercentage = (totalCoins, rewardCoins) => {
     const percentage = (totalCoins / rewardCoins) * 100;
     return percentage;
@@ -40,7 +61,7 @@ const LeaguesTab = ({leagueTasks}) => {
         <section key={task.id} className="taskPad rounded-3 py-1 px-3">
           <div className="d-flex justify-content-between align-items-center">
             <div className='d-flex gap-3 align-items-center'>
-              <img src={getTrophyIcon(task.type)} alt="taskIcon" width="40px" height="70px" />
+              <img src={getTrophyIcon(task.name)} alt="taskIcon" width="40px" height="70px" />
               <div className="d-flex flex-column">
                 <h6>{task.name}</h6>
                 <div className='d-flex align-items-center gap-2'>

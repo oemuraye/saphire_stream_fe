@@ -248,12 +248,12 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
             <TrophyInfo coinPoints={points} league={user?.data.league} />
           </section>
 
-          <section className={`coinTap_section container d-flex justify-content-center pb-5 ${speedTapping && 'speed-tapping'}`} 
-            onTouchStart={handleTap} 
-            onMouseDown={handleTap}
-            onTouchMove={(e) => e.preventDefault()} 
-          >
-            <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px" />
+          <section className={`coinTap_section container d-flex justify-content-center pb-5 ${speedTapping && 'speed-tapping'}`} >
+            <img src={coinImg} alt="coin-img" className="img-fluid" width="100%" height="250px"
+              onTouchStart={handleTap} 
+              onMouseDown={handleTap}
+              onTouchMove={(e) => e.preventDefault()}
+            />
             {clickAnimations.map(animation => (
               <span key={animation.id} className="plus-one" style={{ left: `${animation.x}px`, top: `${animation.y}px` }}
               >+{tapSequence}</span>

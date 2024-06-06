@@ -41,17 +41,17 @@ const Join_socials = () => {
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-2 px-2 gap-2'>
             {/* <h6 className="muted-color">Join the Telegram chat</h6> */}
             <h6 className={missionStarted === true ? "mb-0 text-white" : "mb-0 py-1"}>Join the Telegram chat</h6>
-            {missionStarted === true && (<Link className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
+            {missionStarted === true && (<Link to="https://t.me/SapphireStream" className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
           </div>
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-2 px-2 gap-2'>
             {/* <h6 className="muted-color">Follow X handle</h6> */}
             <h6 className={missionStarted === true ? "mb-0 text-white" : "mb-0 py-1"}>Follow X handle</h6>
-            {missionStarted === true && (<Link className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
+            {missionStarted === true && (<Link to="https://twitter.com/sapphirestream_" className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
           </div>
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-2 px-2 gap-2'>
             {/* <h6 className="muted-color">Visit website</h6> */}
             <h6 className={missionStarted === true ? "mb-0 text-white" : "mb-0 py-1"}>Visit website</h6>
-            {missionStarted === true && (<Link className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
+            {missionStarted === true && (<Link to="https://t.me/SapphireStream" className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>)}
           </div>
         </div>
       </section>

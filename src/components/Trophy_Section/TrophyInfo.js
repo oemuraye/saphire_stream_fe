@@ -39,10 +39,12 @@ const TrophyInfo = ({coinPoints, league}) => {
   const trophy = trophies.find(trophy => coinPoints >= trophy.rangeStart && coinPoints < trophy.rangeEnd) || trophies[trophies.length - 1];
 
   return (
-    <div className='trophy d-flex justify-content-center align-items-center gap-1' onClick={goToTrophyPage} role='button'>
-      <img src={trophy.src} alt="trophy-logo" width="13px" />
-      <span className='muted-color'>{trophy.title}</span>
-      <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
+    <div className='trophy d-flex justify-content-center align-items-center'>
+      <div className='d-flex gap-1 align-items-center' onClick={goToTrophyPage} role='button'>
+        <img src={trophy.src} alt="trophy-logo" width="13px" />
+        <span className='muted-color'>{trophy.title}</span>
+        <i className="muted-color fa fa-angle-right" aria-hidden="true"></i>
+        </div>
     </div>
   );
 };
