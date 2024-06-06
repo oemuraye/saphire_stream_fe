@@ -40,6 +40,7 @@ function App() {
     const savedRemainingPoints = localStorage.getItem('remainingPoints');
     return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : energyLevel;
   });
+  
 
   // useEffect(() => {
   //   setPoints(user.coins);

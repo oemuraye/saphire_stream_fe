@@ -30,6 +30,7 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initData) {
         const initData = telegram.initData;
+        telegram.ready();
         // const userId = initData.user;
         // const userInfo = parseTelegramInitData(initData);
         // let referralID
@@ -58,9 +59,9 @@ export const UserProvider = ({ children }) => {
            const storedUser = localStorage.getItem('user');
            const storedUserId = storedUser.data.telegram_user_id;
 
-           if (storedUserId !== userId) {
-             localStorage.clear();
-           }
+          //  if (storedUserId !== userId) {
+          //    localStorage.clear();
+          //  }
 
           localStorage.setItem('user', JSON.stringify(newUser));
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
