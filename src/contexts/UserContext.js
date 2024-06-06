@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
         const initData = telegram.initData || "";
         const user = parseTelegramInitData(initData);
         // setUserInfo(user);
-        alert(user);
+        alert(user.username);
         // const userId = initData.user;
         const userId = "fds704222354";
 
