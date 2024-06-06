@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // const [userInfo, setUserInfo] = useState(null);
 
   const parseTelegramInitData = (initData) => {
@@ -68,6 +68,7 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
           localStorage.setItem('points', points);          
           setUser(userResponse.data);
+          alert(JSON.stringify(userResponse.data.data));
 
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');
