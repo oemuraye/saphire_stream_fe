@@ -57,18 +57,18 @@ export const UserProvider = ({ children }) => {
 
 
 
-           const storedUser = localStorage.getItem('user');
-           const storedUserId = storedUser.data.telegram_user_id;
+          //  const storedUser = localStorage.getItem('user');
+          //  const storedUserId = storedUser.data.telegram_user_id;
 
-           if (storedUserId !== userId) {
-             localStorage.clear();
-           }
+          //  if (storedUserId !== userId) {
+          //    localStorage.clear();
+          //  }
 
           localStorage.setItem('user', JSON.stringify(newUser));
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
           localStorage.setItem('points', points);          
           setUser(userResponse.data);
-          alert(JSON.stringify(userResponse.data.data));
+          // alert(JSON.stringify(userResponse.data.data));
 
           // Fetch boosters data
           const boostersResponse = await API.get('/boosters');
