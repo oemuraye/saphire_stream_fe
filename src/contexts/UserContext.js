@@ -9,29 +9,35 @@ export const UserProvider = ({ children }) => {
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
+
+  const parseTelegramInitData = (initData) => {
+    if (!initData) return null;
+
+      // Convert URL encoded string to object
+      const params = new URLSearchParams(initData);
+      
+      // Extract user data as JSON
+      const userData = params.get('user');
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      return null;
+  };
 
   useEffect(() => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initData) {
-        const initData = telegram.initData;
-        
-        const parseTelegramInitData = (initData) => {
-          if (!initData) return null;
-  
-          // Decode initData
-          const params = new URLSearchParams(initData);
-          const userData = params.get('user');
-          if (userData) {
-              return JSON.parse(userData);
-          }
-          return null;
-      };
-      
-      const user = parseTelegramInitData(initData);
-      alert(user.username);
-      // const userId = initData.user;
-      const userId = "fds704222354";
+        // const initData = telegram.initData;
+        telegram.ready();
+
+        const initData = telegram.initData || "";
+        const user = parseTelegramInitData(initData);
+        // setUserInfo(user);
+        alert(user);
+        // const userId = initData.user;
+        const userId = "fds704222354";
 
       try {
         // Fetch user data
