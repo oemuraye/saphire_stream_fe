@@ -37,8 +37,8 @@ export const UserProvider = ({ children }) => {
         // alert(initData.user.id)
         const userId = "2we704222354";
 
-      try {
-        // Fetch user data
+        try {
+          // Fetch user data
           const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
           
           //  const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 

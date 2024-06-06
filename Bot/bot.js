@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 const path = require('path');
 
-const BOT_TOKEN = "7460241461:AAGGJ3bNUhVanu7UxizcnImuhtJS1wQ7dpo";
+const BOT_TOKEN = "";
 
 const bot = new Telegraf(BOT_TOKEN);
 const web_link = "https://saphirestreamapp.com/";
