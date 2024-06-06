@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
       };
       
       const user = parseTelegramInitData(initData);
-      alert(user);
+      alert(user.username);
       // const userId = initData.user;
       const userId = "fds704222354";
 
