@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initDataUnsafe) {
+      if (telegram && telegram.initData) {
         const initData = telegram.initData;
         // console.log(initData);
         // const initial = initData.user;
