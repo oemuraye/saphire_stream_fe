@@ -32,11 +32,11 @@ export const UserProvider = ({ children }) => {
 
       if (telegram && telegram.initDataUnsafe) {
         const initData = telegram.initData;
-        console.log(initData);
-        const initial = initData.user;
+        // console.log(initData);
+        // const initial = initData.user;
         const userInfo = parseTelegramInitData(initData);
         let referralID
-        // alert(initData.user.id)
+        alert(userInfo.user.id)
         // const userId = "jhjjh704222354";
           try {
             // Fetch user data
