@@ -55,6 +55,8 @@ export const UserProvider = ({ children }) => {
           const token = userResponse.data.token;
           const points = userResponse.data.data.coins;
 
+          alert(points)
+
 
            const storedUser = localStorage.getItem('user');
            const storedUserId = storedUser.data.telegram_user_id;
