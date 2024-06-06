@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
 
   const parseTelegramInitData = (initData) => {
     if (!initData) return null;
@@ -30,10 +30,10 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initData) {
         const initData = telegram.initData;
-        const userI = initData.user.id;
+        // const userId = initData.user;
         const userInfo = parseTelegramInitData(initData);
         let referralID
-        // alert(userI)
+        alert(initData.user.id)
         const userId = "bnj704222354";
 
       try {
