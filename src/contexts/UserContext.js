@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // const [userInfo, setUserInfo] = useState(null);
 
   const parseTelegramInitData = (initData) => {
@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
         // const userInfo = parseTelegramInitData(initData);
         // let referralID
         // alert(initData.user.id)
-        const userId = "dxz704222354";
+        const userId = "2we704222354";
 
       try {
         // Fetch user data
@@ -55,15 +55,14 @@ export const UserProvider = ({ children }) => {
           const token = userResponse.data.token;
           const points = userResponse.data.data.coins;
 
-          alert(points)
 
 
            const storedUser = localStorage.getItem('user');
            const storedUserId = storedUser.data.telegram_user_id;
 
-          //  if (storedUserId !== userId) {
-          //    localStorage.clear();
-          //  }
+           if (storedUserId !== userId) {
+             localStorage.clear();
+           }
 
           localStorage.setItem('user', JSON.stringify(newUser));
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
