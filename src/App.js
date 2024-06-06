@@ -103,6 +103,7 @@ function App() {
 
   return (
     <UserProvider>
+      <RemainingPointsProvider>
         <section className="app">
           <section className="main_section">
             <section className="main-section">
@@ -140,6 +141,7 @@ function App() {
             )}
           </section>
         </section>
+      </RemainingPointsProvider>
     </UserProvider>
   );
 }
