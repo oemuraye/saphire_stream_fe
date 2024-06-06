@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initData) {
         const initData = telegram.initData;
-        alert(initData.query_id);
+        alert(initData.username);
         // const userId = initData.user;
         const userId = "fds704222354";
 
