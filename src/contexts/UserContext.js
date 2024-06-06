@@ -30,11 +30,11 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initData) {
-        const initData = telegram.initData;
+      if (telegram && telegram.initDataUnsafe) {
+        const initDataUnsafe = telegram.initDataUnsafe;
         // console.log(initData);
         // const initial = initData.user;
-        const userInfo = parseTelegramInitData(initData);
+        const userInfo = parseTelegramInitData(initDataUnsafe);
         let referralID
         alert(userInfo.user.id)
         // const userId = "jhjjh704222354";
