@@ -50,9 +50,19 @@ export const UserProvider = ({ children }) => {
           //   }
           // );
           
+          const newUser = userResponse.data;
           const token = userResponse.data.token;
           const points = userResponse.data.data.coins;
-          localStorage.setItem('user', JSON.stringify(userResponse.data));
+
+
+           const storedUser = localStorage.getItem('user');
+           const storedUserId = storedUser.data.telegram_user_id;
+
+           if (storedUserId !== userId) {
+             localStorage.clear();
+           }
+
+          localStorage.setItem('user', JSON.stringify(newUser));
           localStorage.setItem('profile', JSON.stringify({ access_token: token }));
           localStorage.setItem('points', points);          
           setUser(userResponse.data);
