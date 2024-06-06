@@ -31,11 +31,11 @@ export const UserProvider = ({ children }) => {
       telegram.ready();
 
       if (telegram && telegram.initData) {
-        // const initData = telegram.initData;
-        const userInfo = telegram.initData;
+        const initData = telegram.initData;
+        // const userInfo = telegram.initData;
         // console.log(initData);
         // const userInfo = initData.user;
-        // const userInfo = parseTelegramInitData(initData);
+        const userInfo = parseTelegramInitData(initData);
         let referralID
         alert(userInfo.id)
         const userId = "jhjjh704222354";
