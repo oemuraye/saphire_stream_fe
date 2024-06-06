@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 const path = require('path');
 
-const BOT_TOKEN = "";
+const BOT_TOKEN = "7460241461:AAGGJ3bNUhVanu7UxizcnImuhtJS1wQ7dpo";
 
 const bot = new Telegraf(BOT_TOKEN);
 const web_link = "https://saphirestreamapp.com/";
@@ -10,7 +10,9 @@ const logoImagePath = path.join(__dirname, './sapphire coin.png');
 const helpImagePath = path.join(__dirname, './helpImage.jpg');
 
 
-const setMenuButton = async () => {
+const setMenuButton = async (user) => {
+    const personalizedWebLink = `${web_link}?username=${user}`;
+
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setChatMenuButton`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -19,21 +21,24 @@ const setMenuButton = async () => {
                 type: "web_app",
                 text: "👋 Play",
                 web_app: {
-                    url: web_link
+                    url: personalizedWebLink
                 }
             }
         })
     });
     const data = await response.json();
     console.log(data);
+    console.log(user);
 };
 
-setMenuButton();
 
 
-bot.start((ctx) => {
+bot.start(async (ctx) => {
     const user = ctx.from;
     const username = user.username;
+    const personalizedWebLink = `${web_link}?username=${user}`;
+    
+    await setMenuButton(user);
 
     // Send the image first
     ctx.replyWithPhoto(
@@ -48,7 +53,7 @@ bot.start((ctx) => {
             {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: "👋 Play App", web_app: { url: web_link } }],
+                        [{ text: "👋 Play App", web_app: { url: personalizedWebLink } }],
                         [{ text: "💪 Join Our Community", url: 'https://t.me/SapphireStream' }],
                         [{ text: "🗒️ Help", callback_data: 'help' }]
                     ],
