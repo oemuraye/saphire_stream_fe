@@ -10,7 +10,7 @@ import UserContext from '../../../contexts/UserContext';
 const RefTaskTab = ({refTasks, user, setSuccessAlert}) => {
   const claimReward = async (id) => {
     try {
-      const response = await API.post('/claim', {"type": "task", "task_id": id});
+      const response = await API.post('/claim', {"type": "ref_tasks", "task_id": id});
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {

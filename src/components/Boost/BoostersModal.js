@@ -23,7 +23,6 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
 
     const handleBooster = async () => {
         setIsLoading(true);
-        console.log(boosterPrice);
         try {
             let response;
             if (title === actionsTitle.tappingGuru) {

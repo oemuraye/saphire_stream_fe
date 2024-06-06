@@ -34,23 +34,22 @@ export const UserProvider = ({ children }) => {
         const initData = telegram.initData;
         console.log(initData);
         // const initial = initData.user;
-        const userInfo = parseTelegramInitData(initData);
-        let referralID
+        // const userInfo = parseTelegramInitData(initData);
+        // let referralID
         // alert(initData.user.id)
-        // const userId = "dfd704222354";
-        // const userId = "jhjjh704222354";
+        const userId = "jhjjh704222354";
           try {
             // Fetch user data
-            // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
-             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
-              { 
-                telegram_user_id: userInfo?.id,  
-                username: userInfo?.username,
-                first_name: userInfo?.first_name,
-                last_name: userInfo?.last_name,
-                referred_by: referralID !== undefined ? referralID : null,
-              }
-            );
+            const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
+            //  const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
+            //   { 
+            //     telegram_user_id: userInfo?.id,  
+            //     username: userInfo?.username,
+            //     first_name: userInfo?.first_name,
+            //     last_name: userInfo?.last_name,
+            //     referred_by: referralID !== undefined ? referralID : null,
+            //   }
+            // );
             
             const newUser = userResponse.data;
             const token = userResponse.data.token;
@@ -61,7 +60,7 @@ export const UserProvider = ({ children }) => {
              const storedUser = JSON.parse(localStorage.getItem('user'));
              const storedUserId = storedUser.data.telegram_user_id;
   
-             if (storedUserId !== userInfo.id) {
+             if (storedUserId !== userId) {
                localStorage.clear();
              }
   
@@ -107,6 +106,18 @@ export const UserProvider = ({ children }) => {
       const boostersResponse = await API.get('/boosters');
       const userResponse = await API.get('/user');
       setBoosters(boostersResponse.data);
+      setUser(userResponse.data)
+      console.log(userResponse.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateTasks = async () => {
+    try {
+      const tasksResponse = await API.get('/boosters');
+      const userResponse = await API.get('/user');
+      setTasks(tasksResponse.data);
       setUser(userResponse.data)
       console.log(userResponse.data);
     } catch (error) {
@@ -184,7 +195,7 @@ console.log(storedUser);
   };
 
   return (
-    <UserContext.Provider value={{ user, boosters, tasks, updateUser, updateBoosters, handleBoosterUpdate, updateUserCoins, isLoading }}>
+    <UserContext.Provider value={{ user, boosters, tasks, updateUser, updateBoosters, updateTasks, handleBoosterUpdate, updateUserCoins, isLoading }}>
       {children}
     </UserContext.Provider>
   );

@@ -43,7 +43,7 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert}) => {
 
   const claimReward = async (id) => {
     try {
-      const response = await API.post('/claim', {"type": "task", "task_id": id});
+      const response = await API.post('/claim', {"type": "leagues", "task_id": id});
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {

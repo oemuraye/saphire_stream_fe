@@ -73,7 +73,7 @@ const Task = ({points, setPoints}) => {
 
         <section className="tab-content mt-3" id="myTabContent">
           <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-            <SpecialTab specialTasks={specialTasks} setSuccessAlert={setSuccessAlert} />
+            <SpecialTab specialTasks={specialTasks} />
           </div>
           <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
             <LeagueTab leagueTasks={leagueTasks} setSuccessAlert={setSuccessAlert} />  
