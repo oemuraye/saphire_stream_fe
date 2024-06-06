@@ -15,12 +15,26 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       if (telegram && telegram.initData) {
         const initData = telegram.initData;
-        alert(initData.id);
-        // const userId = initData.user;
-        const userId = "fds704222354";
+        
+        const parseTelegramInitData = (initData) => {
+          if (!initData) return null;
+  
+          // Decode initData
+          const params = new URLSearchParams(initData);
+          const userData = params.get('user');
+          if (userData) {
+              return JSON.parse(userData);
+          }
+          return null;
+      };
+      
+      const user = parseTelegramInitData(initData);
+      alert(user);
+      // const userId = initData.user;
+      const userId = "fds704222354";
 
-        try {
-          // Fetch user data
+      try {
+        // Fetch user data
           const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
           const token = userResponse.data.token;
           const points = userResponse.data.data.coins;
