@@ -33,23 +33,23 @@ export const UserProvider = ({ children }) => {
       if (telegram && telegram.initDataUnsafe) {
         const initData = telegram.initData;
         console.log(initData);
-        // const initial = initData.user;
-        // const userInfo = parseTelegramInitData(initData);
-        // let referralID
+        const initial = initData.user;
+        const userInfo = parseTelegramInitData(initData);
+        let referralID
         // alert(initData.user.id)
-        const userId = "jhjjh704222354";
+        // const userId = "jhjjh704222354";
           try {
             // Fetch user data
-            const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
-            //  const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
-            //   { 
-            //     telegram_user_id: userInfo?.id,  
-            //     username: userInfo?.username,
-            //     first_name: userInfo?.first_name,
-            //     last_name: userInfo?.last_name,
-            //     referred_by: referralID !== undefined ? referralID : null,
-            //   }
-            // );
+            // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
+             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
+              { 
+                telegram_user_id: userInfo?.id,  
+                username: userInfo?.username,
+                first_name: userInfo?.first_name,
+                last_name: userInfo?.last_name,
+                referred_by: referralID !== undefined ? referralID : null,
+              }
+            );
             
             const newUser = userResponse.data;
             const token = userResponse.data.token;
@@ -60,7 +60,8 @@ export const UserProvider = ({ children }) => {
              const storedUser = JSON.parse(localStorage.getItem('user'));
              const storedUserId = storedUser.data.telegram_user_id;
   
-             if (storedUserId !== userId) {
+            //  if (storedUserId !== userId) {
+             if (storedUserId !== userInfo.id) {
                localStorage.clear();
              }
   
