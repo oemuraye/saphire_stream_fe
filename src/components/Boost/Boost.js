@@ -13,7 +13,7 @@ import './boost.css';
 import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence }) => {
+const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence, tapLevel, energyLimitLevel, energyRechargeLevel, tapBotLevel, setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel, seTapBotLevel }) => {
   const { boosters, updateBoosters } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
@@ -32,6 +32,9 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
     if (user?.booster_data?.daily_boosters) {
       setGuruCount(user?.booster_data?.daily_boosters.tapping_guru);
       setFullTankCount(user?.booster_data?.daily_boosters.full_tank);
+      setTapLevel(user?.booster_data?.tap_level);
+      setEnergyLimitLevel(user?.booster_data?.energy_limit_level);
+      setEnergyRechargeLevel(user?.booster_data?.energy_recharge_level);
     }
   }, []);
 
@@ -39,6 +42,9 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
     if (user?.booster_data?.daily_boosters) {
       setGuruCount(user.booster_data.daily_boosters.tapping_guru);
       setFullTankCount(user.booster_data.daily_boosters.full_tank);
+      setTapLevel(user?.booster_data?.tap_level);
+      setEnergyLimitLevel(user?.booster_data?.energy_limit_level);
+      setEnergyRechargeLevel(user?.booster_data?.energy_recharge_level);
     }
   }, [user]);
 
@@ -91,15 +97,16 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
   };
 
   const boosterFieldMap = {
-    'Multitap': 'tap_level',
-    'Energy Limit': 'energy_limit_level',
-    'Recharging Speed': 'energy_recharge_level',
-    'Tap Bot': 'tap_bot',
+    'Multitap': tapLevel,
+    'Energy Limit': energyLimitLevel,
+    'Recharging Speed': energyRechargeLevel,
+    'Tap Bot': tapBotLevel,
   };
 
   const getUserBoosterLevel = (boosterName) => {
     const fieldName = boosterFieldMap[boosterName];
-    const level = Number(user?.data?.booster_data?.[fieldName])
+    const level = boosterFieldMap[boosterName];
+    // const level = Number(user?.data?.booster_data?.[fieldName])
     return level || 0;
   };
 
@@ -208,6 +215,10 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
           setGuruCount={setGuruCount}
           setFullTankCount={setFullTankCount}
           setTapSequence={setTapSequence}
+          setTapLevel={setTapLevel} 
+          setEnergyLimitLevel={setEnergyLimitLevel} 
+          setEnergyRechargeLevel={setEnergyRechargeLevel}
+          seTapBotLevel={seTapBotLevel}
         />
       )}    
     </>

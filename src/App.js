@@ -35,6 +35,10 @@ function App() {
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
   const [energyLevel, setEnergyLevel] = useState(user?.data?.booster_data.energy_limit);
+  const [tapLevel, setTapLevel] = useState(user?.data?.booster_data.tap_level);
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(user?.data?.booster_data.energy_limit_level);
+  const [energyRechargeLevel, setEnergyRechargeLevel] = useState(user?.data?.booster_data.energy_recharge_level);
+  const [tapBot, setTapBot] = useState(user?.data?.booster_data.tap_bot);
   
   const [remainingPoints, setRemainingPoints] = useState(() => {
     const savedRemainingPoints = localStorage.getItem('remainingPoints');
@@ -126,6 +130,10 @@ function App() {
                                                     setSpeedTapping={setSpeedTapping} setFullEnergyLevel={setFullEnergyLevel} 
                                                     guruCount={guruCount} setGuruCount={setGuruCount} 
                                                     fullTankCount={fullTankCount} setFullTankCount={setFullTankCount} 
+                                                    tapLevel={tapLevel} setTapLevel={setTapLevel} 
+                                                    energyLimitLevel={energyLimitLevel} setEnergyLimitLevel={setEnergyLimitLevel} 
+                                                    energyRechargeLevel={energyRechargeLevel} setEnergyRechargeLevel={setEnergyRechargeLevel} 
+                                                    tapBot={tapBot} setTapBot={setTapBot} 
                                               />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/join_socials" element={<JoinSocials />} />

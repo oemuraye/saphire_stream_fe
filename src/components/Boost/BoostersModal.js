@@ -15,7 +15,7 @@ const actionsTitle = {
 
 }
 
-const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount, setTapSequence }) => {
+const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount, setTapSequence,  setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel }) => {
     const { updateUser, handleBoosterUpdate } = useContext(UserContext);
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
@@ -38,15 +38,18 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
             } else if (title === actionsTitle.multiTap) {
                 response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
                 const newPoints = user.coins - boosterPrice;
+                setTapLevel((prev) => prev + 1)
                 updateUser({ coins: newPoints });
                 setTapSequence((prev) => prev + 1);
             } else if (title === actionsTitle.energyLimit) {
                 response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
                 const newPoints = user.coins - boosterPrice;
+                setEnergyLimitLevel((prev) => prev + 1)
                 updateUser({ coins: newPoints });
             } else if (title === actionsTitle.rechargeSpeed) {
                 response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
                 const newPoints = user.coins - boosterPrice;
+                setEnergyRechargeLevel((prev) => prev + 1)
                 updateUser({ coins: newPoints });
             } else if (title === actionsTitle.tapBot) {
                 response = await API.post('/claim', {"booster":"tap_bot_coins"});

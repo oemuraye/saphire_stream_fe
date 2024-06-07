@@ -30,19 +30,15 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initData) {
+      if (telegram && telegram.initDataUnsafe) {
         const initData = telegram.initData;
-        // const userInfo = telegram.initData;
-        // console.log(initData);
-        // const userInfo = initData.user;
         const userInfo = parseTelegramInitData(initData);
         let referralID
-        // alert(userInfo.id)
-        // const userId = "jhjjh704222354";
+        // const userId = "jbjh704222354";
           try {
             // Fetch user data
             // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
-             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
+            const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
               { 
                 telegram_user_id: userInfo?.id,  
                 username: userInfo?.username,
@@ -70,7 +66,6 @@ export const UserProvider = ({ children }) => {
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));
             localStorage.setItem('points', points);          
             setUser(newUser);
-            // alert(JSON.stringify(userResponse.data.data));
   
             // Fetch boosters data
             const boostersResponse = await API.get('/boosters');

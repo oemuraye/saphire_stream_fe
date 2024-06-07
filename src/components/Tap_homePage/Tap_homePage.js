@@ -34,7 +34,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
   useEffect(() => {
     if (user && user?.data) {
-      setEnergyLevel(user.data.energy || 500);
+      setEnergyLevel(user.data.booster_data.energy_limit);
       const savedPoints = localStorage.getItem('points');
       const initialPoints = savedPoints ? parseInt(savedPoints, 10) : user.data.coins || 0;
       setPoints(initialPoints);    
@@ -184,7 +184,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
     try {
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
-      setAccumulatedTaps(taps - accumulatedTaps);
+      setAccumulatedTaps(accumulatedTaps);
       console.log(accumulatedTaps);
       console.log(points);
       const userResponse = await API.get('/user');
