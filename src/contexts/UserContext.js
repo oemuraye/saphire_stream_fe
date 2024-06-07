@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
         // const initData = telegram.initData;
         // const userInfo = parseTelegramInitData(initData);
         let referralID
-        const userId = "tyhfgjg704222354";
+        const userId = "tuhgjg704222354";
           try {
             // Fetch user data
             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
@@ -59,8 +59,9 @@ export const UserProvider = ({ children }) => {
   
              // if (storedUserId !== userInfo.id) {
              if (storedUserId !== userId) {
+               localStorage.clear();
+               }
               localStorage.clear();
-            }
 
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));
