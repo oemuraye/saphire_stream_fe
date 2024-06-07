@@ -61,7 +61,7 @@ export const UserProvider = ({ children }) => {
             // if (storedUserId !== userInfo.id) {
               localStorage.clear();
             }
-            // localStorage.clear();
+            localStorage.clear();
 
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));
