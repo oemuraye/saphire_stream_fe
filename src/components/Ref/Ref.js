@@ -55,7 +55,7 @@ const Ref = () => {
     }
   }, [successAlert]);
 
-console.log(referralInfo.data.length);
+console.log(referralInfo?.data?.length);
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -64,7 +64,7 @@ console.log(referralInfo.data.length);
   return (
     <section className='referral_section container mt-4'>
       <div className="d-flex flex-column text-center text-white">
-        <h2>{user?.data.referral_count} Referrals</h2>
+        <h2>{user?.data?.referral_count} Referrals</h2>
         {/* <span className='increase_ref'>+0</span> */}
       </div>
 
@@ -79,7 +79,7 @@ console.log(referralInfo.data.length);
       </section>
 
       <section className="text-center text-white mt-5">
-        {referralInfo.data.length > 0 ? (
+        {referralInfo?.data?.length > 0 ? (
           referralInfo.data.map((referredUser) => {
             <section key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
               <h6 className='text-start'>{referredUser.username}</h6>
