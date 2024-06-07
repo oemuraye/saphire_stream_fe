@@ -221,7 +221,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
       const saveTappingsInterval = setInterval(() => {
         saveTappings();
         setAccumulatedTaps(0);
-      }, 10000);
+      }, 6000);
   
       return () => {
         clearInterval(saveTappingsInterval);
