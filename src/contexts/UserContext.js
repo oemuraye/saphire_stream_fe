@@ -54,14 +54,13 @@ export const UserProvider = ({ children }) => {
   
   
   
-             const storedUser = JSON.parse(localStorage.getItem('user'));
-             const storedUserId = storedUser.data.telegram_user_id;
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            const storedUserId = storedUser?.data?.telegram_user_id;
   
-             // if (storedUserId !== userInfo.id) {
-             if (storedUserId !== userId) {
-               localStorage.clear();
-               }
+            // if (storedUserId !== userInfo.id) {
+            if (storedUserId !== userId) {
               localStorage.clear();
+            }
 
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));

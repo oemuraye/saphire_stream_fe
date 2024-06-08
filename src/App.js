@@ -34,7 +34,7 @@ function App() {
   const [guruCount, setGuruCount] = useState(user?.data?.booster_data?.daily_boosters.tapping_guru);
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
-  const [energyLevel, setEnergyLevel] = useState(user?.data?.booster_data.energy_limit);
+  const [energyLevel, setEnergyLevel] = useState(user?.data?.energy);
   const [tapLevel, setTapLevel] = useState(user?.data?.booster_data.tap_level);
   const [energyLimitLevel, setEnergyLimitLevel] = useState(user?.data?.booster_data.energy_limit_level);
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(user?.data?.booster_data.energy_recharge_level);
@@ -42,7 +42,7 @@ function App() {
   
   const [remainingPoints, setRemainingPoints] = useState(() => {
     const savedRemainingPoints = localStorage.getItem('remainingPoints');
-    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : energyLevel;
+    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : Number(energyLevel);
   });
 
   // useEffect(() => {
