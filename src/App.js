@@ -34,12 +34,12 @@ function App() {
   const [guruCount, setGuruCount] = useState(user?.data?.booster_data?.daily_boosters.tapping_guru);
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
-  const [energyLevel, setEnergyLevel] = useState(user?.data?.energy);
-  const [energyLimit, setEnergyLimit] = useState(user?.data?.booster_data.energy_limit);
-  const [tapLevel, setTapLevel] = useState(user?.data?.booster_data.tap_level);
-  const [energyLimitLevel, setEnergyLimitLevel] = useState(user?.data?.booster_data.energy_limit_level);
-  const [energyRechargeLevel, setEnergyRechargeLevel] = useState(user?.data?.booster_data.energy_recharge_level);
-  const [tapBot, setTapBot] = useState(user?.data?.booster_data.tap_bot);
+  const [energyLevel, setEnergyLevel] = useState(Number(user?.data?.energy));
+  const [energyLimit, setEnergyLimit] = useState(Number(user?.data?.booster_data.energy_limit));
+  const [tapLevel, setTapLevel] = useState(Number(user?.data?.booster_data.tap_level));
+  const [energyLimitLevel, setEnergyLimitLevel] = useState(Number(user?.data?.booster_data.energy_limit_level));
+  const [energyRechargeLevel, setEnergyRechargeLevel] = useState(Number(user?.data?.booster_data.energy_recharge_level));
+  const [tapBot, setTapBot] = useState(Number(user?.data?.booster_data.tap_bot));
   
   const [remainingPoints, setRemainingPoints] = useState(energyLevel);
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
