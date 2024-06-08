@@ -41,9 +41,11 @@ function App() {
   const [energyLimitLevel, setEnergyLimitLevel] = useState(Number(user?.data?.booster_data.energy_limit_level));
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(Number(user?.data?.booster_data.energy_recharge_level));
   const [energyRecharge, setEnergyRecharge] = useState(Number(user?.data?.booster_data.energy_recharge));
-  const [tapBot, setTapBot] = useState(Number(user?.data?.booster_data.tap_bot));
-  const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.tap_bot_coins));
+  const [tapBot, setTapBot] = useState(Number(user?.data?.tap_bot_coins));
+  const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.booster_data.tap_bot));
   const [tapBotCoinsCount, setTapBotCoinsCount] = useState(0);
+  const [isTapBotModalOpen, setIsTapBotModalOpen] = useState(false);
+  const tapBotIntervalRef = useRef(null);
   
   const [remainingPoints, setRemainingPoints] = useState(energyLevel);
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
@@ -94,6 +96,41 @@ function App() {
     return () => clearTimeout(timeout);
   }, []);
 
+  // TapBot auto tapping
+  useEffect(() => {
+    if (tapBotCoins > 0) {
+      setIsTapBotModalOpen(true);
+    }
+  }, [tapBotCoins])
+
+  useEffect(() => {
+    if (tapBot === 1) {
+      tapBotIntervalRef.current = setInterval(() => {
+        setPoints(prevPoints => {
+          const newPoints = prevPoints + 3;
+          localStorage.setItem('points', newPoints); // Optional: Persist points to local storage
+          return newPoints;
+        });
+        setTapBotCoinsCount(prevCoins => prevCoins + 3);
+      }, 1000);
+    }
+
+    return () => {
+      if (tapBotIntervalRef.current) {
+        clearInterval(tapBotIntervalRef.current);
+      }
+    };
+  }, [setPoints, setTapBotCoinsCount, tapBot]);
+
+  useEffect(() => {
+    return () => {
+      if (tapBotIntervalRef.current) {
+        clearInterval(tapBotIntervalRef.current);
+      }
+    };
+  }, []);
+  
+
   const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
   // if (isMobile) {
@@ -126,6 +163,7 @@ function App() {
                                             tapBotCoinsCount={tapBotCoinsCount} setTapBotCoinsCount={setTapBotCoinsCount}
                                             tapBotCoins={tapBotCoins} setTapBotCoins={setTapBotCoins}
                                             tapBot={tapBot}
+                                            isTapBotModalOpen={isTapBotModalOpen} setIsTapBotModalOpen={setIsTapBotModalOpen}
                                         />} />
                 <Route path="/ref" element={<Ref />} />
                 <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />

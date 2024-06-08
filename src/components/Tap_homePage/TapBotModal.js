@@ -3,10 +3,10 @@ import UserContext from '../../contexts/UserContext';
 import API from '../../api/api';
 
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
-import taskIcon from "../../utils/images/taskIcon.png";
+import taskIcon from "../../utils/images/tapbot.png";
 
-const TapBotModal = ({closeTaskModal, setTapBotCoinsCount}) => {
-    const { updateBoosters } = useContext(UserContext);
+const TapBotModal = ({closeTaskModal, setTapBotCoinsCount, setPoints, tapBotCoins, setTapBotCoins}) => {
+    const { updateBoosters, updateUser } = useContext(UserContext);
     const user = JSON.parse(localStorage.getItem('user'));
     const [isLoading, setIsLoading] = useState(false);
 
@@ -15,10 +15,14 @@ const TapBotModal = ({closeTaskModal, setTapBotCoinsCount}) => {
 
         try {
             const response = await API.post('/claim', {"type": "tap_bot_coins"});
-            closeTaskModal();
+            setPoints((prev) => prev + tapBotCoins);
+            const newPoints = user.coins + tapBotCoins;
+            updateUser({ coins: newPoints });
+            setTapBotCoins(0)
             setTapBotCoinsCount(0)
-            console.log(response.data);
             await updateBoosters();
+            closeTaskModal();
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         } finally {
@@ -34,14 +38,16 @@ const TapBotModal = ({closeTaskModal, setTapBotCoinsCount}) => {
 
         <section className='d-flex flex-column gap-2 justify-content-center text-center'>
             <span className="booster-icon">
-                <img src={taskIcon} alt="booster-img" className='img-fluid' width="40px" />
+                <img src={taskIcon} alt="booster-img" className='img-fluid' width="60px" />
             </span>
             
-            <h3>Congratulations</h3>
+            <h3>Tap Bot</h3>
+
+            <p className='text-light'>While you were asleep, your Tap Bot earned some shares for you </p>
 
             <div className='d-flex justify-content-center align-items-center gap-2'>
                 <img src={coinIcon} alt="coin-icon" width="25px" />
-                <h4 className='text-white mb-0'>200 000</h4>
+                <h4 className='text-white mb-0'>{tapBotCoins}</h4>
             </div>
 
 

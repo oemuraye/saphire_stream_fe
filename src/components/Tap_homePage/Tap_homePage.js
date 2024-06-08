@@ -10,21 +10,22 @@ import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import coinImg from "../../utils/images/tap coin.png";
 
 import './tap.css';
+import TapBotModal from './TapBotModal';
 
 const Tap_homePage = ({
   points, setPoints, speedTapping, remainingPoints, setRemainingPoints, 
   setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence,
   setTapSequence, energyLimit, setEnergyLevel, energyLevel, 
   accumulatedTaps, setAccumulatedTaps, energyRecharge,
-  tapBot, setTapBotCoinsCount 
+  tapBot, setTapBotCoinsCount, setTapBotCoins, tapBotCoins, isTapBotModalOpen, setIsTapBotModalOpen
 }) => {
 
   const { isLoading, updateUser } = useContext(UserContext);
-  const user = JSON.parse(localStorage.getItem('user'));
   const [clickAnimations, setClickAnimations] = useState([]);
-  const inactivityTimeoutRef = useRef(null);
-  const saveTappingsIntervalRef = useRef(null);
+  const user = JSON.parse(localStorage.getItem('user'));
   const accumulatedTapsRef = useRef(accumulatedTaps);
+  const saveTappingsIntervalRef = useRef(null);
+  const inactivityTimeoutRef = useRef(null);
   const intervalRef = useRef(null);
 
 
@@ -38,18 +39,17 @@ const Tap_homePage = ({
   }, [user, setPoints]);
 
 
-  // TapBot auto tapping
-  useEffect(() => {
-    if (tapBot === 1) {
-      const tapBotInterval = setInterval(() => {
-        setPoints(prevPoints => prevPoints + 3);
-        setTapBotCoinsCount(prevCoins => prevCoins + 3);
-      }, 1000);
+  
 
-      return () => clearInterval(tapBotInterval);
+  const openModal = () => {
+    if (!isTapBotModalOpen) {
+      setIsTapBotModalOpen(true);
     }
-  }, [tapBot, setPoints, setTapBotCoinsCount]);
+  };
 
+  const closeTaskModal = () => {
+    setIsTapBotModalOpen(false);
+  };
 
 
   useEffect(() => {
@@ -268,6 +268,14 @@ const Tap_homePage = ({
       <section className="tap-progress_section container">
         <ProgressBar remainingPoints={remainingPoints} progressPercentage={progressPercentage} energyLimit={energyLimit} /> 
       </section>
+
+      {isTapBotModalOpen && (<TapBotModal 
+                          closeTaskModal={closeTaskModal} 
+                          setTapBotCoinsCount={setTapBotCoinsCount}
+                          setTapBotCoins={setTapBotCoins}
+                          setPoints={setPoints}
+                          tapBotCoins={tapBotCoins}
+                        />)}
     </>
   );
 };

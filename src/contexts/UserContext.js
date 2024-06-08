@@ -45,8 +45,9 @@ export const UserProvider = ({ children }) => {
         // const { userInfo } = parseTelegramInitData(initData);
         // const { referralCode } = parseTelegramInitData(initData);
         let referralID
-        const userId = "sfsdv704222354";
+        const userId = "hgcgdfg704222354";
         // const userId = "hgd704222354";
+        
           try {
             // Fetch user data
             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });

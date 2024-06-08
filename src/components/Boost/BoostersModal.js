@@ -119,22 +119,6 @@ console.log(userBoosterLevel);
                                     <div role='button' onClick={handleBooster} className='start-mission basic-gradient my-3 h5'>Get it!</div>
                                 )}
                             </section>
-                        {/* {filteredLevel.map((level, index) => (
-                            <>
-                                <div key={index} className='d-flex justify-content-center align-items-center gap-2'>
-                                    <img src={coinIcon} alt="coin-icon" width="25px" />
-                                    <h4 className='text-white mb-0'>{level.price}</h4>
-                                    {title === "Tap Bot" ? null : <h6 className='muted-color mb-0'>| {level.value} level</h6>}
-                                </div>
-                                <section key={index + 1} className='action-btn container'>
-                                    {isLoading ? (
-                                        <div role='button' className='start-mission loadingBtn my-3 h5'>Get it!</div>
-                                    ) : (
-                                        <div role='button' onClick={() => handleBooster(level.value)} className='start-mission basic-gradient my-3 h5'>Get it!</div>
-                                    )}
-                                </section>
-                            </>
-                        ))} */}
                     
                     </section>
                 </section>
