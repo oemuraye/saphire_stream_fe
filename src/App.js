@@ -60,7 +60,7 @@ function App() {
         setIsMobile(true);
       }
 
-      telegram.isExpanded();
+      // telegram.isExpanded();
 
     } else {
       setIsTelegramMiniApp(false);
