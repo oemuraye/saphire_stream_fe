@@ -13,7 +13,7 @@ import './boost.css';
 import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence, tapLevel, energyLimitLevel, energyRechargeLevel, tapBotLevel, setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel, seTapBotLevel }) => {
+const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence, tapLevel, energyLimitLevel, energyRechargeLevel, tapBotLevel, setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel, seTapBotLevel, accumulatedTaps, setAccumulatedTaps, setEnergyLevel }) => {
   const { boosters, updateBoosters } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
@@ -21,8 +21,6 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
   const [successAlert, setSuccessAlert] = useState(false);
   const [selectedIconSrc, setSelectedIconSrc] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
-  // const [guruCount, setGuruCount] = useState();
-  // const [fullTankCount, setFullTankCount] = useState();
   const [selectedBooster, setSelectedBooster] = useState(null);
   const [boosterLevel, setBoosterLevel] = useState(0);
   const [boosterValue, setBoosterValue] = useState(0);
@@ -48,13 +46,6 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
     }
   }, [user]);
 
-  
-  // useEffect(() => {
-  //   const refreshBooster = async () => {
-  //     await updateBoosters();
-  //   }
-  //   refreshBooster();
-  // }, [location]);
   
 
   const openModal = (iconSrc, title, booster, value, level, price) => {
@@ -107,7 +98,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
     const fieldName = boosterFieldMap[boosterName];
     const level = boosterFieldMap[boosterName];
     // const level = Number(user?.data?.booster_data?.[fieldName])
-    return level || 0;
+    return Number(level);
   };
 
   const getBoosterLevelData = (booster, level) => {
@@ -163,11 +154,11 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
               const userBoosterLevel = getUserBoosterLevel(boosterName);
               const isTapBot = boosterName === 'Tap Bot';
               const isEnergyLimit = boosterName === 'Energy Limit';
-              const boosterData = isTapBot ? booster.data.levels[0] : getBoosterLevelData(booster, userBoosterLevel + 1);
-              console.log(userBoosterLevel + 1);
-              const boosterValue = boosterData.value || 0;
-              const boosterLevel = boosterData.level || 0;
-              const boosterPrice = boosterData.price || 0;
+              const boosterData = isTapBot ? booster.data.levels[0] : getBoosterLevelData(booster, Number(userBoosterLevel) + 1);
+              console.log(boosterName + ":" + userBoosterLevel);
+              const boosterValue = Number(boosterData.value);
+              const boosterLevel = Number(boosterData.level);
+              const boosterPrice = Number(boosterData.price);
 
               return (
                 <section key={index} role="button" onClick={() => openModal(boosterIcon, boosterName, booster, boosterValue, boosterLevel, boosterPrice)}
@@ -216,9 +207,12 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
           setFullTankCount={setFullTankCount}
           setTapSequence={setTapSequence}
           setTapLevel={setTapLevel} 
+          setEnergyLevel={setEnergyLevel}
           setEnergyLimitLevel={setEnergyLimitLevel} 
           setEnergyRechargeLevel={setEnergyRechargeLevel}
           seTapBotLevel={seTapBotLevel}
+          accumulatedTaps={accumulatedTaps} setAccumulatedTaps={setAccumulatedTaps}
+          setPoints={setPoints}
         />
       )}    
     </>

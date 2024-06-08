@@ -14,18 +14,11 @@ import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
 
-const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRemainingPoints, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence, energyLevel, setEnergyLevel}) => {
+const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRemainingPoints, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence, energyLimit, setEnergyLevel, energyLevel, accumulatedTaps, setAccumulatedTaps }) => {
   const { isLoading, updateBoosters, updateUser } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
-  // const { remainingPoints, setRemainingPoints } = useRemainingPoints();
-  // const [energyLevel, setEnergyLevel] = useState(user?.data?.energy || 500);
-  // const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap || 1);
-  // const [remainingPoints, setRemainingPoints] = useState(() => {
-  //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
-  //   return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : 500;
-  // });
   const [clickAnimations, setClickAnimations] = useState([]);
-  const [accumulatedTaps, setAccumulatedTaps] = useState(0);
+  // const [accumulatedTaps, setAccumulatedTaps] = useState(0);
   const [initialPoints, setInitialPoints] = useState(user?.data?.coins || 0);
   const saveTappingsIntervalRef = useRef(null);
   const intervalRef = useRef(null);
@@ -34,7 +27,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
   useEffect(() => {
     if (user && user?.data) {
-      setEnergyLevel(user.data.booster_data.energy_limit);
+      setEnergyLevel(user.data.energy);
       const savedPoints = localStorage.getItem('points');
       const initialPoints = savedPoints ? parseInt(savedPoints, 10) : user.data.coins || 0;
       setPoints(initialPoints);    
@@ -43,24 +36,30 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
 
 
-  // useEffect(() => {
-  //   // Start the interval unconditionally
-  //   intervalRef.current = setInterval(() => {
-  //     setRemainingPoints(prev => Math.min(prev + 1, 500));
-  //   }, 1000);
-  
-  //   // Clean up function to clear the interval when component unmounts
-  //   return () => clearInterval(intervalRef.current);
-  // }, []);
-
-
-
   useEffect(() => {
-    const savedRemainingPoints = localStorage.getItem('remainingPoints');
-    if (savedRemainingPoints) {
-      setRemainingPoints(parseInt(savedRemainingPoints, 10));
+    if (remainingPoints < energyLimit) {
+      intervalRef.current = setInterval(() => {
+        setRemainingPoints((prev) => {
+          const newRemainingPoints = Math.min(prev + 1, energyLimit);
+          localStorage.setItem('remainingPoints', newRemainingPoints);
+          return newRemainingPoints;
+        });
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
     }
+
+    return () => clearInterval(intervalRef.current);
   }, []);
+
+
+
+  // useEffect(() => {
+  //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
+  //   if (savedRemainingPoints) {
+  //     setRemainingPoints(parseInt(savedRemainingPoints, 10));
+  //   }
+  // }, []);
 
 
 
@@ -82,7 +81,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
   useEffect(() => {
     if (fullEnergyLevel) {
-      setRemainingPoints(energyLevel);
+      setRemainingPoints(energyLimit);
 
       const fullEnergyTimer = setTimeout(() => {
         setFullEnergyLevel(false);
@@ -90,7 +89,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
       return () => clearTimeout(fullEnergyTimer);
     }
-  }, [fullEnergyLevel, energyLevel, setRemainingPoints]);
+  }, [fullEnergyLevel, energyLimit, setRemainingPoints]);
 
 
 
@@ -136,7 +135,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
           });
         }
 
-        setAccumulatedTaps(prev => prev + 1);
+        setAccumulatedTaps(prev => prev + tapSequence);
 
         // Calculate touch position relative to the image
         const rect = e.target.getBoundingClientRect();
@@ -179,14 +178,10 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
   };
 
   const saveTappings = async () => {
-    console.log(accumulatedTaps);
-    const taps = accumulatedTaps
     try {
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
-      setAccumulatedTaps(accumulatedTaps);
-      console.log(accumulatedTaps);
-      console.log(points);
+      setAccumulatedTaps(0);
       const userResponse = await API.get('/user');
       updateUser(userResponse.data);
     } catch (error) {
@@ -221,7 +216,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
       const saveTappingsInterval = setInterval(() => {
         saveTappings();
         setAccumulatedTaps(0);
-      }, 6000);
+      }, 3000);
   
       return () => {
         clearInterval(saveTappingsInterval);
@@ -230,7 +225,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
   }, [accumulatedTaps]);
   
 
-  const progressPercentage = (remainingPoints / 500) * 100;
+  const progressPercentage = (remainingPoints / energyLimit) * 100;
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -262,7 +257,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
         </section>
       </section>
       <section className="tap-progress_section container">
-        <ProgressBar remainingPoints={remainingPoints} progressPercentage={progressPercentage} energyLevel={energyLevel} /> 
+        <ProgressBar remainingPoints={remainingPoints} progressPercentage={progressPercentage} energyLimit={energyLimit} /> 
       </section>
     </>
   );

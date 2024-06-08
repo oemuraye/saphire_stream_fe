@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
   const [boosters, setBoosters] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // const [userInfo, setUserInfo] = useState(null);
+  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   const parseTelegramInitData = (initData) => {
     if (!initData) return null;
@@ -25,6 +25,16 @@ export const UserProvider = ({ children }) => {
       return null;
   };
 
+  const clearBrowserCache = () => {
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        names.forEach(name => {
+          caches.delete(name);
+        });
+      });
+    }
+  };
+
   useEffect(() => {
     const fetchUserAndData = async () => {
       const telegram = window.Telegram.WebApp;
@@ -34,7 +44,7 @@ export const UserProvider = ({ children }) => {
         // const initData = telegram.initData;
         // const userInfo = parseTelegramInitData(initData);
         let referralID
-        const userId = "tuhgjg704222354";
+        const userId = "nefcc704222354";
           try {
             // Fetch user data
             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
@@ -54,13 +64,15 @@ export const UserProvider = ({ children }) => {
   
   
   
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            const storedUserId = storedUser?.data?.telegram_user_id;
+            const storedUserId = storedUser && storedUser.data.telegram_user_id;
   
-            // if (storedUserId !== userInfo.id) {
             if (storedUserId !== userId) {
               localStorage.clear();
+              clearBrowserCache();
             }
+            // if (storedUserId !== userInfo.id) {
+            //   localStorage.clear();
+            // }
 
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));

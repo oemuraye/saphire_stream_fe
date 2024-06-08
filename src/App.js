@@ -35,19 +35,14 @@ function App() {
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
   const [energyLevel, setEnergyLevel] = useState(user?.data?.energy);
+  const [energyLimit, setEnergyLimit] = useState(user?.data?.booster_data.energy_limit);
   const [tapLevel, setTapLevel] = useState(user?.data?.booster_data.tap_level);
   const [energyLimitLevel, setEnergyLimitLevel] = useState(user?.data?.booster_data.energy_limit_level);
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(user?.data?.booster_data.energy_recharge_level);
   const [tapBot, setTapBot] = useState(user?.data?.booster_data.tap_bot);
   
-  const [remainingPoints, setRemainingPoints] = useState(() => {
-    const savedRemainingPoints = localStorage.getItem('remainingPoints');
-    return savedRemainingPoints ? parseInt(savedRemainingPoints, 10) : Number(energyLevel);
-  });
-
-  // useEffect(() => {
-  //   setPoints(user.coins);
-  // }, [points]);
+  const [remainingPoints, setRemainingPoints] = useState(energyLevel);
+  const [accumulatedTaps, setAccumulatedTaps] = useState(0);
 
 
   useEffect(() => {
@@ -121,6 +116,8 @@ function App() {
                                             fullEnergyLevel={fullEnergyLevel} setFullEnergyLevel={setFullEnergyLevel} 
                                             tapSequence={tapSequence} setTapSequence={setTapSequence}
                                             energyLevel={energyLevel} setEnergyLevel={setEnergyLevel}
+                                            energyLimit={energyLimit} setEnergyLimit={setEnergyLimit}
+                                            accumulatedTaps={accumulatedTaps} setAccumulatedTaps={setAccumulatedTaps}
                                         />} />
                 <Route path="/ref" element={<Ref />} />
                 <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
@@ -131,9 +128,11 @@ function App() {
                                                     guruCount={guruCount} setGuruCount={setGuruCount} 
                                                     fullTankCount={fullTankCount} setFullTankCount={setFullTankCount} 
                                                     tapLevel={tapLevel} setTapLevel={setTapLevel} 
+                                                    setEnergyLevel={setEnergyLevel}
                                                     energyLimitLevel={energyLimitLevel} setEnergyLimitLevel={setEnergyLimitLevel} 
                                                     energyRechargeLevel={energyRechargeLevel} setEnergyRechargeLevel={setEnergyRechargeLevel} 
-                                                    tapBot={tapBot} setTapBot={setTapBot} 
+                                                    tapBot={tapBot} setTapBot={setTapBot}
+                                                    accumulatedTaps={accumulatedTaps} setAccumulatedTaps={setAccumulatedTaps} 
                                               />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/join_socials" element={<JoinSocials />} />
