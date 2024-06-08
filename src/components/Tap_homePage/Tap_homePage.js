@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import { useRemainingPoints } from '../../contexts/RemainingPointsContext';
 import API from '../../api/api';
 import Loading from '../LoadingSection/Loading';
 import TrophyInfo from '../Trophy_Section/TrophyInfo';
@@ -10,19 +8,24 @@ import TrophyInfo from '../Trophy_Section/TrophyInfo';
 import ProgressBar from './ProgressBar/ProgressBar';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import coinImg from "../../utils/images/tap coin.png";
-import speedCoinImg from "../../utils/images/speedtapping.png";
 
 import './tap.css';
 
-const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRemainingPoints, setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence, setTapSequence, energyLimit, setEnergyLevel, energyLevel, accumulatedTaps, setAccumulatedTaps }) => {
-  const { isLoading, updateBoosters, updateUser } = useContext(UserContext);
+const Tap_homePage = ({
+  points, setPoints, speedTapping, remainingPoints, setRemainingPoints, 
+  setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence,
+  setTapSequence, energyLimit, setEnergyLevel, energyLevel, 
+  accumulatedTaps, setAccumulatedTaps, energyRecharge,
+  tapBot, setTapBotCoinsCount 
+}) => {
+
+  const { isLoading, updateUser } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   const [clickAnimations, setClickAnimations] = useState([]);
-  // const [accumulatedTaps, setAccumulatedTaps] = useState(0);
-  const [initialPoints, setInitialPoints] = useState(user?.data?.coins || 0);
+  const inactivityTimeoutRef = useRef(null);
   const saveTappingsIntervalRef = useRef(null);
+  const accumulatedTapsRef = useRef(accumulatedTaps);
   const intervalRef = useRef(null);
-  const location = useLocation();
 
 
   useEffect(() => {
@@ -35,12 +38,25 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
   }, [user, setPoints]);
 
 
+  // TapBot auto tapping
+  useEffect(() => {
+    if (tapBot === 1) {
+      const tapBotInterval = setInterval(() => {
+        setPoints(prevPoints => prevPoints + 3);
+        setTapBotCoinsCount(prevCoins => prevCoins + 3);
+      }, 1000);
+
+      return () => clearInterval(tapBotInterval);
+    }
+  }, [tapBot, setPoints, setTapBotCoinsCount]);
+
+
 
   useEffect(() => {
     if (remainingPoints < energyLimit) {
       intervalRef.current = setInterval(() => {
         setRemainingPoints((prev) => {
-          const newRemainingPoints = Math.min(prev + 1, energyLimit);
+          const newRemainingPoints = Math.min(prev + energyRecharge, energyLimit);
           localStorage.setItem('remainingPoints', newRemainingPoints);
           return newRemainingPoints;
         });
@@ -51,15 +67,6 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
     return () => clearInterval(intervalRef.current);
   }, []);
-
-
-
-  // useEffect(() => {
-  //   const savedRemainingPoints = localStorage.getItem('remainingPoints');
-  //   if (savedRemainingPoints) {
-  //     setRemainingPoints(parseInt(savedRemainingPoints, 10));
-  //   }
-  // }, []);
 
 
 
@@ -75,8 +82,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
       return () => clearTimeout(speedTappingTimer);
     }
-  }, [speedTapping]);
-
+  }, [speedTapping, tapSequence, setTapSequence, setSpeedTapping]);
 
 
   useEffect(() => {
@@ -85,29 +91,11 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
       const fullEnergyTimer = setTimeout(() => {
         setFullEnergyLevel(false);
-      }, 20000);
+      }, 3000);
 
       return () => clearTimeout(fullEnergyTimer);
     }
-  }, [fullEnergyLevel, energyLimit, setRemainingPoints]);
-
-
-
-  // useEffect(() => {
-  //   if (remainingPoints < 500 && !fullEnergyLevel) {
-  //     intervalRef.current = setInterval(() => {
-  //       setRemainingPoints((prev) => {
-  //         const newRemainingPoints = Math.min(prev + 1, 500);
-  //         localStorage.setItem('remainingPoints', newRemainingPoints);
-  //         return newRemainingPoints;
-  //       });
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(intervalRef.current);
-  //   }
-
-  //   return () => clearInterval(intervalRef.current);
-  // }, [remainingPoints, fullEnergyLevel]);
+  }, [fullEnergyLevel, energyLimit, setRemainingPoints, setFullEnergyLevel]);
 
 
   const handleTap = (e) => {
@@ -129,13 +117,18 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
 
         if (!speedTapping) {
           setRemainingPoints(prevRemainingPoints => {
-            const newRemainingPoints = prevRemainingPoints - 1;
+            const newRemainingPoints = prevRemainingPoints - tapSequence;
             localStorage.setItem('remainingPoints', newRemainingPoints);
             return newRemainingPoints;
           });
         }
 
-        setAccumulatedTaps(prev => prev + tapSequence);
+        setAccumulatedTaps(prev => {
+          const newTaps = prev + tapSequence;
+          accumulatedTapsRef.current = newTaps;
+          console.log("Updated accumulatedTaps: ", newTaps);
+          return newTaps;
+        });
 
         // Calculate touch position relative to the image
         const rect = e.target.getBoundingClientRect();
@@ -169,23 +162,44 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setRemainingPoints(prev => {
-        const newRemainingPoints = Math.min(prev + 1, energyLevel);
+        const newRemainingPoints = Math.min(prev + energyRecharge, energyLevel);
         localStorage.setItem('remainingPoints', newRemainingPoints);
         return newRemainingPoints;
       });
     }, 1000);
 
+
+    // Clear the inactivity timeout and set it again
+    clearTimeout(inactivityTimeoutRef.current);
+    inactivityTimeoutRef.current = setTimeout(() => {
+      clearInterval(saveTappingsIntervalRef.current);
+      saveTappingsIntervalRef.current = null;
+    }, 3000);
+
+    // If the interval is not already set, start it
+    if (!saveTappingsIntervalRef.current) {
+      saveTappingsIntervalRef.current = setInterval(() => saveTappings(accumulatedTapsRef.current), 3000);
+    }
+
   };
 
-  const saveTappings = async () => {
-    console.log(accumulatedTaps);
+  const saveTappings = async (tapsAccumulated) => {
+    console.log("Sending taps: ", tapsAccumulated);
+    const tapsToSend = tapsAccumulated;
+    setAccumulatedTaps(0);
+    accumulatedTapsRef.current = 0;
+    
     try {
-      await API.post('/tap', { "taps": accumulatedTaps });
+      await API.post('/tap', { "taps": tapsToSend });
       console.log("points sent");
-      setAccumulatedTaps(0);
       const userResponse = await API.get('/user');
       updateUser(userResponse.data);
     } catch (error) {
+      setAccumulatedTaps(prev => {
+        const newTaps = prev + tapsToSend;
+        accumulatedTapsRef.current = newTaps;
+        return newTaps;
+      });
       console.error(error);
     }
   }
@@ -194,7 +208,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
   useEffect(() => {
     if (accumulatedTaps > 0) {
       const handleBeforeUnload = (event) => {
-        saveTappings();
+        saveTappings(accumulatedTaps);
         event.preventDefault();
         event.returnValue = ''; // Standard way to trigger a confirmation dialog
       };
@@ -206,17 +220,11 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
     }
   }, [accumulatedTaps]);
 
-  // useEffect(() => {
-  //   if (accumulatedTaps >= 100) {
-  //     saveTappings();
-  //   }
-  // }, [accumulatedTaps]);
 
   useEffect(() => {
     if (accumulatedTaps > 0) {
       const saveTappingsInterval = setInterval(() => {
-        saveTappings();
-        setAccumulatedTaps(0);
+        saveTappings(accumulatedTaps);
       }, 3000);
   
       return () => {

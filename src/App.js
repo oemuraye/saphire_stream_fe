@@ -31,6 +31,7 @@ function App() {
   const [speedTapping, setSpeedTapping] = useState(false);
   const [fullEnergyLevel, setFullEnergyLevel] = useState(false);
   const [points, setPoints] = useState(user?.data?.coins);
+
   const [guruCount, setGuruCount] = useState(user?.data?.booster_data?.daily_boosters.tapping_guru);
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
   const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
@@ -39,7 +40,10 @@ function App() {
   const [tapLevel, setTapLevel] = useState(Number(user?.data?.booster_data.tap_level));
   const [energyLimitLevel, setEnergyLimitLevel] = useState(Number(user?.data?.booster_data.energy_limit_level));
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(Number(user?.data?.booster_data.energy_recharge_level));
+  const [energyRecharge, setEnergyRecharge] = useState(Number(user?.data?.booster_data.energy_recharge));
   const [tapBot, setTapBot] = useState(Number(user?.data?.booster_data.tap_bot));
+  const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.tap_bot_coins));
+  const [tapBotCoinsCount, setTapBotCoinsCount] = useState(0);
   
   const [remainingPoints, setRemainingPoints] = useState(energyLevel);
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
@@ -61,24 +65,24 @@ function App() {
 
   // adding back button to telegram default header
   useEffect(() => {
-      const backButton = window.Telegram.WebApp.BackButton;
+    const backButton = window.Telegram.WebApp.BackButton;
 
-      if (telegram.setHeaderColor) {
-        telegram.setHeaderColor('#2f062f');
-      }
-      
-      if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
-        backButton.show();
-      } else {
-        backButton.hide();
-      }
-      
-      backButton.onClick(() => {
-        navigate(-1);
-      });
+    if (telegram.setHeaderColor) {
+      telegram.setHeaderColor('#2f062f');
+    }
+    
+    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+      backButton.show();
+    } else {
+      backButton.hide();
+    }
+    
+    backButton.onClick(() => {
+      navigate(-1);
+    });
 
-      return () => backButton.offClick();
-    }, [location.pathname, navigate]);
+    return () => backButton.offClick();
+  }, [location.pathname, navigate]);
 
 
     // initialize loading
@@ -118,6 +122,10 @@ function App() {
                                             energyLevel={energyLevel} setEnergyLevel={setEnergyLevel}
                                             energyLimit={energyLimit} setEnergyLimit={setEnergyLimit}
                                             accumulatedTaps={accumulatedTaps} setAccumulatedTaps={setAccumulatedTaps}
+                                            energyRecharge={energyRecharge} setEnergyRecharge={setEnergyRecharge}
+                                            tapBotCoinsCount={tapBotCoinsCount} setTapBotCoinsCount={setTapBotCoinsCount}
+                                            tapBotCoins={tapBotCoins} setTapBotCoins={setTapBotCoins}
+                                            tapBot={tapBot}
                                         />} />
                 <Route path="/ref" element={<Ref />} />
                 <Route path="/task" element={<Task points={points} setPoints={setPoints} />} />
@@ -129,13 +137,15 @@ function App() {
                                                     fullTankCount={fullTankCount} setFullTankCount={setFullTankCount} 
                                                     tapLevel={tapLevel} setTapLevel={setTapLevel} 
                                                     setEnergyLevel={setEnergyLevel}
+                                                    setEnergyRecharge={setEnergyRecharge}
                                                     energyLimitLevel={energyLimitLevel} setEnergyLimitLevel={setEnergyLimitLevel} 
                                                     energyRechargeLevel={energyRechargeLevel} setEnergyRechargeLevel={setEnergyRechargeLevel} 
                                                     tapBot={tapBot} setTapBot={setTapBot}
+                                                    tapBotCoins={tapBotCoins} setTapBotCoins={setTapBotCoins}
                                                     accumulatedTaps={accumulatedTaps} setAccumulatedTaps={setAccumulatedTaps} 
                                               />} />
                 <Route path="/stats" element={<Stats />} />
-                <Route path="/join_socials" element={<JoinSocials />} />
+                <Route path="/join_socials" element={<JoinSocials setPoints={setPoints} />} />
                 <Route path="/connect_wallet" element={<ConnectWallet />} />
                 <Route path="/trophy" element={<TrophySection />} />
               </Routes>

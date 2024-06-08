@@ -14,10 +14,8 @@ export const UserProvider = ({ children }) => {
   const parseTelegramInitData = (initData) => {
     if (!initData) return null;
 
-      // Convert URL encoded string to object
       const params = new URLSearchParams(initData);
       
-      // Extract user data as JSON
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
 
@@ -42,12 +40,13 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initDataUnsafe) {
+      if (telegram && telegram.initDataUnsafe) { // remember to change here to initData 
         // const initData = telegram.initData;
         // const { userInfo } = parseTelegramInitData(initData);
         // const { referralCode } = parseTelegramInitData(initData);
         let referralID
-        const userId = "bcuew704222354";
+        const userId = "sfsdv704222354";
+        // const userId = "hgd704222354";
           try {
             // Fetch user data
             const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
