@@ -33,55 +33,57 @@ console.log(accumulatedTaps);
             updateUser(userResponse.data);
         }
 
-        try {
-            let response;
-            if (title === actionsTitle.tappingGuru) {
-                response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
-                setSpeedTapping(true)
-                setGuruCount((prev) => prev - 1)
-                navigate('/');
-            } else if (title === actionsTitle.fullTank) {
-                response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
-                setFullTankCount((prev) => prev - 1)
-                setFullEnergyLevel(true)
-                navigate('/');
-            } else if (title === actionsTitle.multiTap) {
-                response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
-                const newPoints = user.coins - boosterPrice;
-                setTapLevel((prev) => prev + 1)
-                setPoints((prev) => prev - boosterPrice);
-                updateUser({ coins: newPoints });
-                setTapSequence((prev) => prev + 1);
-            } else if (title === actionsTitle.energyLimit) {
-                response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
-                const newPoints = user.coins - boosterPrice;
-                setEnergyLimitLevel((prev) => prev + 1)
-                setEnergyLevel((prev) => prev + 1)
-                setPoints((prev) => prev - boosterPrice);
-                updateUser({ coins: newPoints });
-            } else if (title === actionsTitle.rechargeSpeed) {
-                response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
-                const newPoints = user.coins - boosterPrice;
-                setEnergyRechargeLevel((prev) => prev + 1)
-                setPoints((prev) => prev - boosterPrice);
-                updateUser({ coins: newPoints });
-            } else if (title === actionsTitle.tapBot) {
-                response = await API.post('/claim', {"booster":"tap_bot_coins"});
-                const newPoints = user.coins - boosterPrice;
-                setPoints((prev) => prev - boosterPrice);
-                updateUser({ coins: newPoints });
+        setTimeout(async () => {
+            try {
+                let response;
+                if (title === actionsTitle.tappingGuru) {
+                    response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
+                    setSpeedTapping(true)
+                    setGuruCount((prev) => prev - 1)
+                    navigate('/');
+                } else if (title === actionsTitle.fullTank) {
+                    response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
+                    setFullTankCount((prev) => prev - 1)
+                    setFullEnergyLevel(true)
+                    navigate('/');
+                } else if (title === actionsTitle.multiTap) {
+                    response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
+                    const newPoints = user.coins - boosterPrice;
+                    setTapLevel((prev) => prev + 1)
+                    setPoints((prev) => prev - boosterPrice);
+                    updateUser({ coins: newPoints });
+                    setTapSequence((prev) => prev + 1);
+                } else if (title === actionsTitle.energyLimit) {
+                    response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
+                    const newPoints = user.coins - boosterPrice;
+                    setEnergyLimitLevel((prev) => prev + 1)
+                    setEnergyLevel((prev) => prev + 1)
+                    setPoints((prev) => prev - boosterPrice);
+                    updateUser({ coins: newPoints });
+                } else if (title === actionsTitle.rechargeSpeed) {
+                    response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
+                    const newPoints = user.coins - boosterPrice;
+                    setEnergyRechargeLevel((prev) => prev + 1)
+                    setPoints((prev) => prev - boosterPrice);
+                    updateUser({ coins: newPoints });
+                } else if (title === actionsTitle.tapBot) {
+                    response = await API.post('/claim', {"booster":"tap_bot_coins"});
+                    const newPoints = user.coins - boosterPrice;
+                    setPoints((prev) => prev - boosterPrice);
+                    updateUser({ coins: newPoints });
+                }
+    
+                console.log(response.data);
+                await updateBoosters();
+                setSuccessAlert(true);
+                onClose();
+    
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsLoading(false);
             }
-
-            console.log(response.data);
-            await updateBoosters();
-            setSuccessAlert(true);
-            onClose();
-
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
+        }, 1000);
     };
 
 console.log(userBoosterLevel);

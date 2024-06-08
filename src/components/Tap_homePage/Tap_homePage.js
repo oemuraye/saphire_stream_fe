@@ -178,6 +178,7 @@ const Tap_homePage = ({points, setPoints, speedTapping, remainingPoints, setRema
   };
 
   const saveTappings = async () => {
+    console.log(accumulatedTaps);
     try {
       await API.post('/tap', { "taps": accumulatedTaps });
       console.log("points sent");
