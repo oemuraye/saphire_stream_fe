@@ -44,9 +44,8 @@ export const UserProvider = ({ children }) => {
         // const initData = telegram.initData;
         // const { userInfo } = parseTelegramInitData(initData);
         // const { referralCode } = parseTelegramInitData(initData);
-        let referralID
-        const userId = "hgcgdfg704222354";
-        // const userId = "hgd704222354";
+        // let referralID = referralCode
+        const userId = "dsbcie704222354";
         
           try {
             // Fetch user data
