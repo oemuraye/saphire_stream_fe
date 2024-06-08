@@ -41,6 +41,7 @@ function App() {
   const [energyLimitLevel, setEnergyLimitLevel] = useState(Number(user?.data?.booster_data.energy_limit_level));
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(Number(user?.data?.booster_data.energy_recharge_level));
   const [energyRecharge, setEnergyRecharge] = useState(Number(user?.data?.booster_data.energy_recharge));
+  
   const [tapBot, setTapBot] = useState(Number(user?.data?.tap_bot_coins));
   const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.booster_data.tap_bot));
   const [tapBotCoinsCount, setTapBotCoinsCount] = useState(0);

@@ -13,7 +13,14 @@ import './boost.css';
 import API from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCount, setGuruCount, fullTankCount, setFullTankCount, setTapSequence, tapLevel, energyLimitLevel, energyRechargeLevel, tapBotLevel, setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel, seTapBotLevel, accumulatedTaps, setAccumulatedTaps, setEnergyLevel, setEnergyRecharge }) => {
+const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, 
+  guruCount, setGuruCount, fullTankCount, setFullTankCount, 
+  setTapSequence, tapLevel, energyLimitLevel, 
+  energyRechargeLevel, tapBotLevel, setTapLevel, 
+  setEnergyLimitLevel, setEnergyRechargeLevel, 
+  seTapBotLevel, accumulatedTaps, setAccumulatedTaps, 
+  setEnergyLevel, setEnergyRecharge, tapBot 
+}) => {
   const { boosters, updateBoosters } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   console.log(user);
@@ -132,6 +139,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, guruCou
                   <span>{guruCount}/3</span>
                 </div>
               </div>
+              {/* <span className='section_overlay'></span> */}
             </div>
             <div role="button" onClick={() => openModal(boltIcon, 'Full Tank', null)} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ms-1'>
               <img src={boltIcon} alt="boltIcon" width="30px" height="" />

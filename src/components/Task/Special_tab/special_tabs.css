@@ -1,5 +1,6 @@
 .taskPad {
     background-color: var(--bg_basic);
+    position: relative;
 }
 
 .start-mission {

@@ -82,7 +82,7 @@ const Tap_homePage = ({
 
       return () => clearTimeout(speedTappingTimer);
     }
-  }, [speedTapping, tapSequence, setTapSequence, setSpeedTapping]);
+  }, [speedTapping]);
 
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const Tap_homePage = ({
 
       return () => clearTimeout(fullEnergyTimer);
     }
-  }, [fullEnergyLevel, energyLimit, setRemainingPoints, setFullEnergyLevel]);
+  }, [fullEnergyLevel]);
 
 
   const handleTap = (e) => {
