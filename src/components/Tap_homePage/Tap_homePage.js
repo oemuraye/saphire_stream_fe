@@ -28,6 +28,8 @@ const Tap_homePage = ({
   const inactivityTimeoutRef = useRef(null);
   const intervalRef = useRef(null);
 
+  const coinSectionRef = useRef(null);
+
 
   useEffect(() => {
     if (user && user?.data) {
@@ -235,17 +237,21 @@ const Tap_homePage = ({
 
 
   useEffect(() => {
-    const coinSection = document.querySelector('.coinTap_section');
+    const coinSection = coinSectionRef.current;
     const handleWheel = (event) => {
       if (event.ctrlKey) {
         event.preventDefault();
       }
     };
     
-    coinSection.addEventListener('wheel', handleWheel);
+    if (coinSection) {
+      coinSection.addEventListener('wheel', handleWheel);
+    }
     
     return () => {
-      coinSection.removeEventListener('wheel', handleWheel);
+      if (coinSection) {
+        coinSection.removeEventListener('wheel', handleWheel);
+      }
     };
   }, []);
 
