@@ -11,7 +11,8 @@ const helpImagePath = path.join(__dirname, './helpImage.jpg');
 
 
 const setMenuButton = async (user, ref) => {
-    const personalizedWebLink = `${web_link}?username=${user}?ref=${ref}`;
+    const userStr = encodeURIComponent(JSON.stringify(user));
+    const personalizedWebLink = `${web_link}?user=${userStr}&ref=${ref}`;
 
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setChatMenuButton`, {
         method: 'POST',
@@ -36,8 +37,10 @@ const setMenuButton = async (user, ref) => {
 bot.start(async (ctx) => {
     const user = ctx.from;
     const username = user.username;
-    const ref = ctx.startPayload;
-    const personalizedWebLink = `${web_link}?username=${user}?ref=${ref}`;
+    const ref = ctx.startPayload || '';
+
+    const userStr = encodeURIComponent(JSON.stringify(user));
+    const personalizedWebLink = `${web_link}?user=${userStr}&ref=${ref}`;    
     
     await setMenuButton(user, ref);
 
