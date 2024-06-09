@@ -16,13 +16,13 @@ export const UserProvider = ({ children }) => {
 
       const params = new URLSearchParams(initData);
       
-      const userData = params.get('user');
-      const userInfo = userData ? JSON.parse(userData) : null;
+      // const userData = params.get('user');
+      // const userInfo = userData ? JSON.parse(userData) : null;
 
       const referralCode = params.get('start');
 
 
-      return { userInfo, referralCode };
+      return { referralCode };
   };
 
   const clearBrowserCache = () => {
@@ -41,11 +41,13 @@ export const UserProvider = ({ children }) => {
       telegram.ready();
 
       if (telegram && telegram.initDataUnsafe) { // remember to change here to initData 
-        // const initData = telegram.initData;
+        const initData = telegram.initData;
         // const { userInfo } = parseTelegramInitData(initData);
-        // const { referralCode } = parseTelegramInitData(initData);
-        // let referralID = referralCode
-        const userId = "fdsb704222354";
+        const { referralCode } = parseTelegramInitData(initData);
+        let referralID = referralCode
+        alert(referralID)
+        const userId = "awxcw704222354";
+        // const userId = "fdsb704222354";
         
           try {
             // Fetch user data
