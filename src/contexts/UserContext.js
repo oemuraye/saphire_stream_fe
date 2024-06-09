@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
 
-      const referralCode = params.get('start');
+      const referralCode = params.get('start_param');
 
 
       return { userInfo, referralCode };
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }) => {
         const initData = telegram.initData;
         const { userInfo, referralCode } = parseTelegramInitData(initData);
         let referralID = referralCode
-        alert(JSON.stringify(telegram.initData.startattach))
+        alert(JSON.stringify(telegram.initData.start_param))
         alert(JSON.stringify(referralCode))
         // const userId = "xmnesf704222354";
         const userId = "sdqwer704222354";
