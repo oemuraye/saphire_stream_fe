@@ -47,6 +47,7 @@ export const UserProvider = ({ children }) => {
         let referralID = referralCode
         alert(`User Info: ${JSON.stringify(userInfo)}`); // Display userInfo to see its content
         alert(`Referral Code: ${referralCode}`); 
+        alert(JSON.stringify(window.location.href))
         // const userId = "xmnesf704222354";
         const userId = "asxzc704222354";
         
