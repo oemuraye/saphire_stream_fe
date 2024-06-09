@@ -56,6 +56,21 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
   
 
   const openModal = (iconSrc, title, booster, value, level, price) => {
+    const boosterLevels = {
+      'Multitap': tapLevel,
+      'Energy Limit': energyLimitLevel,
+      'Recharging Speed': energyRechargeLevel,
+      'Tap Bot': tapBotLevel,
+    };
+
+    const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) && (
+      (title === 'Tap Bot' ? tapBot === 1 : Object.values(boosterLevels).some(level => level === booster?.data?.levels[booster?.data?.levels.length - 1].level))
+    );
+
+    if (isSectionOverlay) {
+      return;
+    }
+    
     if (!isModalOpen) {
       setSelectedBooster(booster);
       setSelectedTitle(title);
@@ -102,9 +117,9 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
   };
 
   const getUserBoosterLevel = (boosterName) => {
-    const fieldName = boosterFieldMap[boosterName];
-    const level = boosterFieldMap[boosterName];
+    // const fieldName = boosterFieldMap[boosterName];
     // const level = Number(user?.data?.booster_data?.[fieldName])
+    const level = boosterFieldMap[boosterName];
     return Number(level);
   };
 
@@ -131,7 +146,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
         <section className='daily-boosters container text-white my-3'>
           <h5>Your daily boosters:</h5>
           <section className="d-flex justify-content-between align-items-center gap-1">
-            <div role="button" onClick={() => openModal(flameIcon, 'Tapping Guru', null)} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2'>
+            <div role="button" onClick={() => openModal(flameIcon, 'Tapping Guru', null)} className={`taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ${(guruCount === 0) && 'section_overlay'}`} >
               <img src={flameIcon} alt="taskIcon" width="30px" height="" />
               <div className="d-flex flex-column">
                 <h6 className='mb-0'>Tapping Guru</h6>
@@ -139,9 +154,8 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
                   <span>{guruCount}/3</span>
                 </div>
               </div>
-              {/* <span className='section_overlay'></span> */}
             </div>
-            <div role="button" onClick={() => openModal(boltIcon, 'Full Tank', null)} className='taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ms-1'>
+            <div role="button" onClick={() => openModal(boltIcon, 'Full Tank', null)} className={`taskPad col-6 d-flex gap-2 align-items-center rounded-3 py-2 px-2 gap-2 ms-1 ${(fullTankCount === 0) && 'section_overlay'}`}>
               <img src={boltIcon} alt="boltIcon" width="30px" height="" />
               <div className="d-flex flex-column">
                 <h6 className='mb-0'>Full Tank</h6>
@@ -168,9 +182,13 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
               const boosterLevel = Number(boosterData.level);
               const boosterPrice = Number(boosterData.price);
 
+              const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) && (
+                (isTapBot ? tapBot === 1 : Object.values(boosterFieldMap).some(level => level === booster.data.levels[booster.data.levels.length - 1].level))
+              );
+
               return (
                 <section key={index} role="button" onClick={() => openModal(boosterIcon, boosterName, booster, boosterValue, boosterLevel, boosterPrice)}
-                  className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
+                  className={`taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3 ${isSectionOverlay && 'section_overlay'}`}
                 >
                   <div className='d-flex gap-3 align-items-center'>
                     <img src={boosterIcon} alt={`${boosterName}Icon`} width="40px" height="" />

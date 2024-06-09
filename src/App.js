@@ -41,9 +41,9 @@ function App() {
   const [energyLimitLevel, setEnergyLimitLevel] = useState(Number(user?.data?.booster_data.energy_limit_level));
   const [energyRechargeLevel, setEnergyRechargeLevel] = useState(Number(user?.data?.booster_data.energy_recharge_level));
   const [energyRecharge, setEnergyRecharge] = useState(Number(user?.data?.booster_data.energy_recharge));
-  
-  const [tapBot, setTapBot] = useState(Number(user?.data?.tap_bot_coins));
-  const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.booster_data.tap_bot));
+
+  const [tapBot, setTapBot] = useState(Number(user?.data?.booster_data.tap_bot));
+  const [tapBotCoins, setTapBotCoins] = useState(Number(user?.data?.tap_bot_coins));
   const [tapBotCoinsCount, setTapBotCoinsCount] = useState(0);
   const [isTapBotModalOpen, setIsTapBotModalOpen] = useState(false);
   const tapBotIntervalRef = useRef(null);
@@ -113,7 +113,7 @@ function App() {
       tapBotIntervalRef.current = setInterval(() => {
         setPoints(prevPoints => {
           const newPoints = prevPoints + 3;
-          localStorage.setItem('points', newPoints); // Optional: Persist points to local storage
+          localStorage.setItem('points', newPoints);
           return newPoints;
         });
         setTapBotCoinsCount(prevCoins => prevCoins + 3);

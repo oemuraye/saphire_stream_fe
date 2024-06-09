@@ -68,7 +68,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                     setEnergyRecharge((prev) => prev + 1)
                     setEnergyRechargeLevel((prev) => prev + 1)
                 } else if (title === actionsTitle.tapBot) {
-                    response = await API.post('/claim', {"booster":"tap_bot_coins"});
+                    response = await API.post('/boosters/upgrade', {"booster":"tap_bot"});
                     const newPoints = user.coins - boosterPrice;
                     setPoints((prev) => prev - boosterPrice);
                     updateUser({ coins: newPoints });
@@ -87,7 +87,6 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
         }, 1000);
     };
 
-console.log(userBoosterLevel);
 
   return (
     <section className='boosters-modal_section container'>
