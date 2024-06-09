@@ -10,8 +10,8 @@ const logoImagePath = path.join(__dirname, './sapphire coin.png');
 const helpImagePath = path.join(__dirname, './helpImage.jpg');
 
 
-const setMenuButton = async (user) => {
-    const personalizedWebLink = `${web_link}?username=${user}`;
+const setMenuButton = async (user, ref) => {
+    const personalizedWebLink = `${web_link}?username=${user}?ref=${ref}`;
 
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setChatMenuButton`, {
         method: 'POST',
@@ -36,9 +36,10 @@ const setMenuButton = async (user) => {
 bot.start(async (ctx) => {
     const user = ctx.from;
     const username = user.username;
-    const personalizedWebLink = `${web_link}?username=${user}`;
+    const ref = ctx.startPayload;
+    const personalizedWebLink = `${web_link}?username=${user}?ref=${ref}`;
     
-    await setMenuButton(user);
+    await setMenuButton(user, ref);
 
     // Send the image first
     ctx.replyWithPhoto(
