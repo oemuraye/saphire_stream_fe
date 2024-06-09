@@ -11,10 +11,10 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const storedUser = JSON.parse(localStorage.getItem('user'));
 
-  const parseTelegramInitData = (initData) => {
-    if (!initData) return null;
+  const parseTelegramInitData = (initDataUnsafe) => {
+    if (!initDataUnsafe) return null;
 
-      const params = new URLSearchParams(initData);
+      const params = new URLSearchParams(initDataUnsafe);
       
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
@@ -40,10 +40,10 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initData) { // remember to change here to initData 
-        const initData = telegram.initData;
-        alert(`Init Data: ${initData}`);
-        const { userInfo, referralCode } = parseTelegramInitData(initData);
+      if (telegram && telegram.initDataUnsafe) { // remember to change here to initData 
+        const initDataUnsafe = telegram.initDataUnsafe;
+        alert(`Init Data: ${initDataUnsafe}`);
+        const { userInfo, referralCode } = parseTelegramInitData(initDataUnsafe);
         let referralID = referralCode
         alert(`User Info: ${JSON.stringify(userInfo)}`); // Display userInfo to see its content
         alert(`Referral Code: ${referralCode}`); 
