@@ -16,7 +16,6 @@ export const UserProvider = ({ children }) => {
 
       const url = window.location.href;
 
-      // Step 2: Create a URL object
       const urlObj = new URL(url);
 
       const refParams = new URLSearchParams(urlObj.search);
@@ -26,10 +25,6 @@ export const UserProvider = ({ children }) => {
       
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
-
-      // const referralCode = params.get('start_param');
-      alert(params)
-
 
       return { userInfo, referralCode };
   };
@@ -49,12 +44,11 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initData) { // remember to change here to initData 
+      if (telegram && telegram.initData) { 
         const initData = telegram.initData;
-        alert(`Init Data: ${initData}`);
         const { userInfo, referralCode } = parseTelegramInitData(initData);
         let referralID = referralCode
-        alert(`Referral Code: ${referralCode}`); 
+        alert(`Referral Code: ${referralID}`); 
         // const userId = "xmnesf704222354";
         const userId = "asxzc704222354";
         
