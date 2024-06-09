@@ -49,6 +49,7 @@
 
 .coinTap_section {
     position: relative;
+    touch-action: none;
 }
 .plus-one {
     position: absolute;

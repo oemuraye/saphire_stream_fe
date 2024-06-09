@@ -232,7 +232,29 @@ const Tap_homePage = ({
       };
     }
   }, [accumulatedTaps]);
-  
+
+
+  useEffect(() => {
+    const coinSection = document.querySelector('.coin_section');
+    const handleWheel = (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault();
+      }
+    };
+    
+    coinSection.addEventListener('wheel', handleWheel);
+    
+    return () => {
+      coinSection.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  function formatPoints(points) {
+    if (points >= 10000000) {
+      return (points / 1000000).toFixed(3) + ' M';
+    }
+    return points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
   const progressPercentage = (remainingPoints / energyLimit) * 100;
 
@@ -247,7 +269,7 @@ const Tap_homePage = ({
           <section className='points_section d-flex flex-column justify-content-center gap-1 pt-4'>
             <div className='points d-flex justify-content-center align-items-center gap-1'>
               <img src={coinIcon} alt="coin-logo" width="30px" />
-              <span className=''>{points}</span>
+              <span className=''>{formatPoints(points)}</span>
             </div>
             <TrophyInfo coinPoints={points} league={user?.data.league} />
           </section>
