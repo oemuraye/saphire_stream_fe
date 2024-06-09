@@ -14,12 +14,20 @@ export const UserProvider = ({ children }) => {
   const parseTelegramInitData = (initData) => {
     if (!initData) return null;
 
+      const url = window.location.href;
+
+      // Step 2: Create a URL object
+      const urlObj = new URL(url);
+
+      const refParams = new URLSearchParams(urlObj.search);
+      const referralCode = refParams.get('start_param');
+
       const params = new URLSearchParams(initData);
       
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
 
-      const referralCode = params.get('start_param');
+      // const referralCode = params.get('start_param');
       alert(params)
 
 
@@ -46,9 +54,7 @@ export const UserProvider = ({ children }) => {
         alert(`Init Data: ${initData}`);
         const { userInfo, referralCode } = parseTelegramInitData(initData);
         let referralID = referralCode
-        alert(`User Info: ${JSON.stringify(userInfo)}`); // Display userInfo to see its content
         alert(`Referral Code: ${referralCode}`); 
-        alert(JSON.stringify(window.location.href))
         // const userId = "xmnesf704222354";
         const userId = "asxzc704222354";
         
