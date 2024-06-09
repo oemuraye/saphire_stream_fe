@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
         // const { userInfo } = parseTelegramInitData(initData);
         // const { referralCode } = parseTelegramInitData(initData);
         // let referralID = referralCode
-        const userId = "zxcvbnm704222354";
+        const userId = "fdsb704222354";
         
           try {
             // Fetch user data
@@ -71,9 +71,12 @@ export const UserProvider = ({ children }) => {
             if (storedUserId !== userId) {
               localStorage.clear();
               clearBrowserCache();
+              window.location.reload(true);
             }
             // if (storedUserId !== userInfo.id) {
-            //   localStorage.clear();
+            //     localStorage.clear();
+            //   clearBrowserCache();
+            //   window.location.reload(true);
             // }
 
             localStorage.setItem('user', JSON.stringify(newUser));
