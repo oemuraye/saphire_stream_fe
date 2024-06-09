@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
       const userData = params.get('user');
       const userInfo = userData ? JSON.parse(userData) : null;
 
-      const referralCode = params.get('startattach');
+      const referralCode = params.get('start');
 
 
       return { userInfo, referralCode };
