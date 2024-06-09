@@ -10,9 +10,7 @@ const logoImagePath = path.join(__dirname, './sapphire coin.png');
 const helpImagePath = path.join(__dirname, './helpImage.jpg');
 
 
-const setMenuButton = async (user, ref) => {
-    const userStr = encodeURIComponent(JSON.stringify(user));
-    const personalizedWebLink = `${web_link}?user=${userStr}&ref=${ref}`;
+const setMenuButton = async (personalizedWebLink) => {
 
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setChatMenuButton`, {
         method: 'POST',
@@ -29,20 +27,17 @@ const setMenuButton = async (user, ref) => {
     });
     const data = await response.json();
     console.log(data);
-    console.log(user);
 };
 
 
 
 bot.start(async (ctx) => {
     const user = ctx.from;
-    const username = user.username;
     const ref = ctx.startPayload || '';
 
-    const userStr = encodeURIComponent(JSON.stringify(user));
-    const personalizedWebLink = `${web_link}?user=${userStr}&ref=${ref}`;    
+    const personalizedWebLink = `${web_link}?user=${encodeURIComponent(JSON.stringify(user))}&start_param=${encodeURIComponent(ref)}`;
     
-    await setMenuButton(user, ref);
+    await setMenuButton(personalizedWebLink);
 
     // Send the image first
     ctx.replyWithPhoto(
@@ -50,7 +45,7 @@ bot.start(async (ctx) => {
     ).then(() => {
         // Send the text message with buttons after the image
         ctx.replyWithHTML(
-            `Welcome <b>${username}! </b>to Saphire Stream!\n\n` +
+            `Welcome <b>${user.username}! </b>to Saphire Stream!\n\n` +
             "Tap on the coin and see your balance rise.\n\n" +
             "<b>SaphireStream</b> is a Decentralized Exchange on the Solana Blockchain. The biggest part of SaphireStream Token SAST distribution will occur among the players here.\n\n" +
             `Got friends, relatives, co-workers?\nBring them all into the game.\nMore buddies, more coins.`,
