@@ -235,7 +235,7 @@ const Tap_homePage = ({
 
 
   useEffect(() => {
-    const coinSection = document.querySelector('.coin_section');
+    const coinSection = document.querySelector('.coinTap_section');
     const handleWheel = (event) => {
       if (event.ctrlKey) {
         event.preventDefault();
