@@ -5,18 +5,18 @@ import API from '../../api/api';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import taskIcon from "../../utils/images/taskIcon.png";
 
-const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoints}) => {
+const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoints, taskId, rewardInCoins}) => {
     const { updateTasks, updateUser } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleBooster = async (id) => {
+    const handleBooster = async () => {
         setIsLoading(true);
 
         try {
-            const response = await API.post('/claim', {"type": "special", "task_id": id});
+            const response = await API.post('/claim', {"type": "special", "task_id": taskId});
             closeTaskModal();
             setPoints((prevPoints) => {
-                const newPoints = prevPoints + 200000;
+                const newPoints = prevPoints + rewardInCoins;
                 localStorage.setItem('points', newPoints);
                 updateUser({ coins: newPoints });
                 return newPoints;
@@ -47,7 +47,7 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoin
 
             <div className='d-flex justify-content-center align-items-center gap-2'>
                 <img src={coinIcon} alt="coin-icon" width="25px" />
-                <h4 className='text-white mb-0'>200 000</h4>
+                <h4 className='text-white mb-0'>{rewardInCoins}</h4>
             </div>
 
 

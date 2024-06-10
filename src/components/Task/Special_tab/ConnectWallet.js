@@ -34,8 +34,9 @@ const Connect_wallet = () => {
           <div className='taskPad w-100 col-6 d-flex gap-2 align-items-center justify-content-between rounded-3 py-2 px-2 gap-2'>
             <h6 className="text-white mb-0">Saphire Wallet</h6>
             <div className="d-flex align-items-center gap-2">
-              <Link className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
-              <Link className='go-mission basic-gradient fw-bold py-1 px-4'>Check</Link>
+              {/* <Link className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
+              <Link className='go-mission basic-gradient fw-bold py-1 px-4'>Check</Link> */}
+              <span className='text-info'>Coming Soon!</span>
             </div>
           </div>
         </div>

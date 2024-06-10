@@ -1,9 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-
-import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
-import trophyIcon from "../../utils/svgs/bronze trophy.svg";
-
+import React, { useEffect, useState } from 'react';
+// import { Link } from "react-router-dom";
 
 import './ref.css';
 import API from '../../api/api';
@@ -12,7 +8,6 @@ import Loading from '../LoadingSection/Loading';
 
 const Ref = () => {
   const user = JSON.parse(localStorage.getItem('user'));  
-  const [hasReferrals, sethasReferrals] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [referralInfo, setReferralInfo] = useState();

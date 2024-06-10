@@ -4,11 +4,9 @@ import SpecialTab from './Special_tab/SpecialTab';
 import LeagueTab from './Leagues_tab/LeaguesTab';
 import RefTaskTab from './RefTask_tab/RefTaskTab';
 
-import trophyIcon from "../../utils/svgs/bronze trophy.svg";
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 
 import './task.css';
-import { useNavigate } from 'react-router-dom';
 import TrophyInfo from '../Trophy_Section/TrophyInfo';
 import UserContext from '../../contexts/UserContext';
 
