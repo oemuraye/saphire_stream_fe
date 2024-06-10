@@ -55,7 +55,7 @@ const Ref = () => {
     }
   }, [successAlert]);
 
-console.log(referralInfo?.data?.length);
+alert(referralInfo?.data);
 
   if (isLoading) {
     return <div><Loading /></div>;
