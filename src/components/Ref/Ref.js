@@ -55,7 +55,6 @@ const Ref = () => {
     }
   }, [successAlert]);
 
-alert(JSON.stringify(referralInfo?.data));
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -80,7 +79,7 @@ alert(JSON.stringify(referralInfo?.data));
 
       <section className="text-center text-white mt-5">
         {referralInfo?.data?.length > 0 ? (
-          referralInfo.data.map((referredUser) => {
+          referralInfo.data.map((referredUser) => (
             <section key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
               <h6 className='text-start'>{referredUser.username}</h6>
 
@@ -105,7 +104,7 @@ alert(JSON.stringify(referralInfo?.data));
                 <div className="progress-bar rounded-4" style={{width: "20%"}}></div>
               </div> */}
             </section>
-          })
+          ))
         ) : (
           <h6>You don't have referrals &#128557;</h6>
         )}
