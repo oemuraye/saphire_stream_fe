@@ -38,12 +38,18 @@ const getTrophyIcon = (type) => {
   }
 };
 
-const LeaguesTab = ({leagueTasks, setSuccessAlert}) => {
-  const { user } = useContext(UserContext);
+const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
+  const { user, updateUser } = useContext(UserContext);
 
-  const claimReward = async (id) => {
+  const claimReward = async (id, reward) => {
     try {
       const response = await API.post('/claim', {"type": "leagues", "task_id": id});
+      setPoints((prevPoints) => {
+        const newPoints = prevPoints + reward;
+        localStorage.setItem('points', newPoints);
+        updateUser({ coins: newPoints });
+        return newPoints;
+      });
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {
@@ -72,7 +78,7 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert}) => {
             </div>
             <div>
               {task.completed ? (
-                <span onClick={() => claimReward(task.id)} className='claim_link py-1'>Claim</span>
+                <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-1'>Claim</span>
               ) : (
                 <span className='notClaim_link py-2'>Claim</span>
               )}

@@ -5,8 +5,8 @@ import API from '../../api/api';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import taskIcon from "../../utils/images/taskIcon.png";
 
-const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed}) => {
-    const { updateTasks } = useContext(UserContext);
+const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoints}) => {
+    const { updateTasks, updateUser } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleBooster = async (id) => {
@@ -15,6 +15,12 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed}) => {
         try {
             const response = await API.post('/claim', {"type": "special", "task_id": id});
             closeTaskModal();
+            setPoints((prevPoints) => {
+                const newPoints = prevPoints + 200000;
+                localStorage.setItem('points', newPoints);
+                updateUser({ coins: newPoints });
+                return newPoints;
+            });
             setSuccessAlert(true);
             console.log(response.data);
             await updateTasks();

@@ -5,7 +5,7 @@ import coinIcon from "../../../utils/images/Small Icons/Tap coin.png";
 import TaskModal from '../TaskModal';
 
 
-const Join_socials = () => {
+const Join_socials = ({setPoints}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
   const [isRewardClaimed, setIsRewardClaimed] = useState(() => {
@@ -148,7 +148,7 @@ const Join_socials = () => {
           <h6 className="mb-0">Done!</h6>
         </section>
       )}
-      {isModalOpen && (<TaskModal closeTaskModal={closeTaskModal} setSuccessAlert={setSuccessAlert} setIsRewardClaimed={setIsRewardClaimed} />)}
+      {isModalOpen && (<TaskModal closeTaskModal={closeTaskModal} setSuccessAlert={setSuccessAlert} setIsRewardClaimed={setIsRewardClaimed} setPoints={setPoints} />)}
     </>
   )
 }

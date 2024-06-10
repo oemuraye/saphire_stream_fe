@@ -7,10 +7,17 @@ import './refTask.css';
 import API from '../../../api/api';
 import UserContext from '../../../contexts/UserContext';
 
-const RefTaskTab = ({refTasks, user, setSuccessAlert}) => {
-  const claimReward = async (id) => {
+const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
+  const { updateUser } = useContext(UserContext);
+  const claimReward = async (id, reward) => {
     try {
       const response = await API.post('/claim', {"type": "ref_tasks", "task_id": id});
+      setPoints((prevPoints) => {
+        const newPoints = prevPoints + reward;
+        localStorage.setItem('points', newPoints);
+        updateUser({ coins: newPoints });
+        return newPoints;
+      });
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {
@@ -40,7 +47,7 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert}) => {
             </div>
             <div>
               {task.completed ? (
-                <span onClick={() => claimReward(task.id)} className='claim_link py-2'>Claim</span>
+                <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-2'>Claim</span>
               ) : (
                 <span className='notClaim_link py-2'>Claim</span>
               )}

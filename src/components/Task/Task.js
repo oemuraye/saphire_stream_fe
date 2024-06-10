@@ -76,10 +76,10 @@ const Task = ({points, setPoints}) => {
             <SpecialTab specialTasks={specialTasks} />
           </div>
           <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-            <LeagueTab leagueTasks={leagueTasks} setSuccessAlert={setSuccessAlert} />  
+            <LeagueTab leagueTasks={leagueTasks} setSuccessAlert={setSuccessAlert} setPoints={setPoints} />  
           </div>
           <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab">
-            <RefTaskTab refTasks={refTasks} user={user} setSuccessAlert={setSuccessAlert} />  
+            <RefTaskTab refTasks={refTasks} user={user} setSuccessAlert={setSuccessAlert} setPoints={setPoints} />  
           </div>
         </section>
     </section>

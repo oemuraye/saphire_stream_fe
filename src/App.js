@@ -189,7 +189,7 @@ function App() {
                                               />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/join_socials" element={<JoinSocials setPoints={setPoints} />} />
-                <Route path="/connect_wallet" element={<ConnectWallet />} />
+                <Route path="/connect_wallet" element={<ConnectWallet setPoints={setPoints} />} />
                 <Route path="/trophy" element={<TrophySection />} />
               </Routes>
             </section>
