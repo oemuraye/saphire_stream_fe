@@ -55,7 +55,7 @@ const Ref = () => {
     }
   }, [successAlert]);
 
-alert(referralInfo?.data);
+alert(JSON.stringify(referralInfo?.data));
 
   if (isLoading) {
     return <div><Loading /></div>;

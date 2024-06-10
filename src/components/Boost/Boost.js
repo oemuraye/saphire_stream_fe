@@ -127,8 +127,6 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
     return booster.data.levels.find(l => l.level === level) || {};
   };
 
-  console.log(user);
-  console.log(boosters);
 
   return (
     <>
