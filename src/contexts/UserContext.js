@@ -60,7 +60,7 @@ export const UserProvider = ({ children }) => {
                 username: userInfo?.username,
                 first_name: userInfo?.first_name,
                 last_name: userInfo?.last_name,
-                referred_by: referralID !== '' ? referralID : null,
+                referred_by: referralID,
               }
             );
             
@@ -77,11 +77,11 @@ export const UserProvider = ({ children }) => {
             //   clearBrowserCache();
             //   window.location.reload(true);
             // }
-            
+
             if (storedUserId !== userInfo.id) {
                 localStorage.clear();
-              clearBrowserCache();
-              window.location.reload(true);
+                clearBrowserCache();
+              // window.location.reload(true);
             }
 
             localStorage.setItem('user', JSON.stringify(newUser));
