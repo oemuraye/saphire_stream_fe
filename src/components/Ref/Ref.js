@@ -81,7 +81,7 @@ const Ref = () => {
         {referralInfo?.data?.length > 0 ? (
           referralInfo.data.map((referredUser) => (
             <section key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
-              <h6 className='text-start'>{referredUser.username}</h6>
+              <h6 className='text-start'>{referralInfo.username}</h6>
 
               {/* <div className="trophy-point d-flex gap-2 justify-content-between">
                 <div className="d-flex gap-1">
