@@ -39,27 +39,26 @@ bot.start(async (ctx) => {
     
     await setMenuButton(personalizedWebLink);
 
-    // Send the image first
+    const welcomeMessage = 
+        `Welcome <b>${username}! </b>to Saphire Stream!\n\n` +
+        "Tap on the coin and see your balance rise.\n\n" +
+        "<b>SaphireStream</b> is a Decentralized Exchange on the Solana Blockchain. The biggest part of SaphireStream Token SAST distribution will occur among the players here.\n\n" +
+        `Got friends, relatives, co-workers?\nBring them all into the game.\nMore buddies, more coins.`;
+
     ctx.replyWithPhoto(
-        { source: logoImagePath }
-    ).then(() => {
-        // Send the text message with buttons after the image
-        ctx.replyWithHTML(
-            `Welcome <b>${user.username}! </b>to Saphire Stream!\n\n` +
-            "Tap on the coin and see your balance rise.\n\n" +
-            "<b>SaphireStream</b> is a Decentralized Exchange on the Solana Blockchain. The biggest part of SaphireStream Token SAST distribution will occur among the players here.\n\n" +
-            `Got friends, relatives, co-workers?\nBring them all into the game.\nMore buddies, more coins.`,
-            {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: "👋 Play App", web_app: { url: personalizedWebLink } }],
-                        [{ text: "💪 Join Our Community", url: 'https://t.me/SapphireStream' }],
-                        [{ text: "🗒️ Help", callback_data: 'help' }]
-                    ],
-                }
+        { source: logoImagePath },
+        {
+            caption: welcomeMessage,
+            parse_mode: 'HTML',
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: "👋 Play App", web_app: { url: personalizedWebLink } }],
+                    [{ text: "💪 Join Our Community", url: 'https://t.me/SapphireStream' }],
+                    [{ text: "🗒️ Help", callback_data: 'help' }]
+                ],
             }
-        );
-    });
+        }
+    );
 });
 
 
