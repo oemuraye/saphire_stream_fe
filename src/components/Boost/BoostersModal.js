@@ -18,7 +18,7 @@ const actionsTitle = {
 const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAlert, setSpeedTapping, setFullEnergyLevel, boosterPrice, userBoosterLevel, boosterValue, updateBoosters, setGuruCount, setFullTankCount, setTapSequence,  setTapLevel, setEnergyLimitLevel, setEnergyRechargeLevel, accumulatedTaps, setAccumulatedTaps, setPoints, setEnergyLevel, setEnergyRecharge }) => {
     const { updateUser } = useContext(UserContext);
     const user = JSON.parse(localStorage.getItem('user'));
-    // const points = JSON.parse(localStorage.getItem('points'));
+    // const points = localStorage.getItem('points');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -48,30 +48,42 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                     navigate('/');
                 } else if (title === actionsTitle.multiTap) {
                     response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
-                    const newPoints = user.coins - boosterPrice;
-                    setPoints((prev) => prev - boosterPrice);
-                    updateUser({ coins: newPoints });
+                    setPoints((prevPoints) => {
+                        const newPoints = prevPoints - boosterPrice;
+                        localStorage.setItem('points', newPoints);
+                        updateUser({ coins: newPoints });
+                        return newPoints;
+                    });
                     setTapLevel((prev) => prev + 1)
                     setTapSequence((prev) => prev + 1);
                 } else if (title === actionsTitle.energyLimit) {
                     response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
-                    const newPoints = user.coins - boosterPrice;
-                    setPoints((prev) => prev - boosterPrice);
-                    updateUser({ coins: newPoints });
+                    setPoints((prevPoints) => {
+                        const newPoints = prevPoints - boosterPrice;
+                        localStorage.setItem('points', newPoints);
+                        updateUser({ coins: newPoints });
+                        return newPoints;
+                    });
                     setEnergyLimitLevel((prev) => prev + 1)
                     setEnergyLevel((prev) => prev + 1)
                 } else if (title === actionsTitle.rechargeSpeed) {
                     response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
-                    const newPoints = user.coins - boosterPrice;
-                    setPoints((prev) => prev - boosterPrice);
-                    updateUser({ coins: newPoints });
+                    setPoints((prevPoints) => {
+                        const newPoints = prevPoints - boosterPrice;
+                        localStorage.setItem('points', newPoints);
+                        updateUser({ coins: newPoints });
+                        return newPoints;
+                    });
                     setEnergyRecharge((prev) => prev + 1)
                     setEnergyRechargeLevel((prev) => prev + 1)
                 } else if (title === actionsTitle.tapBot) {
                     response = await API.post('/boosters/upgrade', {"booster":"tap_bot", "level": 1});
-                    const newPoints = user.coins - boosterPrice;
-                    setPoints((prev) => prev - boosterPrice);
-                    updateUser({ coins: newPoints });
+                    setPoints((prevPoints) => {
+                        const newPoints = prevPoints - boosterPrice;
+                        localStorage.setItem('points', newPoints);
+                        updateUser({ coins: newPoints });
+                        return newPoints;
+                    });
                 }
     
                 console.log(response.data);
