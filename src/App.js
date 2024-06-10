@@ -34,7 +34,7 @@ function App() {
 
   const [guruCount, setGuruCount] = useState(user?.data?.booster_data?.daily_boosters.tapping_guru);
   const [fullTankCount, setFullTankCount] = useState(user?.data?.booster_data?.daily_boosters.full_tank);
-  const [tapSequence, setTapSequence] = useState(user?.data?.booster_data.tap);
+  const [tapSequence, setTapSequence] = useState(Number(user?.data?.booster_data.tap));
   const [energyLevel, setEnergyLevel] = useState(Number(user?.data?.energy));
   const [energyLimit, setEnergyLimit] = useState(Number(user?.data?.booster_data.energy_limit));
   const [tapLevel, setTapLevel] = useState(Number(user?.data?.booster_data.tap_level));
@@ -48,7 +48,7 @@ function App() {
   const [isTapBotModalOpen, setIsTapBotModalOpen] = useState(false);
   const tapBotIntervalRef = useRef(null);
   
-  const [remainingPoints, setRemainingPoints] = useState(energyLevel);
+  const [remainingPoints, setRemainingPoints] = useState(Number(energyLevel));
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
 
 

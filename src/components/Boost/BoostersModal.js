@@ -40,12 +40,16 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                     response = await API.post('/boosters/activate', {"daily_booster": "tapping_guru"});
                     setSpeedTapping(true)
                     setGuruCount((prev) => prev - 1)
-                    navigate('/');
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 500);
                 } else if (title === actionsTitle.fullTank) {
                     response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
                     setFullTankCount((prev) => prev - 1)
                     setFullEnergyLevel(true)
-                    navigate('/');
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 500);
                 } else if (title === actionsTitle.multiTap) {
                     response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
                     setPoints((prevPoints) => {

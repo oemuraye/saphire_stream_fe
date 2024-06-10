@@ -12,7 +12,7 @@ export const RemainingPointsProvider = ({ children }) => {
     if (remainingPoints < user?.data.booster_data.energy_limit_level) {
       intervalRef.current = setInterval(() => {
         setRemainingPoints((prev) => {
-          const newRemainingPoints = Math.min(prev + 1, user.data.booster_data.energy_limit_level);
+          const newRemainingPoints = Math.min(prev + 1, Number(user.data.booster_data.energy_limit_level));
           localStorage.setItem('remainingPoints', newRemainingPoints);
           return newRemainingPoints;
         });
@@ -28,7 +28,7 @@ export const RemainingPointsProvider = ({ children }) => {
     if (remainingPoints < user?.data?.booster_data.energy_limit_level) {
       intervalRef.current = setInterval(() => {
         setRemainingPoints((prev) => {
-          const newRemainingPoints = Math.min(prev + 1, user?.data?.booster_data.energy_limit_level);
+          const newRemainingPoints = Math.min(prev + 1, Number(user?.data?.booster_data.energy_limit_level));
           localStorage.setItem('remainingPoints', newRemainingPoints);
           return newRemainingPoints;
         });
