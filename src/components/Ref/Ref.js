@@ -103,7 +103,7 @@ const Ref = () => {
     return percentage;
   };
 
-  alert(referralInfo && referralInfo)
+  alert(JSON.stringify(referralInfo))
 
 
   if (isLoading) {
