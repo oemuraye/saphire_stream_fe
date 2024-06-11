@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 
 import './ref.css';
 import API from '../../api/api';
 import Loading from '../LoadingSection/Loading';
 
+import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import woodImg from '../../utils/images/trophies/wood.png';
 import bronzeImg from '../../utils/images/trophies/Bronze.png';
 import silverImg from '../../utils/images/trophies/Silver.png';
@@ -16,7 +18,6 @@ import grandMasterImg from '../../utils/images/trophies/Grandmaster.png';
 import eliteImg from '../../utils/images/trophies/Elite league.png';
 import legendaryImg from '../../utils/images/trophies/Legendary.png';
 import mythicImg from '../../utils/images/trophies/Mystic league.png';
-import { useNavigate } from 'react-router-dom';
 
 
 const Ref = () => {
@@ -38,7 +39,6 @@ const Ref = () => {
   const [successAlert, setSuccessAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [referralInfo, setReferralInfo] = useState();
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const referralLink = `https://t.me/SapphireStreamBot?start=${user?.data.referral_id}`;
 
@@ -93,14 +93,19 @@ const Ref = () => {
     }
   }, [successAlert]);
 
-  // const currentTrophy = trophyImages[currentIndex];
-  // const rangeSize = currentTrophy.rangeEnd - currentTrophy.rangeStart;
-  // const progressBarWidth = Math.min(((points - currentTrophy.rangeStart) / rangeSize) * 100, 100) + '%';
-  // const pointsInRange = points >= currentTrophy.rangeStart && points < currentTrophy.rangeEnd;
+  const calculatePercentage = (points, rangeStart, rangeEnd) => {
+    const rangeSize = rangeEnd - rangeStart;
+    const progress = ((points - rangeStart) / rangeSize) * 100;
+    return Math.min(progress, 100); // Ensure the percentage does not exceed 100%
+  };
 
-  const calculatePercentage = (expectedReferral, referralCount) => {
-    const percentage = (expectedReferral / referralCount) * 100;
-    return percentage;
+  const getUserTrophy = (points) => {
+    for (let i = 0; i < trophyImages.length; i++) {
+      if (points >= trophyImages[i].rangeStart && points < trophyImages[i].rangeEnd) {
+        return trophyImages[i];
+      }
+    }
+    return trophyImages[trophyImages.length - 1];
   };
 
 
@@ -128,32 +133,39 @@ const Ref = () => {
 
       <section className="text-center text-white mt-5">
         {referralInfo?.data?.length > 0 ? (
-          referralInfo.data.map((referredUser) => (
-            <section role='button' onClick={() => goToUserTelegram(referredUser.username)} key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
-              <h6 className='text-start'>{referredUser.username}</h6>
+          referralInfo.data.map((referredUser) => {
+            // const userPoints = referredUser.points;
+            const userPoints = 200;
+            const userTrophy = getUserTrophy(userPoints);
+            const progressBarWidth = calculatePercentage(userPoints, userTrophy.rangeStart, userTrophy.rangeEnd);
 
-              {/* <div className="trophy-point d-flex gap-2 justify-content-between">
-                <div className="d-flex gap-1">
-                  <img src={trophyIcon} alt="coin-icon" className='trophy-img' width="18px" height="15px" />
-                  <span className='muted-color'>bronze |</span>
-                  <img src={coinIcon} alt="coin-icon" width="20px" height="20px" />
-                  <span className=''>652</span>
+            return (
+              <section role='button' onClick={() => goToUserTelegram(referredUser.username)} key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
+                <h6 className='text-start'>{referredUser.username}</h6>
+
+                <div className="trophy-point d-flex gap-2 justify-content-between">
+                  <div className="d-flex gap-1">
+                    <img src={userTrophy.src} alt="trophy-icon" className='trophy-img' width="18px" height="15px" />
+                    <span className='muted-color'>{userTrophy.title} |</span>
+                    <img src={coinIcon} alt="coin-icon" width="20px" height="20px" />
+                    <span className=''>{userPoints}</span>
+                  </div>
+                  <div className="d-flex gap-2">
+                    {/* <h6>+{referredUser.bonusPoints}</h6> */}
+                    <i className="fa fa-angle-right" aria-hidden="true"></i>
+                  </div>
                 </div>
-                <div className="d-flex gap-2">
-                  <h6>+2000</h6>
-                  <i className="fa fa-angle-right" aria-hidden="true"></i>
+
+                <div>
+                  <p>{referredUser.name}</p>
                 </div>
-              </div> */}
 
-              <div className=''>
-                <p>{referredUser.name}</p>
-              </div>
-
-              {/* <div className="progress mt-2" role="progressbar" aria-label="Warning example" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                <div className="progress-bar rounded-4" style={{width: "20%"}}></div>
-              </div> */}
-            </section>
-          ))
+                <div className="progress mt-2" role="progressbar" aria-label="Warning example" aria-valuenow={progressBarWidth} aria-valuemin="0" aria-valuemax="100">
+                  <div className="progress-bar rounded-4" style={{ width: `${progressBarWidth}%` }}></div>
+                </div>
+              </section>
+            );
+          })
         ) : (
           <h6>You don't have referrals &#128557;</h6>
         )}

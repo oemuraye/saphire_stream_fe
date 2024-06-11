@@ -56,7 +56,7 @@ const Join_socials = ({setPoints}) => {
     setTaskStatus((prevStatus) => ({ ...prevStatus, [task]: 'Checking...' }));
     setTimeout(() => {
       setTaskStatus((prevStatus) => ({ ...prevStatus, [task]: 'Done!' }));
-    }, 20000);
+    }, 30000);
   };
 
   const allTasksCompleted = Object.values(taskStatus).every(status => status === 'Done!');

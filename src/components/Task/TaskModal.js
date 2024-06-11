@@ -13,18 +13,21 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoin
         setIsLoading(true);
 
         try {
-            const response = await API.post('/claim', {"type": "special", "task_id": taskId});
-            closeTaskModal();
-            setPoints((prevPoints) => {
-                const newPoints = prevPoints + rewardInCoins;
-                localStorage.setItem('points', newPoints);
-                updateUser({ coins: newPoints });
-                return newPoints;
-            });
-            setSuccessAlert(true);
-            console.log(response.data);
-            await updateTasks();
-            setIsRewardClaimed(true)
+            await API.post('/tasks/complete', {"task_id": taskId});
+            setTimeout(async () => {
+                const response = await API.post('/claim', {"type": "special", "task_id": taskId});
+                closeTaskModal();
+                setPoints((prevPoints) => {
+                    const newPoints = prevPoints + rewardInCoins;
+                    localStorage.setItem('points', newPoints);
+                    updateUser({ coins: newPoints });
+                    return newPoints;
+                });
+                setSuccessAlert(true);
+                console.log(response.data);
+                await updateTasks();
+                setIsRewardClaimed(true);
+            }, 2000);
         } catch (error) {
             console.log(error);
         } finally {
