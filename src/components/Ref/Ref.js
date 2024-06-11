@@ -49,7 +49,7 @@ const Ref = () => {
       return () => clearTimeout(timer);
     }
   }, [successAlert]);
-console.log(JSON.stringify(referralInfo));
+alert(JSON.stringify(referralInfo));
 
   if (isLoading) {
     return <div><Loading /></div>;
