@@ -156,10 +156,6 @@ const Ref = () => {
                   </div>
                 </div>
 
-                <div>
-                  <p>{referredUser.name}</p>
-                </div>
-
                 <div className="progress mt-2" role="progressbar" aria-label="Warning example" aria-valuenow={progressBarWidth} aria-valuemin="0" aria-valuemax="100">
                   <div className="progress-bar rounded-4" style={{ width: `${progressBarWidth}%` }}></div>
                 </div>

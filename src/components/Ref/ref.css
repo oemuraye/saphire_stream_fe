@@ -51,3 +51,7 @@
     box-shadow: none;
     border: none;
 }
+
+.referral_section .progress-bar {
+    background-color: purple;
+}
