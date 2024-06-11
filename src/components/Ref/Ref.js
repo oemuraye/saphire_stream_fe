@@ -49,7 +49,7 @@ const Ref = () => {
       return () => clearTimeout(timer);
     }
   }, [successAlert]);
-alert(JSON.stringify(referralInfo));
+
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -76,7 +76,7 @@ alert(JSON.stringify(referralInfo));
         {referralInfo?.data?.length > 0 ? (
           referralInfo.data.map((referredUser) => (
             <section key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
-              <h6 className='text-start'>{referralInfo.username}</h6>
+              <h6 className='text-start'>{referredUser.username}</h6>
 
               {/* <div className="trophy-point d-flex gap-2 justify-content-between">
                 <div className="d-flex gap-1">
@@ -92,7 +92,7 @@ alert(JSON.stringify(referralInfo));
               </div> */}
 
               <div className=''>
-                <p>{referralInfo.name}</p>
+                <p>{referredUser.name}</p>
               </div>
 
               {/* <div className="progress mt-2" role="progressbar" aria-label="Warning example" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
