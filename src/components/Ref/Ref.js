@@ -5,14 +5,51 @@ import './ref.css';
 import API from '../../api/api';
 import Loading from '../LoadingSection/Loading';
 
+import woodImg from '../../utils/images/trophies/wood.png';
+import bronzeImg from '../../utils/images/trophies/Bronze.png';
+import silverImg from '../../utils/images/trophies/Silver.png';
+import goldImg from '../../utils/images/trophies/Gold.png';
+import platinumImg from '../../utils/images/trophies/Platinum.png';
+import diamondImg from '../../utils/images/trophies/Diamond.png';
+import masterImg from '../../utils/images/trophies/Master.png';
+import grandMasterImg from '../../utils/images/trophies/Grandmaster.png';
+import eliteImg from '../../utils/images/trophies/Elite league.png';
+import legendaryImg from '../../utils/images/trophies/Legendary.png';
+import mythicImg from '../../utils/images/trophies/Mystic league.png';
+import { useNavigate } from 'react-router-dom';
+
 
 const Ref = () => {
+  const trophyImages = [
+    { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 1 },
+    { src: bronzeImg, title: 'Bronze', rangeStart: 1, rangeEnd: 500 },
+    { src: silverImg, title: 'Silver', rangeStart: 500, rangeEnd: 5000 },
+    { src: goldImg, title: 'Gold', rangeStart: 5000, rangeEnd: 50000 },
+    { src: platinumImg, title: 'Platinum', rangeStart: 50000, rangeEnd: 500000 },
+    { src: diamondImg, title: 'Diamond', rangeStart: 500000, rangeEnd: 1000000 },
+    { src: masterImg, title: 'Master', rangeStart: 1000000, rangeEnd: 2500000 },
+    { src: grandMasterImg, title: 'Grand Master', rangeStart: 2500000, rangeEnd: 5000000 },
+    { src: eliteImg, title: 'Elite League', rangeStart: 5000000, rangeEnd: 10000000 },
+    { src: legendaryImg, title: 'Legendary', rangeStart: 10000000, rangeEnd: 50000000 },
+    { src: mythicImg, title: 'Mythic', rangeStart: 50000000, rangeEnd: Infinity },
+  ];
+
   const user = JSON.parse(localStorage.getItem('user'));  
   const [successAlert, setSuccessAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [referralInfo, setReferralInfo] = useState();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const referralLink = `https://t.me/SapphireStreamBot?start=${user?.data.referral_id}`;
+
+  // const getCurrentTrophyIndex = () => {
+  //   for (let i = 0; i < trophyImages.length; i++) {
+  //     if (points >= trophyImages[i].rangeStart && points < trophyImages[i].rangeEnd) {
+  //       return i;
+  //     }
+  //   }
+  //   return trophyImages.length - 1;
+  // };
   // console.log(user?.data);
 
   const getReferralInfo = async () => {
@@ -30,6 +67,12 @@ const Ref = () => {
   useEffect(() => {
     getReferralInfo();
   }, []);
+
+  const navigate = useNavigate();
+
+  const goToUserTelegram = (username) => {
+    navigate(`https://t.me/${username}`);
+  };
 
   
   const handleCopyLink = () => {
@@ -49,6 +92,18 @@ const Ref = () => {
       return () => clearTimeout(timer);
     }
   }, [successAlert]);
+
+  // const currentTrophy = trophyImages[currentIndex];
+  // const rangeSize = currentTrophy.rangeEnd - currentTrophy.rangeStart;
+  // const progressBarWidth = Math.min(((points - currentTrophy.rangeStart) / rangeSize) * 100, 100) + '%';
+  // const pointsInRange = points >= currentTrophy.rangeStart && points < currentTrophy.rangeEnd;
+
+  const calculatePercentage = (expectedReferral, referralCount) => {
+    const percentage = (expectedReferral / referralCount) * 100;
+    return percentage;
+  };
+
+  alert(referralInfo && referralInfo)
 
 
   if (isLoading) {
@@ -75,7 +130,7 @@ const Ref = () => {
       <section className="text-center text-white mt-5">
         {referralInfo?.data?.length > 0 ? (
           referralInfo.data.map((referredUser) => (
-            <section key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
+            <section role='button' onClick={() => goToUserTelegram(referredUser.username)} key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
               <h6 className='text-start'>{referredUser.username}</h6>
 
               {/* <div className="trophy-point d-flex gap-2 justify-content-between">

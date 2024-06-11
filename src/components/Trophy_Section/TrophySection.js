@@ -30,7 +30,8 @@ const trophyImages = [
 
 const TrophySection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [points, setPoints] = useState(450);
+  const user = JSON.parse(localStorage.getItem('user'));  
+  const [points, setPoints] = useState(Number(user?.data?.coins));
 
   const getCurrentTrophyIndex = () => {
     for (let i = 0; i < trophyImages.length; i++) {
