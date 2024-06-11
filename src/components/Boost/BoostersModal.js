@@ -42,14 +42,14 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                     setGuruCount((prev) => prev - 1)
                     setTimeout(() => {
                         navigate('/');
-                    }, 500);
+                    }, 200);
                 } else if (title === actionsTitle.fullTank) {
                     response = await API.post('/boosters/activate', {"daily_booster": "full_tank"});
                     setFullTankCount((prev) => prev - 1)
                     setFullEnergyLevel(true)
                     setTimeout(() => {
                         navigate('/');
-                    }, 500);
+                    }, 200);
                 } else if (title === actionsTitle.multiTap) {
                     response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
                     setPoints((prevPoints) => {

@@ -68,7 +68,6 @@ const Ref = () => {
     getReferralInfo();
   }, []);
 
-  const navigate = useNavigate();
 
   const goToUserTelegram = (username) => {
     window.location.href = `https://t.me/${username}`;
