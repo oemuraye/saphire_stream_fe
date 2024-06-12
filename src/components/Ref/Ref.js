@@ -127,7 +127,7 @@ const Ref = () => {
             const progressBarWidth = calculatePercentage(userPoints, userTrophy.rangeStart, userTrophy.rangeEnd);
 
             return (
-              <section role='button' onClick={() => goToUserTelegram(referredUser.username)} key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column rounded-3 p-2'>
+              <section role='button' onClick={() => goToUserTelegram(referredUser.username)} key={referredUser.telegram_user_id} className='taskPad container d-flex flex-column gap-2 rounded-3 p-2'>
                 <h6 className='text-start'>{referredUser.username}</h6>
 
                 <div className="trophy-point d-flex gap-2 justify-content-between">
