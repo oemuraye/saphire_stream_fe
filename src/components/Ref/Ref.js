@@ -42,16 +42,6 @@ const Ref = () => {
 
   const referralLink = `https://t.me/SapphireStreamBot?start=${user?.data.referral_id}`;
 
-  // const getCurrentTrophyIndex = () => {
-  //   for (let i = 0; i < trophyImages.length; i++) {
-  //     if (points >= trophyImages[i].rangeStart && points < trophyImages[i].rangeEnd) {
-  //       return i;
-  //     }
-  //   }
-  //   return trophyImages.length - 1;
-  // };
-  // console.log(user?.data);
-
   const getReferralInfo = async () => {
     try {
       const response = await API.get('/referrals');
@@ -68,7 +58,7 @@ const Ref = () => {
     getReferralInfo();
   }, []);
 
-
+alert(JSON.stringify(referralInfo))
   const goToUserTelegram = (username) => {
     window.location.href = `https://t.me/${username}`;
   };
