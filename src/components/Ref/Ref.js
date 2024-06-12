@@ -58,7 +58,6 @@ const Ref = () => {
     getReferralInfo();
   }, []);
 
-alert(JSON.stringify(referralInfo))
   const goToUserTelegram = (username) => {
     window.location.href = `https://t.me/${username}`;
   };
@@ -85,7 +84,7 @@ alert(JSON.stringify(referralInfo))
   const calculatePercentage = (points, rangeStart, rangeEnd) => {
     const rangeSize = rangeEnd - rangeStart;
     const progress = ((points - rangeStart) / rangeSize) * 100;
-    return Math.min(progress, 100); // Ensure the percentage does not exceed 100%
+    return Math.min(progress, 100);
   };
 
   const getUserTrophy = (points) => {
@@ -123,8 +122,7 @@ alert(JSON.stringify(referralInfo))
       <section className="text-center text-white mt-5">
         {referralInfo?.data?.length > 0 ? (
           referralInfo.data.map((referredUser) => {
-            // const userPoints = referredUser.points;
-            const userPoints = 200;
+            const userPoints = referredUser.coins;
             const userTrophy = getUserTrophy(userPoints);
             const progressBarWidth = calculatePercentage(userPoints, userTrophy.rangeStart, userTrophy.rangeEnd);
 
