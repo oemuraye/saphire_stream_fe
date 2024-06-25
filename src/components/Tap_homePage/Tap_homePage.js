@@ -80,7 +80,7 @@ const Tap_homePage = ({
       const speedTappingTimer = setTimeout(() => {
         setSpeedTapping(false);
         setTapSequence(originalTapSequence);
-      }, 200000);
+      }, 20000);
 
       return () => clearTimeout(speedTappingTimer);
     }
