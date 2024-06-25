@@ -75,10 +75,10 @@
     width: 70%;
     /* height: 225px; */
     margin-top: 40px;
-    border-bottom-right-radius: 90%;
+    border-bottom-right-radius: 46%;
     border-bottom-left-radius: 46%;
-    border-top-right-radius: 50%;
-    border-top-left-radius: 90%;
+    border-top-right-radius: 60%;
+    border-top-left-radius: 60%;
     background-color: #ffffff00;
 }
 
@@ -90,8 +90,8 @@
 .speed-tapping {
     background: url(../../utils/images/electricBolt.png);
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position:center;
+    background-size: 100% 125%;;
+    background-position: center;
 }
 
 @keyframes dipEffect {

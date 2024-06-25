@@ -79,7 +79,7 @@ export const UserProvider = ({ children }) => {
             // }
 
             if (storedUserId !== userInfo.id) {
-              localStorage.clear();
+              // localStorage.clear();
               clearBrowserCache();
               // window.location.reload(true);
             }

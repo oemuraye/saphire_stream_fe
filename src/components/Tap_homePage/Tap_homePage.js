@@ -7,7 +7,7 @@ import TrophyInfo from '../Trophy_Section/TrophyInfo';
 
 import ProgressBar from './ProgressBar/ProgressBar';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
-import coinImg from "../../utils/images/tap coin.png";
+import coinImg from "../../utils/images/newTapCoin.png";
 
 import './tap.css';
 import TapBotModal from './TapBotModal';
@@ -80,7 +80,7 @@ const Tap_homePage = ({
       const speedTappingTimer = setTimeout(() => {
         setSpeedTapping(false);
         setTapSequence(originalTapSequence);
-      }, 20000);
+      }, 200000);
 
       return () => clearTimeout(speedTappingTimer);
     }
