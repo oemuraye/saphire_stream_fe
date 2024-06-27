@@ -50,6 +50,7 @@
 .coinTap_section {
     position: relative;
     touch-action: none;
+    margin-top: 40px;
 }
 .plus-one {
     position: absolute;
@@ -72,9 +73,9 @@
 }
 
 .coinTap_section img {
-    width: 70%;
+    width: 80%;
     /* height: 225px; */
-    margin-top: 40px;
+    margin-top: 20px;
     border-bottom-right-radius: 46%;
     border-bottom-left-radius: 46%;
     border-top-right-radius: 60%;
