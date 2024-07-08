@@ -11,7 +11,7 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
   const { updateUser } = useContext(UserContext);
   const claimReward = async (id, reward) => {
     try {
-      const response = await API.post('/claim', {"type": "ref_tasks", "task_id": id});
+      const response = await API.post('/claim', {"type": "task", "task_id": id});
       setPoints((prevPoints) => {
         const newPoints = prevPoints + reward;
         localStorage.setItem('points', newPoints);

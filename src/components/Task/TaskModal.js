@@ -11,29 +11,35 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoin
 
     const handleBooster = async () => {
         setIsLoading(true);
-
+    
         try {
-            await API.post('/tasks/complete', {"task_id": taskId});
+            await API.post('/tasks/complete', { "task_id": taskId });
+    
             setTimeout(async () => {
-                const response = await API.post('/claim', {"type": "special", "task_id": taskId});
-                closeTaskModal();
-                setPoints((prevPoints) => {
-                    const newPoints = prevPoints + rewardInCoins;
-                    localStorage.setItem('points', newPoints);
-                    updateUser({ coins: newPoints });
-                    return newPoints;
-                });
-                setSuccessAlert(true);
-                console.log(response.data);
-                await updateTasks();
-                setIsRewardClaimed(true);
+                try {
+                    const response = await API.post('/claim', { "type": "task", "task_id": taskId });
+    
+                    closeTaskModal();
+                    setPoints((prevPoints) => {
+                        const newPoints = prevPoints + rewardInCoins;
+                        localStorage.setItem('points', newPoints);
+                        updateUser({ coins: newPoints });
+                        return newPoints;
+                    });
+                    setSuccessAlert(true);
+                    console.log(response.data);
+                    await updateTasks();
+                    setIsRewardClaimed(true);
+                } catch (error) {
+                    console.log(error);
+                }
             }, 2000);
         } catch (error) {
             console.log(error);
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
   return (
     <section className='boosters-modal_section container'>

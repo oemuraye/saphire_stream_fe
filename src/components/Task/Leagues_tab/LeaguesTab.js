@@ -43,7 +43,7 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
 
   const claimReward = async (id, reward) => {
     try {
-      const response = await API.post('/claim', {"type": "leagues", "task_id": id});
+      const response = await API.post('/claim', {"type": "task", "task_id": id});
       setPoints((prevPoints) => {
         const newPoints = prevPoints + reward;
         localStorage.setItem('points', newPoints);

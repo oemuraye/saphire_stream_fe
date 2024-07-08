@@ -17,6 +17,7 @@ import Stats from "./components/Stats/Stats";
 import JoinSocials from "./components/Task/Special_tab/JoinSocials";
 import ConnectWallet from "./components/Task/Special_tab/ConnectWallet";
 import TrophySection from "./components/Trophy_Section/TrophySection";
+import GeneralTask from './components/Task/Special_tab/GeneralTask';
 
 
 const telegram = window.Telegram.WebApp;
@@ -136,7 +137,7 @@ function App() {
   }, []);
   
 
-  const showFooter = location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
+  const showFooter = location.pathname !== '/general_task' && location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
   if (isMobile) {
     return <div><Loading /></div>;
@@ -190,6 +191,7 @@ function App() {
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/join_socials" element={<JoinSocials setPoints={setPoints} />} />
                 <Route path="/connect_wallet" element={<ConnectWallet setPoints={setPoints} />} />
+                <Route path="/general_task" element={<GeneralTask setPoints={setPoints} />} />
                 <Route path="/trophy" element={<TrophySection />} />
               </Routes>
             </section>

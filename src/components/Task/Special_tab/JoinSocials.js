@@ -39,7 +39,7 @@ const Join_socials = ({setPoints}) => {
   }, [missionStarted]);
 
   useEffect(() => {
-    localStorage.setItem('taskStatus', JSON.stringify(taskStatus));
+    localStorage.setItem('tasksStatus', JSON.stringify(taskStatus));
   }, [taskStatus]);
 
   useEffect(() => {
