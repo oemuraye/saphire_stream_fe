@@ -52,6 +52,8 @@ function App() {
   const [remainingPoints, setRemainingPoints] = useState(Number(energyLevel));
   const [accumulatedTaps, setAccumulatedTaps] = useState(0);
 
+  const [previousUrl, setPreviousUrl] = useState('/');
+
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -87,22 +89,8 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      switch (location.pathname) {
-        case '/connect_wallet':
-        case '/general_task':
-        case '/join_socials':
-          // navigate('/task');
-          alert('task');
-          break;
-        case '/trophy':
-          // window.history.go(-1);
-          alert('trophy');
-          break;
-        default:
-          alert('none');
-          // window.history.go(-1);
-          break;
-      }
+      alert(previousUrl)
+      navigate(previousUrl);
     };
     
     if (showBackButtonPages.includes(location.pathname)) {
@@ -116,6 +104,11 @@ function App() {
 
     return () => backButton.offClick();
   }, [location.pathname, navigate]);
+
+  useEffect(() => {
+    // Update the previousUrl state with the current location.pathname
+    setPreviousUrl(location.pathname);
+  }, [location.pathname]);
 
 
     // initialize loading
