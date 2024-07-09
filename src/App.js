@@ -73,6 +73,7 @@ function App() {
 
   // adding back button to telegram default header
   useEffect(() => {
+    const telegram = window.Telegram.WebApp;
     const backButton = window.Telegram.WebApp.BackButton;
 
     if (telegram.setHeaderColor) {
@@ -85,9 +86,11 @@ function App() {
       backButton.hide();
     }
     
-    backButton.onClick(() => {
-      navigate(-1);
-    });
+    // backButton.onClick(() => {
+    //   navigate(-1);
+    // });
+
+    telegram.onEvent('backButtonClicked', () => navigate(-1))
 
     return () => backButton.offClick();
   }, [location.pathname, navigate]);
@@ -139,9 +142,9 @@ function App() {
 
   const showFooter = location.pathname !== '/general_task' && location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
-  if (isMobile) {
-    return <div><Loading /></div>;
-  }
+  // if (isMobile) {
+  //   return <div><Loading /></div>;
+  // }
 
   if (isLoading) {
     return <div><Loading /></div>;
