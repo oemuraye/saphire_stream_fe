@@ -87,7 +87,13 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      navigate('/task');
+      if (location.pathname === '/connect_wallet' || location.pathname === '/general_task' || location.pathname === '/join_socials') {
+        navigate('/task');
+      } else if (location.pathname === '/trophy') {
+        window.history.go(-1);
+      } else {
+        window.history.go(-1);
+      }
     };
     
     if (showBackButtonPages.includes(location.pathname)) {
