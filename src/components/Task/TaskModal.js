@@ -13,7 +13,8 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoin
         setIsLoading(true);
     
         try {
-            await API.post('/tasks/complete', { "task_id": taskId });
+            const response = await API.post('/tasks/complete', { "task_id": taskId });
+            console.log(response.data);
     
             setTimeout(async () => {
                 try {

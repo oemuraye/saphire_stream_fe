@@ -14,7 +14,10 @@ const GeneralTask = ({setPoints}) => {
     const savedMissionStarted = localStorage.getItem('taskStarted');
     return savedMissionStarted ? JSON.parse(savedMissionStarted) : false;
   });
-  const [missionCompleted, setMissionCompleted] = useState(false);
+  const [missionCompleted, setMissionCompleted] = useState(() => {
+    const isTaskCompleted = localStorage.getItem('isTaskCompleted');
+    return isTaskCompleted ? JSON.parse(isTaskCompleted) : userTask.completed;
+  });
   const [taskStatus, setTaskStatus] = useState(() => {
     const savedTaskStatus = localStorage.getItem('taskStatus');
     return savedTaskStatus ? JSON.parse(savedTaskStatus) : '' 
@@ -33,6 +36,8 @@ const GeneralTask = ({setPoints}) => {
     }
   }, [initialRewardClaimedState]);
 
+  console.log(userTask.completed);
+
   useEffect(() => {
     localStorage.setItem('taskStarted', JSON.stringify(missionStarted));
   }, [missionStarted]);
@@ -44,6 +49,10 @@ const GeneralTask = ({setPoints}) => {
   useEffect(() => {
     localStorage.setItem('isGoBtnClicked', JSON.stringify(isGoBtnClicked));
   }, [isGoBtnClicked]);
+
+  useEffect(() => {
+    localStorage.setItem('isTaskCompleted', JSON.stringify(missionCompleted));
+  }, [missionCompleted]);
 
   const start_mission = () => {
     setMissionStarted(true);

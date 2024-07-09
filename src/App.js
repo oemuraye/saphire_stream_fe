@@ -105,13 +105,13 @@ function App() {
   }, [location.pathname, navigate]);
 
   useEffect(() => {
-    // Update the previousUrl state with the current location.pathname
     setPreviousUrl(location.pathname);
   }, [location.pathname]);
 
 
     // initialize loading
   useEffect(() => {
+    localStorage.clear();
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
