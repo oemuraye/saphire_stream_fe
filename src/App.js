@@ -79,7 +79,7 @@ function App() {
       telegram.setHeaderColor('#2f062f');
     }
     
-    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy') {
+    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy' || location.pathname === '/general_task') {
       backButton.show();
     } else {
       backButton.hide();
