@@ -87,7 +87,7 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      window.history.back();
+      navigate('/task');
     };
     
     if (showBackButtonPages.includes(location.pathname)) {
