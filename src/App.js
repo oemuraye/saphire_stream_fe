@@ -89,7 +89,6 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      alert(previousUrl)
       navigate(previousUrl);
     };
     
