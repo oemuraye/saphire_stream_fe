@@ -87,15 +87,21 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      if (location.pathname === '/connect_wallet' || location.pathname === '/general_task' || location.pathname === '/join_socials') {
-        navigate('/task');
-        alert('task')
-      } else if (location.pathname === '/trophy') {
-        window.history.go(-1);
-        alert('trophy')
-      } else {
-        alert('none')
-        window.history.go(-1);
+      switch (location.pathname) {
+        case '/connect_wallet':
+        case '/general_task':
+        case '/join_socials':
+          // navigate('/task');
+          alert('task');
+          break;
+        case '/trophy':
+          // window.history.go(-1);
+          alert('trophy');
+          break;
+        default:
+          alert('none');
+          // window.history.go(-1);
+          break;
       }
     };
     
@@ -108,7 +114,7 @@ function App() {
     telegram.onEvent('backButtonClicked', handleBackButtonClick)
 
 
-    // return () => backButton.offClick();
+    return () => backButton.offClick();
   }, [location.pathname, navigate]);
 
 
