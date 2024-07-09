@@ -89,9 +89,12 @@ function App() {
     const handleBackButtonClick = () => {
       if (location.pathname === '/connect_wallet' || location.pathname === '/general_task' || location.pathname === '/join_socials') {
         navigate('/task');
+        alert('task')
       } else if (location.pathname === '/trophy') {
         window.history.go(-1);
+        alert('trophy')
       } else {
+        alert('none')
         window.history.go(-1);
       }
     };
