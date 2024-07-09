@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
 
 
-  const showGoBackArrow = location.pathname === '/general_task' || location.pathname === '/connect_wallet' || location.pathname === '/trophy';
+  const showGoBackArrow = location.pathname === '/general_task';
 
   return (
     <header className='container shadow-sm'>
