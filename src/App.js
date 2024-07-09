@@ -75,24 +75,31 @@ function App() {
   useEffect(() => {
     const telegram = window.Telegram.WebApp;
     const backButton = window.Telegram.WebApp.BackButton;
+    const showBackButtonPages = [
+      '/join_socials',
+      '/connect_wallet',
+      '/trophy',
+      '/general_task',
+    ];
 
     if (telegram.setHeaderColor) {
       telegram.setHeaderColor('#2f062f');
     }
+
+    const handleBackButtonClick = () => {
+      navigate(-1);
+    };
     
-    if (location.pathname === '/join_socials' || location.pathname === '/connect_wallet' || location.pathname === '/trophy' || location.pathname === '/general_task') {
+    if (showBackButtonPages.includes(location.pathname)) {
       backButton.show();
     } else {
       backButton.hide();
     }
     
-    // backButton.onClick(() => {
-    //   navigate(-1);
-    // });
+    telegram.onEvent('backButtonClicked', handleBackButtonClick)
 
-    telegram.onEvent('backButtonClicked', () => navigate(-1))
 
-    return () => backButton.offClick();
+    // return () => backButton.offClick();
   }, [location.pathname, navigate]);
 
 
