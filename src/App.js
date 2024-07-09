@@ -111,7 +111,6 @@ function App() {
 
     // initialize loading
   useEffect(() => {
-    localStorage.clear();
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
