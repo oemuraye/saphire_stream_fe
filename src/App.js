@@ -87,7 +87,7 @@ function App() {
     }
 
     const handleBackButtonClick = () => {
-      alert('Back button clicked');
+      window.history.back();
     };
     
     if (showBackButtonPages.includes(location.pathname)) {
