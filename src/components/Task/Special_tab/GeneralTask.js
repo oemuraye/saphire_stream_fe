@@ -96,7 +96,7 @@ const GeneralTask = ({setPoints}) => {
         <article>
           <h4>{userTask.name}</h4>
           <p className="muted-color">
-            We regularly share valuable content on our socials. Join us there and get the rewards.
+            {userTask.data.description}
           </p>
         </article>
 
@@ -133,7 +133,7 @@ const GeneralTask = ({setPoints}) => {
                       {isGoBtnClicked ? (
                         <span role='button' onClick={handleLinkClick} className='go-mission basic-gradient fw-bold py-1 px-4'>Check</span>
                       ) : (
-                        <Link onClick={handleGoClick} to="https://t.me/SapphireStream" className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
+                        <Link onClick={handleGoClick} to={userTask.data.link} className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
                       )}
                     </>
                   ) : (
