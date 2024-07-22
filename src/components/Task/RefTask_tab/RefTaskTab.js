@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import refIcon from '../../../utils/images/Small Icons/Referral.png';
 import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
@@ -9,7 +9,10 @@ import UserContext from '../../../contexts/UserContext';
 
 const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
   const { updateUser, updateTasks } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+
   const claimReward = async (id, reward) => {
+    setIsLoading(true)
     try {
       const response = await API.post('/claim', {"type": "task", "task_id": id});
       setPoints((prevPoints) => {
@@ -23,6 +26,8 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
       console.log(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
   
@@ -52,7 +57,7 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
                   {task.reward_claimed === true ? (
                     <span className='notClaim_link claimed-success py-2'>Claimed</span>
                   ):(
-                    <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-1'>Claim</span>
+                    <span onClick={() => claimReward(task.id, task.reward_in_coins)} className={`claim_link py-1 ${isLoading && 'loadingBtn'}`}>Claim</span>
                   )}
                 </>
               ) : (

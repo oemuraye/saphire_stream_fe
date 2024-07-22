@@ -143,7 +143,6 @@ function App() {
       }
     };
   }, [tapBot]);
-  console.log(tapBot);
 
   useEffect(() => {
     return () => {
@@ -170,6 +169,7 @@ function App() {
         <section className="app">
           <section className="main_section">
             <section className="main-section">
+              {/* {isTelegramMiniApp && <Header />} */}
               {!isTelegramMiniApp && <Header />}
               
               <Routes>

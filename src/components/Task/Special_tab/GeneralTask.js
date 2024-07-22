@@ -68,7 +68,7 @@ const GeneralTask = ({ setPoints }) => {
     setTimeout(() => {
       setTaskStatus('Done!');
       setMissionCompleted(true);
-    }, 10000);
+    }, 5000);
   };
 
   const openModal = () => {
