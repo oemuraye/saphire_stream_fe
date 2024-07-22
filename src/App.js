@@ -123,7 +123,7 @@ function App() {
     if (tapBotCoins > 0) {
       setIsTapBotModalOpen(true);
     }
-  }, [tapBotCoins])
+  }, [])
 
   useEffect(() => {
     if (tapBot === 1) {
@@ -142,7 +142,8 @@ function App() {
         clearInterval(tapBotIntervalRef.current);
       }
     };
-  }, [setPoints, setTapBotCoinsCount, tapBot]);
+  }, [tapBot]);
+  console.log(tapBot);
 
   useEffect(() => {
     return () => {
@@ -184,7 +185,7 @@ function App() {
                                             energyRecharge={energyRecharge} setEnergyRecharge={setEnergyRecharge}
                                             tapBotCoinsCount={tapBotCoinsCount} setTapBotCoinsCount={setTapBotCoinsCount}
                                             tapBotCoins={tapBotCoins} setTapBotCoins={setTapBotCoins}
-                                            tapBot={tapBot}
+                                            tapBot={tapBot} setTapBot={setTapBot}
                                             isTapBotModalOpen={isTapBotModalOpen} setIsTapBotModalOpen={setIsTapBotModalOpen}
                                         />} />
                 <Route path="/ref" element={<Ref />} />

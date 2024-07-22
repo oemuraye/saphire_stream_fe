@@ -18,11 +18,12 @@ const TaskModal = ({closeTaskModal, setSuccessAlert, setIsRewardClaimed, setPoin
     
             setTimeout(async () => {
                 try {
+                    setIsLoading(true);
                     const response = await API.post('/claim', { "type": "task", "task_id": taskId });
     
                     closeTaskModal();
                     setPoints((prevPoints) => {
-                        const newPoints = prevPoints + rewardInCoins;
+                        const newPoints = Number(prevPoints) + Number(rewardInCoins);
                         localStorage.setItem('points', newPoints);
                         updateUser({ coins: newPoints });
                         return newPoints;

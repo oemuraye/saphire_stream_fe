@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import coinIcon from '../../../utils/images/Small Icons/Tap coin.png';
 
@@ -39,17 +39,18 @@ const getTrophyIcon = (type) => {
 };
 
 const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
-  const { user, updateUser } = useContext(UserContext);
+  const { user, updateUser, updateTasks } = useContext(UserContext);
 
   const claimReward = async (id, reward) => {
     try {
       const response = await API.post('/claim', {"type": "task", "task_id": id});
       setPoints((prevPoints) => {
-        const newPoints = prevPoints + reward;
+        const newPoints = Number(prevPoints) + Number(reward);
         localStorage.setItem('points', newPoints);
         updateUser({ coins: newPoints });
         return newPoints;
       });
+      await updateTasks();
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {
@@ -61,9 +62,11 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
     return percentage;
   };
 
+  // console.log(leagueTasks);
+
   return (
     <section className='leagues-tab_section d-flex flex-column gap-2 text-white'>
-      {leagueTasks.map(task => (
+      {leagueTasks?.map(task => (
         <section key={task.id} className="taskPad rounded-3 py-1 px-3">
           <div className="d-flex justify-content-between align-items-center">
             <div className='d-flex gap-3 align-items-center'>
@@ -77,8 +80,14 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
               </div>
             </div>
             <div>
-              {task.completed ? (
-                <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-1'>Claim</span>
+              {task.completed === true ? (
+                <>
+                  {task.reward_claimed === true ? (
+                    <span className='notClaim_link claimed-success py-2'>Claimed</span>
+                  ):(
+                    <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-1'>Claim</span>
+                  )}
+                </>
               ) : (
                 <span className='notClaim_link py-2'>Claim</span>
               )}

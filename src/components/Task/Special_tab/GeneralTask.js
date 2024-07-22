@@ -4,26 +4,29 @@ import { Link, useLocation } from 'react-router-dom';
 import coinIcon from "../../../utils/images/Small Icons/Tap coin.png";
 import TaskModal from '../TaskModal';
 
-
-const GeneralTask = ({setPoints}) => {
+const GeneralTask = ({ setPoints }) => {
   const location = useLocation();
   const { userTask } = location.state;
+
+  // Helper function to create unique keys based on task ID
+  const getKey = (key) => `${key}_${userTask.id}`;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
   const [missionStarted, setMissionStarted] = useState(() => {
-    const savedMissionStarted = localStorage.getItem('taskStarted');
+    const savedMissionStarted = localStorage.getItem(getKey('taskStarted'));
     return savedMissionStarted ? JSON.parse(savedMissionStarted) : false;
   });
   const [missionCompleted, setMissionCompleted] = useState(() => {
-    const isTaskCompleted = localStorage.getItem('isTaskCompleted');
+    const isTaskCompleted = localStorage.getItem(getKey('isTaskCompleted'));
     return isTaskCompleted ? JSON.parse(isTaskCompleted) : userTask.completed;
   });
   const [taskStatus, setTaskStatus] = useState(() => {
-    const savedTaskStatus = localStorage.getItem('taskStatus');
-    return savedTaskStatus ? JSON.parse(savedTaskStatus) : '' 
+    const savedTaskStatus = localStorage.getItem(getKey('taskStatus'));
+    return savedTaskStatus ? JSON.parse(savedTaskStatus) : '';
   });
   const [isGoBtnClicked, setIsGoBtnClicked] = useState(() => {
-    const savedMissionState = localStorage.getItem('isGoBtnClicked');
+    const savedMissionState = localStorage.getItem(getKey('isGoBtnClicked'));
     return savedMissionState ? JSON.parse(savedMissionState) : false;
   });
 
@@ -36,22 +39,20 @@ const GeneralTask = ({setPoints}) => {
     }
   }, [initialRewardClaimedState]);
 
-  console.log(userTask.completed);
-
   useEffect(() => {
-    localStorage.setItem('taskStarted', JSON.stringify(missionStarted));
+    localStorage.setItem(getKey('taskStarted'), JSON.stringify(missionStarted));
   }, [missionStarted]);
 
   useEffect(() => {
-    localStorage.setItem('taskStatus', JSON.stringify(taskStatus));
+    localStorage.setItem(getKey('taskStatus'), JSON.stringify(taskStatus));
   }, [taskStatus]);
 
   useEffect(() => {
-    localStorage.setItem('isGoBtnClicked', JSON.stringify(isGoBtnClicked));
+    localStorage.setItem(getKey('isGoBtnClicked'), JSON.stringify(isGoBtnClicked));
   }, [isGoBtnClicked]);
 
   useEffect(() => {
-    localStorage.setItem('isTaskCompleted', JSON.stringify(missionCompleted));
+    localStorage.setItem(getKey('isTaskCompleted'), JSON.stringify(missionCompleted));
   }, [missionCompleted]);
 
   const start_mission = () => {
@@ -67,7 +68,7 @@ const GeneralTask = ({setPoints}) => {
     setTimeout(() => {
       setTaskStatus('Done!');
       setMissionCompleted(true);
-    }, 20000);
+    }, 10000);
   };
 
   const openModal = () => {
@@ -89,7 +90,17 @@ const GeneralTask = ({setPoints}) => {
       return () => clearTimeout(timer);
     }
   }, [successAlert]);
-    
+
+  useEffect(() => {
+    if (userTask?.completed) {
+      localStorage.removeItem(`${getKey('taskStarted')}`);
+      localStorage.removeItem(`${getKey('isTaskCompleted')}`);
+      localStorage.removeItem(`${getKey('taskStatus')}`);
+      localStorage.removeItem(`${getKey('isGoBtnClicked')}`);
+    }
+  }, [userTask?.completed]);
+  
+
   return (
     <>
       <section className='join_socials container text-white py-2'>
@@ -109,15 +120,18 @@ const GeneralTask = ({setPoints}) => {
         </section>
 
         <section>
-          {!missionStarted && (
-            <div role='button' onClick={start_mission} className='start-mission basic-gradient my-3'>
-              <h5 className='mb-0'>Start mission</h5>
-            </div>
-          )}
-          {missionCompleted && (
+          {missionCompleted ? (
             <div className='text-center done my-3'>
               <h6 className='mb-0'>Mission Completed</h6>
             </div>
+          ) : (
+            <>
+              {!missionStarted && (
+                <div role='button' onClick={start_mission} className='start-mission basic-gradient my-3'>
+                  <h5 className='mb-0'>Start mission</h5>
+                </div>
+              )}
+            </>           
           )}
         </section>
 
@@ -133,11 +147,11 @@ const GeneralTask = ({setPoints}) => {
                       {isGoBtnClicked ? (
                         <span role='button' onClick={handleLinkClick} className='go-mission basic-gradient fw-bold py-1 px-4'>Check</span>
                       ) : (
-                        <Link onClick={handleGoClick} to={userTask.data.link} className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
+                        <Link target='_blank' onClick={handleGoClick} to={userTask.data.link} className='go-mission basic-gradient fw-bold py-1 px-4'>Go</Link>
                       )}
                     </>
                   ) : (
-                    <span className={taskStatus === 'Checking...' ? 'blinking' : 'done'}>{taskStatus}</span>           
+                    <span className={taskStatus === 'Checking...' ? 'blinking' : 'done'}>{taskStatus}</span>
                   )}
                 </>
               )}
@@ -183,4 +197,4 @@ const GeneralTask = ({setPoints}) => {
   )
 }
 
-export default GeneralTask
+export default GeneralTask;

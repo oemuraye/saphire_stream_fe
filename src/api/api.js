@@ -4,7 +4,7 @@ const API = axios.create({ baseURL: 'https://api.saphirestreamapp.com/api' });
 
 API.interceptors.request.use((req) => {
   const userToken = localStorage.getItem('profile');
-  console.log(userToken);
+  // console.log(userToken);
   if (userToken) {
     req.headers.Authorization = `Bearer ${JSON.parse(userToken).access_token}`;
     req.headers["Accept"] = "application/json"; 

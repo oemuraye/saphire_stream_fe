@@ -18,11 +18,14 @@
     top: 3px;
     right: 4px;
     border-radius: 50%;
-    background-color: #E97451;
+    /* background-color: #E97451; */
     height: 12px;
     width: 10px;
     color: transparent;
 }
 .goldBtn {
     background-color: #ffa600;
+}
+.claimed-success {
+    color: #4BB543 !important;
 }

@@ -46,18 +46,17 @@
 
 .blinking {
     animation: blinker 2s linear infinite;
-    color: #858484;
-  }
-  
-  @keyframes blinker {
+    color: #0dcaf0;
+}
+
+@keyframes blinker {
     50% {
-      opacity: 0;
+        opacity: 0;
     }
-  }
-  
-  .done {
+}
+
+.done {
     color: #00C076;
     font-weight: bold;
     font-size: 14px;
-  }
-  
+}

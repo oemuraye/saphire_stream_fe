@@ -10,8 +10,6 @@ import energyIcon from '../../utils/images/Small Icons/Battery.png';
 import handsIcon from '../../utils/images/Small Icons/Hand.png';
 
 import './boost.css';
-import API from '../../api/api';
-import { useNavigate } from 'react-router-dom';
 
 const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel, 
   guruCount, setGuruCount, fullTankCount, setFullTankCount, 
@@ -23,7 +21,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
 }) => {
   const { boosters, updateBoosters } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
+  // console.log(user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
   const [selectedIconSrc, setSelectedIconSrc] = useState('');
@@ -63,7 +61,7 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
       'Tap Bot': tapBotLevel,
     };
 
-    const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) && (
+    const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) || (
       (title === 'Tap Bot' ? tapBot === 1 : Object.values(boosterLevels).some(level => level === booster?.data?.levels[booster?.data?.levels.length - 1].level))
     );
 
@@ -175,12 +173,12 @@ const Boost = ({ points, setPoints, setSpeedTapping, setFullEnergyLevel,
               const isTapBot = boosterName === 'Tap Bot';
               const isEnergyLimit = boosterName === 'Energy Limit';
               const boosterData = isTapBot ? booster.data.levels[0] : getBoosterLevelData(booster, Number(userBoosterLevel) + 1);
-              console.log(boosterName + ":" + userBoosterLevel);
+              // console.log(boosterName + ": " + userBoosterLevel);
               const boosterValue = Number(boosterData.value);
               const boosterLevel = Number(boosterData.level);
               const boosterPrice = Number(boosterData.price);
 
-              const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) && (
+              const isSectionOverlay = (guruCount === 0 || fullTankCount === 0) || (
                 (isTapBot ? tapBot === 1 : Object.values(boosterFieldMap).some(level => level === booster.data.levels[booster.data.levels.length - 1].level))
               );
 

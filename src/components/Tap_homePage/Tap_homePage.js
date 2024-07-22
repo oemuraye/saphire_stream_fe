@@ -17,7 +17,7 @@ const Tap_homePage = ({
   setSpeedTapping, fullEnergyLevel, setFullEnergyLevel, tapSequence,
   setTapSequence, energyLimit, setEnergyLevel, energyLevel, 
   accumulatedTaps, setAccumulatedTaps, energyRecharge,
-  tapBot, setTapBotCoinsCount, setTapBotCoins, tapBotCoins, isTapBotModalOpen, setIsTapBotModalOpen
+  tapBot, setTapBotCoinsCount, setTapBotCoins, tapBotCoins, isTapBotModalOpen, setIsTapBotModalOpen, setTapBot
 }) => {
 
   const { isLoading, updateUser } = useContext(UserContext);
@@ -277,7 +277,7 @@ const Tap_homePage = ({
               <img src={coinIcon} alt="coin-logo" width="30px" />
               <span className=''>{formatPoints(points)}</span>
             </div>
-            <TrophyInfo coinPoints={points} league={user?.data.league} />
+            <TrophyInfo coinPoints={user?.data.total_coins} league={user?.data.league} />
           </section>
 
           <section className={`coinTap_section container d-flex justify-content-center pb-5 ${speedTapping && 'speed-tapping'}`} >
@@ -298,12 +298,14 @@ const Tap_homePage = ({
       </section>
 
       {isTapBotModalOpen && (<TapBotModal 
-                          closeTaskModal={closeTaskModal} 
-                          setTapBotCoinsCount={setTapBotCoinsCount}
-                          setTapBotCoins={setTapBotCoins}
-                          setPoints={setPoints}
-                          tapBotCoins={tapBotCoins}
-                        />)}
+                                closeTaskModal={closeTaskModal} 
+                                setTapBotCoinsCount={setTapBotCoinsCount}
+                                setTapBotCoins={setTapBotCoins}
+                                setPoints={setPoints}
+                                tapBotCoins={tapBotCoins}
+                                setTapBot={setTapBot}
+                              />
+      )}
     </>
   );
 };

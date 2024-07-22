@@ -8,16 +8,17 @@ import API from '../../../api/api';
 import UserContext from '../../../contexts/UserContext';
 
 const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
-  const { updateUser } = useContext(UserContext);
+  const { updateUser, updateTasks } = useContext(UserContext);
   const claimReward = async (id, reward) => {
     try {
       const response = await API.post('/claim', {"type": "task", "task_id": id});
       setPoints((prevPoints) => {
-        const newPoints = prevPoints + reward;
+        const newPoints = Number(prevPoints) + Number(reward);
         localStorage.setItem('points', newPoints);
         updateUser({ coins: newPoints });
         return newPoints;
       });
+      await updateTasks();
       setSuccessAlert(true)
       console.log(response.data);
     } catch (error) {
@@ -32,7 +33,7 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
 
   return (
     <section className='refTask-tab_section d-flex flex-column gap-2 text-white'>
-      {refTasks.map((task) => (
+      {refTasks?.map((task) => (
         <section key={task.id} className='taskPad rounded-3 py-2 px-3'>
           <div className="d-flex justify-content-between align-items-center">
             <div className='d-flex gap-3 align-items-center'>
@@ -46,8 +47,14 @@ const RefTaskTab = ({refTasks, user, setSuccessAlert, setPoints}) => {
               </div>
             </div>
             <div>
-              {task.completed ? (
-                <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-2'>Claim</span>
+              {task.completed === true ? (
+                <>
+                  {task.reward_claimed === true ? (
+                    <span className='notClaim_link claimed-success py-2'>Claimed</span>
+                  ):(
+                    <span onClick={() => claimReward(task.id, task.reward_in_coins)} className='claim_link py-1'>Claim</span>
+                  )}
+                </>
               ) : (
                 <span className='notClaim_link py-2'>Claim</span>
               )}

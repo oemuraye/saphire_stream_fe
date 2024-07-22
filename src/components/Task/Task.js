@@ -12,21 +12,24 @@ import UserContext from '../../contexts/UserContext';
 
 
 const Task = ({points, setPoints}) => {
-  const { tasks } = useContext(UserContext);
+  const { tasks, updateTasks } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   const [successAlert, setSuccessAlert] = useState(false);
 
-  const hasCompletedTask = (type) => tasks?.data?.some(task => task.type === type && task.completed);
-  const getTasksByType = (type) => tasks?.data?.filter(task => task.type === type) || [];
-  
+  const hasCompletedTask = (type) => tasks?.some(task => task.type === type && task.completed && !task.reward_claimed);
+  const getTasksByType = (type) => tasks?.filter(task => task.type === type);
+
   const specialTasks = getTasksByType('special');
   const leagueTasks = getTasksByType('leagues');
   const refTasks = getTasksByType('ref_tasks');
-  console.log(tasks);
+  // console.log(tasks);
   
-  // useEffect(() => {
-  //   setPoints(points);
-  // }, []);
+  useEffect(() => {
+    if (!tasks?.length) {
+      updateTasks();
+    }
+  }, []);
+
 
   useEffect(() => {
     if (successAlert) {
@@ -45,7 +48,7 @@ const Task = ({points, setPoints}) => {
         <img src={coinIcon} alt="coin-logo" width="30px" />
         <span className=''>{points}</span>
       </div>
-      <TrophyInfo coinPoints={user?.data.coins} league={user?.data.league} />
+      <TrophyInfo coinPoints={user?.data.total_coins} league={user?.data.league} />
     </section>
 
     <hr />
@@ -54,15 +57,15 @@ const Task = ({points, setPoints}) => {
       <section className="d-flex justify-content-around align-items-center border rounded-3 p-1">
           <div className='task_tab px-4 py-2 active' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
             <h6 className='mb-0'>Special</h6>
-            {hasCompletedTask('special') && <span className='badge'>.</span>}
+            {hasCompletedTask('special') && <span className='badge bg-danger'>.</span>}
           </div>
           <div className='task_tab px-4 py-2' id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
             <h6 className='mb-0'>Leagues</h6>
-            {hasCompletedTask('leagues') && <span className='badge'>.</span>}
+            {hasCompletedTask('leagues') && <span className='badge bg-danger'>.</span>}
           </div>
           <div className='task_tab px-4 py-2' id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
             <h6 className='mb-0'>Ref Task</h6>
-            {hasCompletedTask('ref_tasks') && <span className='badge'>.</span>}
+            {hasCompletedTask('ref_tasks') && <span className='badge bg-danger'>.</span>}
           </div>
       </section>
 

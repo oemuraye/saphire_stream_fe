@@ -53,7 +53,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 } else if (title === actionsTitle.multiTap) {
                     response = await API.post('/boosters/upgrade', {"booster": "tap", "level": `${userBoosterLevel}`});
                     setPoints((prevPoints) => {
-                        const newPoints = prevPoints - boosterPrice;
+                        const newPoints = Number(prevPoints) - Number(boosterPrice);
                         localStorage.setItem('points', newPoints);
                         updateUser({ coins: newPoints });
                         return newPoints;
@@ -63,7 +63,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 } else if (title === actionsTitle.energyLimit) {
                     response = await API.post('/boosters/upgrade', {"booster":"energy_limit", "level": `${userBoosterLevel}`});
                     setPoints((prevPoints) => {
-                        const newPoints = prevPoints - boosterPrice;
+                        const newPoints = Number(prevPoints) - Number(boosterPrice);
                         localStorage.setItem('points', newPoints);
                         updateUser({ coins: newPoints });
                         return newPoints;
@@ -73,7 +73,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 } else if (title === actionsTitle.rechargeSpeed) {
                     response = await API.post('/boosters/upgrade', {"booster":"energy_recharge", "level": `${userBoosterLevel}`});
                     setPoints((prevPoints) => {
-                        const newPoints = prevPoints - boosterPrice;
+                        const newPoints = Number(prevPoints) - Number(boosterPrice);
                         localStorage.setItem('points', newPoints);
                         updateUser({ coins: newPoints });
                         return newPoints;
@@ -83,7 +83,7 @@ const BoostersModal = ({onClose, iconSrc, selectedBooster, title, setSuccessAler
                 } else if (title === actionsTitle.tapBot) {
                     response = await API.post('/boosters/upgrade', {"booster":"tap_bot", "level": 1});
                     setPoints((prevPoints) => {
-                        const newPoints = prevPoints - boosterPrice;
+                        const newPoints = Number(prevPoints) - Number(boosterPrice);
                         localStorage.setItem('points', newPoints);
                         updateUser({ coins: newPoints });
                         return newPoints;

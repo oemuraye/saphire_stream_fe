@@ -49,7 +49,8 @@ export const UserProvider = ({ children }) => {
         const { userInfo, referralCode } = parseTelegramInitData(initData);
         let referralID = referralCode
 
-        // const userId = "bchv67m704222354";
+        // const userId = "poiu704222354";
+        // const userId = "bgcrefgdf704222354";
         
           try {
             // Fetch user data
@@ -95,7 +96,7 @@ export const UserProvider = ({ children }) => {
   
             // Fetch tasks data
             const getTasksResponse = await API.get('/tasks');
-            setTasks(getTasksResponse.data);
+            setTasks(getTasksResponse.data.data);
   
             setIsLoading(false);
           } catch (error) {
@@ -134,9 +135,9 @@ export const UserProvider = ({ children }) => {
 
   const updateTasks = async () => {
     try {
-      const tasksResponse = await API.get('/boosters');
+      const tasksResponse = await API.get('/tasks');
       const userResponse = await API.get('/user');
-      setTasks(tasksResponse.data);
+      setTasks(tasksResponse.data.data);
       setUser(userResponse.data)
       console.log(userResponse.data);
     } catch (error) {
@@ -144,11 +145,13 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const updateUser = (updatedData) => {
+  const updateUser = async (updatedData) => {
     if (!user) {
       console.error("User is null");
       return;
     }
+    const userResponse = await API.get('/user');
+    setUser(userResponse.data)
 
     const updatedUser = {
       ...user,

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Special_tab = ({specialTasks}) => {
   const navigate = useNavigate();
-  console.log(specialTasks);
+  // console.log(specialTasks);
 
   const goToTaskPage = (userTask) => {
     switch (userTask.name) {
@@ -25,7 +25,7 @@ const Special_tab = ({specialTasks}) => {
   }
   return (
     <section className='special-tab_section d-flex flex-column gap-2 text-white'>
-      {specialTasks.map(task => (
+      {specialTasks?.map(task => (
         <section key={task.id} onClick={() => goToTaskPage(task)} role='button'
           className="taskPad d-flex justify-content-between align-items-center rounded-3 py-2 px-3"
         >

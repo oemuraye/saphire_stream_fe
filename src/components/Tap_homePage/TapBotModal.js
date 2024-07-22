@@ -5,7 +5,7 @@ import API from '../../api/api';
 import coinIcon from "../../utils/images/Small Icons/Tap coin.png";
 import taskIcon from "../../utils/images/tapbot.png";
 
-const TapBotModal = ({closeTaskModal, setTapBotCoinsCount, setPoints, tapBotCoins, setTapBotCoins}) => {
+const TapBotModal = ({closeTaskModal, setTapBotCoinsCount, setPoints, tapBotCoins, setTapBotCoins, setTapBot}) => {
     const { updateBoosters, updateUser } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -15,13 +15,14 @@ const TapBotModal = ({closeTaskModal, setTapBotCoinsCount, setPoints, tapBotCoin
         try {
             const response = await API.post('/claim', {"type": "tap_bot_coins"});
             setPoints((prevPoints) => {
-                const newPoints = prevPoints + tapBotCoins;
+                const newPoints = Number(prevPoints) + Number(tapBotCoins);
                 localStorage.setItem('points', newPoints);
                 updateUser({ coins: newPoints });
                 return newPoints;
             });
-            setTapBotCoins(0)
-            setTapBotCoinsCount(0)
+            setTapBot(1);
+            setTapBotCoins(0);
+            setTapBotCoinsCount(0);
             await updateBoosters();
             closeTaskModal();
             console.log(response.data);
