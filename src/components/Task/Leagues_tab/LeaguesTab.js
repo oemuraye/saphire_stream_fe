@@ -76,7 +76,7 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
             <div className='d-flex gap-3 align-items-center'>
               <img src={getTrophyIcon(task.name)} alt="taskIcon" width="40px" height="70px" />
               <div className="d-flex flex-column">
-                <h6>{task.name}</h6>
+                <h6 className='text-capitalize'>{task.name}</h6>
                 <div className='d-flex align-items-center gap-2'>
                   <img src={coinIcon} alt="coin-icon" width="18px" />
                   <span>{task.reward_in_coins}</span>
