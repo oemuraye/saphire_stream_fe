@@ -1,10 +1,9 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "./components/LoadingSection/Loading";
-import axios from "axios";
-import UserContext, { UserProvider } from './contexts/UserContext';
-import { RemainingPointsProvider, useRemainingPoints } from './contexts/RemainingPointsContext';
+import { UserProvider } from './contexts/UserContext';
+import { RemainingPointsProvider } from './contexts/RemainingPointsContext';
 
 
 import Header from "./components/Header/Header";
