@@ -155,9 +155,9 @@ function App() {
 
   const showFooter = location.pathname !== '/general_task' && location.pathname !== '/join_socials' && location.pathname !== '/connect_wallet';
   
-  // if (isMobile) {
-  //   return <div><Loading /></div>;
-  // }
+  if (isMobile) {
+    return <div><Loading /></div>;
+  }
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -169,8 +169,8 @@ function App() {
         <section className="app">
           <section className="main_section">
             <section className="main-section">
-              {isTelegramMiniApp && <Header />}
-              {/* {!isTelegramMiniApp && <Header />} */}
+              {/* {isTelegramMiniApp && <Header />} */}
+              {!isTelegramMiniApp && <Header />}
               
               <Routes>
                 <Route path="/" element={<Tap 
