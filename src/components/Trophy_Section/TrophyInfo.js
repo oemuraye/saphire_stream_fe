@@ -17,10 +17,10 @@ const TrophyInfo = ({coinPoints, league}) => {
    // Define trophy images and their corresponding point ranges
    const trophies = [
     { src: woodImg, title: 'Wood', rangeStart: 0, rangeEnd: 1 },
-    { src: bronzeImg, title: 'Bronze', rangeStart: 1, rangeEnd: 500 },
-    { src: silverImg, title: 'Silver', rangeStart: 500, rangeEnd: 5000 },
-    { src: goldImg, title: 'Gold', rangeStart: 5000, rangeEnd: 50000 },
-    { src: platinumImg, title: 'Platinum', rangeStart: 50000, rangeEnd: 500000 },
+    { src: bronzeImg, title: 'Bronze', rangeStart: 1, rangeEnd: 5000 },
+    { src: silverImg, title: 'Silver', rangeStart: 5000, rangeEnd: 50000 },
+    { src: goldImg, title: 'Gold', rangeStart: 50000, rangeEnd: 200000 },
+    { src: platinumImg, title: 'Platinum', rangeStart: 200000, rangeEnd: 500000 },
     { src: diamondImg, title: 'Diamond', rangeStart: 500000, rangeEnd: 1000000 },
     { src: masterImg, title: 'Master', rangeStart: 1000000, rangeEnd: 2500000 },
     { src: grandMasterImg, title: 'Grand Master', rangeStart: 2500000, rangeEnd: 5000000 },

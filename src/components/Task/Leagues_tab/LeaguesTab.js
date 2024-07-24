@@ -16,26 +16,20 @@ import API from '../../../api/api';
 import UserContext from '../../../contexts/UserContext';
 
 
-// Function to get the appropriate trophy icon based on the league or task type
-const getTrophyIcon = (type) => {
-  switch (type) {
-    case 'platinum':
-      return platinumImg;
-    case 'diamond':
-      return diamondImg;
-    case 'master':
-      return masterImg;
-    case 'grandmaster':
-      return grandMasterImg;
-    case 'elite':
-      return eliteImg;
-    case 'legendary':
-      return legendaryImg;
-    case 'mythic':
-      return mythicImg;
-    default:
-      return goldImg;
-  }
+// Function to get the appropriate trophy details based on the league or task type
+const trophyDetails = [
+  { src: goldImg, title: 'gold', rangeStart: 50000, rangeEnd: 200000 },
+  { src: platinumImg, title: 'platinum', rangeStart: 200000, rangeEnd: 500000 },
+  { src: diamondImg, title: 'diamond', rangeStart: 500000, rangeEnd: 1000000 },
+  { src: masterImg, title: 'master', rangeStart: 1000000, rangeEnd: 2500000 },
+  { src: grandMasterImg, title: 'grandmaster', rangeStart: 2500000, rangeEnd: 5000000 },
+  { src: eliteImg, title: 'elite', rangeStart: 5000000, rangeEnd: 10000000 },
+  { src: legendaryImg, title: 'legendary', rangeStart: 10000000, rangeEnd: 50000000 },
+  { src: mythicImg, title: 'mythic', rangeStart: 50000000, rangeEnd: Infinity },
+];
+
+const getTrophyDetails = (type) => {
+  return trophyDetails.find(t => t.title === type.toLowerCase()) || trophyDetails[0];
 };
 
 const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
@@ -70,11 +64,14 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
 
   return (
     <section className='leagues-tab_section d-flex flex-column gap-2 text-white'>
-      {leagueTasks?.map(task => (
+      {leagueTasks?.map(task => {
+        const { src, rangeEnd } = getTrophyDetails(task.name);
+
+        return (
         <section key={task.id} className="taskPad rounded-3 py-1 px-3">
           <div className="d-flex justify-content-between align-items-center">
             <div className='d-flex gap-3 align-items-center'>
-              <img src={getTrophyIcon(task.name)} alt="taskIcon" width="40px" height="70px" />
+              <img src={src} alt="taskIcon" width="40px" height="70px" />
               <div className="d-flex flex-column">
                 <h6 className='text-capitalize'>{task.name}</h6>
                 <div className='d-flex align-items-center gap-2'>
@@ -99,13 +96,13 @@ const LeaguesTab = ({leagueTasks, setSuccessAlert, setPoints}) => {
           </div>
           {!task.completed && (
             <div className="task_progress my-2">
-              <div className="progress" role="progressbar" aria-label="Warning example" aria-valuenow={calculatePercentage(user.data.total_coins, task.reward_in_coins)} aria-valuemin="0" aria-valuemax="100">
-                <div className="progress-bar" style={{ width: `${calculatePercentage(user.data.total_coins, task.reward_in_coins)}%` }}></div>
+              <div className="progress" role="progressbar" aria-label="Warning example" aria-valuenow={calculatePercentage(user.data.total_coins, rangeEnd)} aria-valuemin="0" aria-valuemax="100">
+                <div className="progress-bar" style={{ width: `${calculatePercentage(user.data.total_coins, rangeEnd)}%` }}></div>
               </div>
             </div>
           )}
         </section>
-      ))}
+      )})}
     </section>
   )
 }

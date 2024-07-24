@@ -44,26 +44,26 @@ export const UserProvider = ({ children }) => {
       const telegram = window.Telegram.WebApp;
       telegram.ready();
 
-      if (telegram && telegram.initData) { 
-        const initData = telegram.initData;
-        const { userInfo, referralCode } = parseTelegramInitData(initData);
-        let referralID = referralCode
+      if (telegram && telegram.initDataUnsafe) { 
+        // const initData = telegram.initData;
+        // const { userInfo, referralCode } = parseTelegramInitData(initData);
+        // let referralID = referralCode
 
-        // const userId = "poiu704222354";
+        const userId = "poiu704222354";
         // const userId = "bgcrefgdf704222354";
         
           try {
             // Fetch user data
-            // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
-            const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
-              { 
-                telegram_user_id: userInfo?.id,  
-                username: userInfo?.username,
-                first_name: userInfo?.first_name,
-                last_name: userInfo?.last_name,
-                referred_by: referralID,
-              }
-            );
+            const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', { telegram_user_id: userId });
+            // const userResponse = await axios.post('https://api.saphirestreamapp.com/api/login', 
+            //   { 
+            //     telegram_user_id: userInfo?.id,  
+            //     username: userInfo?.username,
+            //     first_name: userInfo?.first_name,
+            //     last_name: userInfo?.last_name,
+            //     referred_by: referralID,
+            //   }
+            // );
             
             const newUser = userResponse.data;
             const token = userResponse.data.token;
@@ -73,17 +73,17 @@ export const UserProvider = ({ children }) => {
   
             const storedUserId = storedUser && storedUser.data.telegram_user_id;
   
-            // if (storedUserId !== userId) {
-            //   localStorage.clear();
-            //   clearBrowserCache();
-            //   window.location.reload(true);
-            // }
-
-            if (storedUserId !== userInfo.id) {
-              // localStorage.clear();
+            if (storedUserId !== userId) {
+              localStorage.clear();
               clearBrowserCache();
-              // window.location.reload(true);
+              window.location.reload(true);
             }
+
+            // if (storedUserId !== userInfo.id) {
+            //   // localStorage.clear();
+            //   clearBrowserCache();
+            //   // window.location.reload(true);
+            // }
 
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('profile', JSON.stringify({ access_token: token }));
@@ -127,7 +127,7 @@ export const UserProvider = ({ children }) => {
       const userResponse = await API.get('/user');
       setBoosters(boostersResponse.data);
       setUser(userResponse.data)
-      console.log(userResponse.data);
+      // console.log(userResponse.data);
     } catch (error) {
       console.error(error);
     }
